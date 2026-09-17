@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Упражнение РКИ: Средства связи в тексте</title>
+  <style>
+    :root {
+      --primary-color: #3b82f6;
+      --bg-color: #f8fafc;
+      --card-bg: #ffffff;
+      --text-color: #1e293b;
+      --border-color: #cbd5e1;
+      --correct-color: #22c55e;
+      --incorrect-color: #ef4444;
+      --drag-bg: #e0f2fe;
+      --drag-border: #0284c7;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      line-height: 1.7;
+      margin: 0;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      background: var(--card-bg);
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    }
+
+    h1 {
+      text-align: center;
+      color: #0f172a;
+      margin-top: 0;
+      margin-bottom: 8px;
+    }
+
+    .instructions {
+      text-align: center;
+      color: #64748b;
+      margin-bottom: 25px;
+      font-size: 0.95rem;
+    }
+
+    .story-block {
+      background-color: #fff;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 25px;
+    }
+
+    .story-title {
+      font-weight: bold;
+      font-size: 1.15rem;
+      margin-bottom: 15px;
+      color: #1e3a8a;
+    }
+
+    /* Банк слов */
+    .word-bank {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      padding: 12px;
+      background-color: #f1f5f9;
+      border-radius: 6px;
+      margin-bottom: 15px;
+      min-height: 42px;
+      align-items: center;
+    }
+
+    /* Карточка слова */
+    .word-card {
+      background-color: var(--card-bg);
+      border: 1px solid var(--border-color);
+      color: #0369a1;
+      font-weight: 600;
+      padding: 6px 14px;
+      border-radius: 6px;
+      cursor: grab;
+      user-select: none;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+      transition: all 0.2s ease;
+      display: inline-block;
+    }
+
+    .word-card:hover {
+      border-color: var(--drag-border);
+      background-color: var(--drag-bg);
+    }
+
+    .word-card.selected {
+      outline: 2px solid var(--primary-color);
+      background-color: var(--drag-bg);
+    }
+
+    .word-card.dragging {
+      opacity: 0.5;
+    }
+
+    /* Пропуски в тексте */
+    .drop-zone {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 110px;
+      height: 32px;
+      border: 2px dashed var(--border-color);
+      border-radius: 6px;
+      margin: 0 4px;
+      vertical-align: middle;
+      background-color: #fafafa;
+      transition: all 0.2s ease;
+      padding: 0 4px;
+    }
+
+    .drop-zone.drag-over {
+      border-color: var(--primary-color);
+      background-color: var(--drag-bg);
+    }
+
+    .drop-zone.correct {
+      border: 2px solid var(--correct-color);
+      background-color: #f0fdf4;
+    }
+
+    .drop-zone.incorrect {
+      border: 2px solid var(--incorrect-color);
+      background-color: #fef2f2;
+    }
+
+    .drop-zone .word-card {
+      margin: 0;
+      cursor: pointer;
+    }
+
+    /* Кнопки и результаты */
+    .controls {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 15px;
+      margin-top: 30px;
+    }
+
+    .btn {
+      background-color: var(--primary-color);
+      color: white;
+      border: none;
+      padding: 12px 28px;
+      font-size: 1rem;
+      font-weight: 600;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background-color 0.2s ease;
+    }
+
+    .btn:hover {
+      background-color: #2563eb;
+    }
+
+    .btn-reset {
+      background-color: #64748b;
+    }
+
+    .btn-reset:hover {
+      background-color: #475569;
+    }
+
+    .btn-group {
+      display: flex;
+      gap: 10px;
+    }
+
+    #result {
+      font-weight: bold;
+      font-size: 1.1rem;
+      text-align: center;
+    }
+
+    .result-success {
+      color: var(--correct-color);
+    }
+
+    .result-partial {
+      color: var(--incorrect-color);
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <h1>Вводные слова и временная связь в тексте</h1>
+  <p class="instructions">Перетащите слова из верхнего блока в соответствующие пропуски в тексте. Вы также можете нажать на слово, а затем нажать на нужный пропуск.</p>
+
+  <!-- История 1 -->
+  <div class="story-block" id="story-1">
+    <div class="story-title">История 1. Где мой билет?</div>
+    <div class="word-bank" id="bank-1">
+      <div class="word-card" draggable="true" id="w1">Однажды</div>
+      <div class="word-card" draggable="true" id="w2">вдруг</div>
+      <div class="word-card" draggable="true" id="w3">Сначала</div>
+      <div class="word-card" draggable="true" id="w4">Потом</div>
+      <div class="word-card" draggable="true" id="w5">вдруг</div>
+    </div>
+    <div class="story-text">
+      <span class="drop-zone" data-answer="Однажды"></span> мы с друзьями пошли в театр. Когда мы уже стояли у входа, я <span class="drop-zone" data-answer="вдруг"></span> понял, что забыл свой билет дома.
+      <span class="drop-zone" data-answer="Сначала"></span> я поехал на такси домой, но дома я не нашёл билет. <span class="drop-zone" data-answer="Потом"></span> я снова приехал в театр, чтобы купить новый, но билетов в кассе уже не было. После этого я уже хотел идти домой, но <span class="drop-zone" data-answer="вдруг"></span> нашёл билет в кармане куртки...
+    </div>
+  </div>
+
+  <!-- История 2 -->
+  <div class="story-block" id="story-2">
+    <div class="story-title">История 2. Встреча</div>
+    <div class="word-bank" id="bank-2">
+      <div class="word-card" draggable="true" id="w6">Однажды</div>
+      <div class="word-card" draggable="true" id="w7">вдруг</div>
+      <div class="word-card" draggable="true" id="w8">Сначала</div>
+      <div class="word-card" draggable="true" id="w9">потом</div>
+      <div class="word-card" draggable="true" id="w10">наконец</div>
+    </div>
+    <div class="story-text">
+      Мы с Андреем встречаемся уже несколько месяцев. У нас всё прекрасно, мы отлично понимаем друг друга. <span class="drop-zone" data-answer="Однажды"></span> мы гуляли по городу, ели мороженое, катались на лодке в парке.<br>
+      И <span class="drop-zone" data-answer="вдруг"></span> Андрей сказал:<br>
+      – Алина, я хочу познакомить тебя с моими родителями. Поехали к ним в гости! Они сейчас на даче.<br>
+      – Андрей, здорово! Давно мечтаю с ними познакомиться, ты так много о них рассказывал.<br>
+      <span class="drop-zone" data-answer="Сначала"></span> мы зашли в цветочный магазин и купили букет для мамы, <span class="drop-zone" data-answer="потом"></span> мы пошли в кондитерскую и купили торт, и, <span class="drop-zone" data-answer="наконец"></span>, мы сидели в машине Андрея и ехали к его родителям...
+    </div>
+  </div>
+
+  <!-- История 3 -->
+  <div class="story-block" id="story-3">
+    <div class="story-title">История 3. Собеседование</div>
+    <div class="word-bank" id="bank-3">
+      <div class="word-card" draggable="true" id="w11">Однажды</div>
+      <div class="word-card" draggable="true" id="w12">вдруг</div>
+      <div class="word-card" draggable="true" id="w13">Сначала</div>
+      <div class="word-card" draggable="true" id="w14">После этого</div>
+      <div class="word-card" draggable="true" id="w15">наконец</div>
+    </div>
+    <div class="story-text">
+      Полина долго искала работу. <span class="drop-zone" data-answer="Однажды"></span> вечером она отправила резюме в компанию своей мечты. Ответ не приходил несколько дней.<br>
+      И <span class="drop-zone" data-answer="вдруг"></span> девушке пришёл имейл. Её приглашают на собеседование. Полина счастлива.<br>
+      <span class="drop-zone" data-answer="Сначала"></span> Полина приехала на первое собеседование. <span class="drop-zone" data-answer="После этого"></span> было второе собеседование, где девушка показала отличные результаты. Всё шло прекрасно, Полина была уверена, что получит эту работу. И, <span class="drop-zone" data-answer="наконец"></span>, её ждал финальный разговор с директором компании. Когда Полина вошла в кабинет директора, она не могла поверить: за столом сидел Иван. Полина рассталась с ним два года назад, и это расставание было очень трудным для него...
+    </div>
+  </div>
+
+  <div class="controls">
+    <div class="btn-group">
+      <button class="btn" onclick="checkAnswers()">Проверить</button>
+      <button class="btn btn-reset" onclick="resetExercise()">Сбросить</button>
+    </div>
+    <div id="result"></div>
+  </div>
+</div>
+
+<script>
+  let selectedCard = null;
+
+  document.addEventListener('DOMContentLoaded', () => {
+    initDragAndDrop();
+    initClickToMove();
+  });
+
+  function initDragAndDrop() {
+    const cards = document.querySelectorAll('.word-card');
+    const dropZones = document.querySelectorAll('.drop-zone');
+    const wordBanks = document.querySelectorAll('.word-bank');
+
+    cards.forEach(card => {
+      card.addEventListener('dragstart', (e) => {
+        card.classList.add('dragging');
+        e.dataTransfer.setData('text/plain', card.id);
+      });
+
+      card.addEventListener('dragend', () => {
+        card.classList.remove('dragging');
+      });
+    });
+
+    [...dropZones, ...wordBanks].forEach(zone => {
+      zone.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        if (zone.classList.contains('drop-zone')) {
+          zone.classList.add('drag-over');
+        }
+      });
+
+      zone.addEventListener('dragleave', () => {
+        zone.classList.remove('drag-over');
+      });
+
+      zone.addEventListener('drop', (e) => {
+        e.preventDefault();
+        zone.classList.remove('drag-over');
+        const cardId = e.dataTransfer.getData('text/plain');
+        const card = document.getElementById(cardId);
+        
+        if (card) {
+          moveCard(card, zone);
+        }
+      });
+    });
+  }
+
+  function initClickToMove() {
+    const cards = document.querySelectorAll('.word-card');
+    const dropZones = document.querySelectorAll('.drop-zone');
+    const wordBanks = document.querySelectorAll('.word-bank');
+
+    cards.forEach(card => {
+      card.addEventListener('click', (e) => {
+        e.stopPropagation();
+        
+        // Если карточка в зоне ответа, клик возвращает её в банк этой истории
+        if (card.parentElement.classList.contains('drop-zone')) {
+          const storyBlock = card.closest('.story-block');
+          const bank = storyBlock.querySelector('.word-bank');
+          moveCard(card, bank);
+          clearSelection();
+          return;
+        }
+
+        // Выбор карточки для клик-перемещения
+        if (selectedCard === card) {
+          clearSelection();
+        } else {
+          clearSelection();
+          selectedCard = card;
+          card.classList.add('selected');
+        }
+      });
+    });
+
+    dropZones.forEach(zone => {
+      zone.addEventListener('click', () => {
+        if (selectedCard) {
+          moveCard(selectedCard, zone);
+          clearSelection();
+        }
+      });
+    });
+
+    wordBanks.forEach(bank => {
+      bank.addEventListener('click', () => {
+        if (selectedCard && selectedCard.closest('.story-block') === bank.closest('.story-block')) {
+          moveCard(selectedCard, bank);
+          clearSelection();
+        }
+      });
+    });
+  }
+
+  function moveCard(card, targetZone) {
+    // Если зона ответа уже занята, возвращаем старую карточку в банк
+    if (targetZone.classList.contains('drop-zone') && targetZone.children.length > 0) {
+      const existingCard = targetZone.children[0];
+      const storyBlock = targetZone.closest('.story-block');
+      const bank = storyBlock.querySelector('.word-bank');
+      bank.appendChild(existingCard);
+    }
+
+    targetZone.appendChild(card);
+    
+    // Сбрасываем стили проверки при изменении
+    resetValidationStyles();
+  }
+
+  function clearSelection() {
+    if (selectedCard) {
+      selectedCard.classList.remove('selected');
+      selectedCard = null;
+    }
+  }
+
+  function resetValidationStyles() {
+    document.querySelectorAll('.drop-zone').forEach(zone => {
+      zone.classList.remove('correct', 'incorrect');
+    });
+    document.getElementById('result').textContent = '';
+  }
+
+  function checkAnswers() {
+    const dropZones = document.querySelectorAll('.drop-zone');
+    let correctCount = 0;
+    const totalCount = dropZones.length;
+
+    dropZones.forEach(zone => {
+      zone.classList.remove('correct', 'incorrect');
+      const card = zone.querySelector('.word-card');
+      
+      if (card) {
+        const userAnswer = card.textContent.trim();
+        const correctAnswer = zone.getAttribute('data-answer').trim();
+
+        if (userAnswer === correctAnswer) {
+          zone.classList.add('correct');
+          correctCount++;
+        } else {
+          zone.classList.add('incorrect');
+        }
+      } else {
+        zone.classList.add('incorrect');
+      }
+    });
+
+    const resultDiv = document.getElementById('result');
+    resultDiv.textContent = `Результат: ${correctCount} из ${totalCount} правильно.`;
+    
+    if (correctCount === totalCount) {
+      resultDiv.className = 'result-success';
+    } else {
+      resultDiv.className = 'result-partial';
+    }
+  }
+
+  function resetExercise() {
+    document.querySelectorAll('.story-block').forEach(story => {
+      const bank = story.querySelector('.word-bank');
+      const cards = story.querySelectorAll('.word-card');
+      cards.forEach(card => bank.appendChild(card));
+    });
+    clearSelection();
+    resetValidationStyles();
+  }
+</script>
+
+</body>
+</html>
