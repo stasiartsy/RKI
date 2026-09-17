@@ -362,16 +362,16 @@
       </div>
     </div>
 
-    <!-- Банк слов справа -->
+    <!-- Перемешанный банк слов справа -->
     <div class="word-bank-container">
       <div class="bank-title">Идиомы для вставки</div>
       <div class="word-bank" id="wordBank">
-        <div class="word-card" draggable="true" id="card-1">войдёт в историю</div>
-        <div class="word-card" draggable="true" id="card-2">руки не доходят</div>
-        <div class="word-card" draggable="true" id="card-3">ушёл в себя</div>
         <div class="word-card" draggable="true" id="card-4">прийти в себя</div>
-        <div class="word-card" draggable="true" id="card-5">перейдет ему дорогу</div>
+        <div class="word-card" draggable="true" id="card-1">войдёт в историю</div>
         <div class="word-card" draggable="true" id="card-6">вышел сухим из воды</div>
+        <div class="word-card" draggable="true" id="card-2">руки не доходят</div>
+        <div class="word-card" draggable="true" id="card-5">перейдет ему дорогу</div>
+        <div class="word-card" draggable="true" id="card-3">ушёл в себя</div>
       </div>
     </div>
   </div>
@@ -418,7 +418,7 @@
     });
   }
 
-  // Перемешивание карточек в банке слов Задания 2
+  // Динамическое перемешивание карточек в банке слов Задания 2
   function shuffleWordBank() {
     const bank = document.getElementById('wordBank');
     const cards = Array.from(bank.children);
