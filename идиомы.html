@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Упражнение РКИ: Идиомы с глаголами движения</title>
+  <style>
+    :root {
+      --primary-color: #3b82f6;
+      --bg-color: #f8fafc;
+      --card-bg: #ffffff;
+      --text-color: #1e293b;
+      --border-color: #cbd5e1;
+      --correct-color: #22c55e;
+      --incorrect-color: #ef4444;
+      --drag-bg: #e0f2fe;
+      --drag-border: #0284c7;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      line-height: 1.7;
+      margin: 0;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      background: var(--card-bg);
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    }
+
+    h1 {
+      text-align: center;
+      color: #0f172a;
+      margin-top: 0;
+      margin-bottom: 8px;
+    }
+
+    h2 {
+      color: #1e3a8a;
+      border-bottom: 2px solid var(--border-color);
+      padding-bottom: 8px;
+      margin-top: 30px;
+      font-size: 1.25rem;
+    }
+
+    .instructions {
+      color: #64748b;
+      margin-bottom: 20px;
+      font-size: 0.95rem;
+    }
+
+    /* ЗАДАНИЕ 1 */
+    .match-table {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-bottom: 30px;
+    }
+
+    .match-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 15px;
+      background-color: #f8fafc;
+      padding: 12px 16px;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      flex-wrap: wrap;
+    }
+
+    .idiom-label {
+      font-weight: 600;
+      color: #0284c7;
+      min-width: 180px;
+    }
+
+    .match-select {
+      flex-grow: 1;
+      padding: 8px 12px;
+      border-radius: 6px;
+      border: 1px solid var(--border-color);
+      font-size: 0.95rem;
+      background-color: #fff;
+      cursor: pointer;
+      max-width: 500px;
+    }
+
+    .match-select.correct {
+      border: 2px solid var(--correct-color);
+      background-color: #f0fdf4;
+    }
+
+    .match-select.incorrect {
+      border: 2px solid var(--incorrect-color);
+      background-color: #fef2f2;
+    }
+
+    /* ЗАДАНИЕ 2 */
+    .task2-layout {
+      display: flex;
+      gap: 25px;
+      align-items: flex-start;
+    }
+
+    @media (max-width: 768px) {
+      .task2-layout {
+        flex-direction: column-reverse;
+      }
+    }
+
+    .sentences-list {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .sentence-item {
+      background: #f8fafc;
+      padding: 14px;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+    }
+
+    /* Банк слов справа */
+    .word-bank-container {
+      width: 240px;
+      background: #f1f5f9;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 15px;
+      position: sticky;
+      top: 20px;
+    }
+
+    @media (max-width: 768px) {
+      .word-bank-container {
+        width: 100%;
+        box-sizing: border-box;
+        position: static;
+      }
+    }
+
+    .bank-title {
+      font-weight: bold;
+      font-size: 0.95rem;
+      color: #334155;
+      margin-bottom: 12px;
+      text-align: center;
+    }
+
+    .word-bank {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      min-height: 100px;
+    }
+
+    @media (max-width: 768px) {
+      .word-bank {
+        flex-direction: row;
+        flex-wrap: wrap;
+      }
+    }
+
+    .word-card {
+      background-color: var(--card-bg);
+      border: 1px solid var(--border-color);
+      color: #0369a1;
+      font-weight: 600;
+      padding: 8px 12px;
+      border-radius: 6px;
+      cursor: grab;
+      user-select: none;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+      transition: all 0.2s ease;
+      text-align: center;
+    }
+
+    .word-card:hover {
+      border-color: var(--drag-border);
+      background-color: var(--drag-bg);
+    }
+
+    .word-card.selected {
+      outline: 2px solid var(--primary-color);
+      background-color: var(--drag-bg);
+    }
+
+    .word-card.dragging {
+      opacity: 0.5;
+    }
+
+    .drop-zone {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 160px;
+      height: 36px;
+      border: 2px dashed var(--border-color);
+      border-radius: 6px;
+      margin: 0 4px;
+      vertical-align: middle;
+      background-color: #ffffff;
+      transition: all 0.2s ease;
+      padding: 0 6px;
+    }
+
+    .drop-zone.drag-over {
+      border-color: var(--primary-color);
+      background-color: var(--drag-bg);
+    }
+
+    .drop-zone.correct {
+      border: 2px solid var(--correct-color);
+      background-color: #f0fdf4;
+    }
+
+    .drop-zone.incorrect {
+      border: 2px solid var(--incorrect-color);
+      background-color: #fef2f2;
+    }
+
+    .drop-zone .word-card {
+      margin: 0;
+      width: 100%;
+      cursor: pointer;
+    }
+
+    /* Кнопки управления */
+    .controls {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 15px;
+      margin-top: 35px;
+    }
+
+    .btn {
+      background-color: var(--primary-color);
+      color: white;
+      border: none;
+      padding: 12px 28px;
+      font-size: 1rem;
+      font-weight: 600;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background-color 0.2s ease;
+    }
+
+    .btn:hover {
+      background-color: #2563eb;
+    }
+
+    .btn-reset {
+      background-color: #64748b;
+    }
+
+    .btn-reset:hover {
+      background-color: #475569;
+    }
+
+    .btn-group {
+      display: flex;
+      gap: 10px;
+    }
+
+    #result {
+      font-weight: bold;
+      font-size: 1.1rem;
+      text-align: center;
+    }
+
+    .result-success {
+      color: var(--correct-color);
+    }
+
+    .result-partial {
+      color: var(--incorrect-color);
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <h1>Идиомы с глаголами движения</h1>
+
+  <!-- ЗАДАНИЕ 1 -->
+  <h2>Задание 1. Соедините идиому и ее значение</h2>
+  <p class="instructions">Выберите из списка правильное значение для каждой идиомы:</p>
+
+  <div class="match-table" id="task1-container">
+    <div class="match-row">
+      <span class="idiom-label">Уйти в себя</span>
+      <select class="match-select" data-correct="быть тихим, сильно думать">
+        <option value="">-- Выберите значение --</option>
+      </select>
+    </div>
+    <div class="match-row">
+      <span class="idiom-label">Прийти в себя</span>
+      <select class="match-select" data-correct="вернуться в сознание">
+        <option value="">-- Выберите значение --</option>
+      </select>
+    </div>
+    <div class="match-row">
+      <span class="idiom-label">Войти в историю</span>
+      <select class="match-select" data-correct="сделать что-то очень важное">
+        <option value="">-- Выберите значение --</option>
+      </select>
+    </div>
+    <div class="match-row">
+      <span class="idiom-label">Выйти сухим из воды</span>
+      <select class="match-select" data-correct="избежать наказания, ответственности">
+        <option value="">-- Выберите значение --</option>
+      </select>
+    </div>
+    <div class="match-row">
+      <span class="idiom-label">Руки не доходят</span>
+      <select class="match-select" data-correct="не хватает времени начать дело">
+        <option value="">-- Выберите значение --</option>
+      </select>
+    </div>
+    <div class="match-row">
+      <span class="idiom-label">Перейти дорогу</span>
+      <select class="match-select" data-correct="стать конкурентом для кого-то">
+        <option value="">-- Выберите значение --</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- ЗАДАНИЕ 2 -->
+  <h2>Задание 2. Вставьте идиому в предложение</h2>
+  <p class="instructions">Перетащите нужную идиому из прямоугольников справа в пропуск или нажмите на идиому, а затем на соответствующий пропуск.</p>
+
+  <div class="task2-layout">
+    <div class="sentences-list">
+      <div class="sentence-item">
+        1. Он такой талантливый. Я уверена, что его имя <span class="drop-zone" data-answer="войдёт в историю"></span>.
+      </div>
+      <div class="sentence-item">
+        2. У меня никак <span class="drop-zone" data-answer="руки не доходят"></span> научиться играть на гитаре.
+      </div>
+      <div class="sentence-item">
+        3. Дима сидит один в комнате, <span class="drop-zone" data-answer="ушёл в себя"></span> и медитирует.
+      </div>
+      <div class="sentence-item">
+        4. После самолёта нам нужно <span class="drop-zone" data-answer="прийти в себя"></span> и отдохнуть.
+      </div>
+      <div class="sentence-item">
+        5. Молодой специалист боялся, что более опытный коллега <span class="drop-zone" data-answer="перейдет ему дорогу"></span> и получит должность.
+      </div>
+      <div class="sentence-item">
+        6. Мальчик разбил вазу, но обвинил кота, и <span class="drop-zone" data-answer="вышел сухим из воды"></span>.
+      </div>
+    </div>
+
+    <!-- Банк слов справа -->
+    <div class="word-bank-container">
+      <div class="bank-title">Идиомы для вставки</div>
+      <div class="word-bank" id="wordBank">
+        <div class="word-card" draggable="true" id="card-1">войдёт в историю</div>
+        <div class="word-card" draggable="true" id="card-2">руки не доходят</div>
+        <div class="word-card" draggable="true" id="card-3">ушёл в себя</div>
+        <div class="word-card" draggable="true" id="card-4">прийти в себя</div>
+        <div class="word-card" draggable="true" id="card-5">перейдет ему дорогу</div>
+        <div class="word-card" draggable="true" id="card-6">вышел сухим из воды</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="controls">
+    <div class="btn-group">
+      <button class="btn" onclick="checkAnswers()">Проверить</button>
+      <button class="btn btn-reset" onclick="resetExercise()">Сбросить</button>
+    </div>
+    <div id="result"></div>
+  </div>
+</div>
+
+<script>
+  let selectedCard = null;
+
+  const meanings = [
+    "быть тихим, сильно думать",
+    "вернуться в сознание",
+    "сделать что-то очень важное",
+    "избежать наказания, ответственности",
+    "не хватает времени начать дело",
+    "стать конкурентом для кого-то"
+  ];
+
+  document.addEventListener('DOMContentLoaded', () => {
+    initTask1Options();
+    initDragAndDrop();
+    initClickToMove();
+    shuffleWordBank();
+  });
+
+  // Заполнение и перемешивание вариантов в Задании 1
+  function initTask1Options() {
+    const selects = document.querySelectorAll('.match-select');
+    selects.forEach(select => {
+      const shuffledMeanings = [...meanings].sort(() => Math.random() - 0.5);
+      shuffledMeanings.forEach(m => {
+        const option = document.createElement('option');
+        option.value = m;
+        option.textContent = m;
+        select.appendChild(option);
+      });
+    });
+  }
+
+  // Перемешивание карточек в банке слов Задания 2
+  function shuffleWordBank() {
+    const bank = document.getElementById('wordBank');
+    const cards = Array.from(bank.children);
+    cards.sort(() => Math.random() - 0.5);
+    cards.forEach(card => bank.appendChild(card));
+  }
+
+  // Drag and Drop для Задания 2
+  function initDragAndDrop() {
+    const cards = document.querySelectorAll('.word-card');
+    const dropZones = document.querySelectorAll('.drop-zone');
+    const wordBank = document.getElementById('wordBank');
+
+    cards.forEach(card => {
+      card.addEventListener('dragstart', (e) => {
+        card.classList.add('dragging');
+        e.dataTransfer.setData('text/plain', card.id);
+      });
+
+      card.addEventListener('dragend', () => {
+        card.classList.remove('dragging');
+      });
+    });
+
+    [...dropZones, wordBank].forEach(zone => {
+      zone.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        if (zone.classList.contains('drop-zone')) {
+          zone.classList.add('drag-over');
+        }
+      });
+
+      zone.addEventListener('dragleave', () => {
+        zone.classList.remove('drag-over');
+      });
+
+      zone.addEventListener('drop', (e) => {
+        e.preventDefault();
+        zone.classList.remove('drag-over');
+        const cardId = e.dataTransfer.getData('text/plain');
+        const card = document.getElementById(cardId);
+
+        if (card) {
+          moveCard(card, zone);
+        }
+      });
+    });
+  }
+
+  // Клик для сенсорных устройств / мыши
+  function initClickToMove() {
+    const cards = document.querySelectorAll('.word-card');
+    const dropZones = document.querySelectorAll('.drop-zone');
+    const wordBank = document.getElementById('wordBank');
+
+    cards.forEach(card => {
+      card.addEventListener('click', (e) => {
+        e.stopPropagation();
+
+        if (card.parentElement.classList.contains('drop-zone')) {
+          moveCard(card, wordBank);
+          clearSelection();
+          return;
+        }
+
+        if (selectedCard === card) {
+          clearSelection();
+        } else {
+          clearSelection();
+          selectedCard = card;
+          card.classList.add('selected');
+        }
+      });
+    });
+
+    dropZones.forEach(zone => {
+      zone.addEventListener('click', () => {
+        if (selectedCard) {
+          moveCard(selectedCard, zone);
+          clearSelection();
+        }
+      });
+    });
+
+    wordBank.addEventListener('click', () => {
+      if (selectedCard) {
+        moveCard(selectedCard, wordBank);
+        clearSelection();
+      }
+    });
+  }
+
+  function moveCard(card, targetZone) {
+    if (targetZone.classList.contains('drop-zone') && targetZone.children.length > 0) {
+      const existingCard = targetZone.children[0];
+      const bank = document.getElementById('wordBank');
+      bank.appendChild(existingCard);
+    }
+
+    targetZone.appendChild(card);
+    resetValidationStyles();
+  }
+
+  function clearSelection() {
+    if (selectedCard) {
+      selectedCard.classList.remove('selected');
+      selectedCard = null;
+    }
+  }
+
+  function resetValidationStyles() {
+    document.querySelectorAll('.match-select').forEach(s => s.classList.remove('correct', 'incorrect'));
+    document.querySelectorAll('.drop-zone').forEach(z => z.classList.remove('correct', 'incorrect'));
+    document.getElementById('result').textContent = '';
+  }
+
+  function checkAnswers() {
+    let correctCount = 0;
+    let totalCount = 0;
+
+    // Проверка Задания 1
+    const selects = document.querySelectorAll('.match-select');
+    selects.forEach(select => {
+      totalCount++;
+      select.classList.remove('correct', 'incorrect');
+      if (select.value === select.getAttribute('data-correct')) {
+        select.classList.add('correct');
+        correctCount++;
+      } else {
+        select.classList.add('incorrect');
+      }
+    });
+
+    // Проверка Задания 2
+    const dropZones = document.querySelectorAll('.drop-zone');
+    dropZones.forEach(zone => {
+      totalCount++;
+      zone.classList.remove('correct', 'incorrect');
+      const card = zone.querySelector('.word-card');
+
+      if (card) {
+        const userAnswer = card.textContent.trim();
+        const correctAnswer = zone.getAttribute('data-answer').trim();
+
+        if (userAnswer === correctAnswer) {
+          zone.classList.add('correct');
+          correctCount++;
+        } else {
+          zone.classList.add('incorrect');
+        }
+      } else {
+        zone.classList.add('incorrect');
+      }
+    });
+
+    // Вывод результатов
+    const resultDiv = document.getElementById('result');
+    resultDiv.textContent = `Результат: ${correctCount} из ${totalCount} правильно.`;
+
+    if (correctCount === totalCount) {
+      resultDiv.className = 'result-success';
+    } else {
+      resultDiv.className = 'result-partial';
+    }
+  }
+
+  function resetExercise() {
+    // Сброс Задания 1
+    document.querySelectorAll('.match-select').forEach(select => {
+      select.value = '';
+    });
+
+    // Сброс Задания 2
+    const bank = document.getElementById('wordBank');
+    document.querySelectorAll('.word-card').forEach(card => {
+      bank.appendChild(card);
+    });
+
+    shuffleWordBank();
+    clearSelection();
+    resetValidationStyles();
+  }
+</script>
+
+</body>
+</html>
