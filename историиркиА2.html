@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Упражнение РКИ: Средства связи в тексте</title>
+  <title>Упражнение РКИ: Текст и Аудио</title>
   <style>
     :root {
       --primary-color: #3b82f6;
@@ -15,6 +15,7 @@
       --incorrect-color: #ef4444;
       --drag-bg: #e0f2fe;
       --drag-border: #0284c7;
+      --audio-bg: #f1f5f9;
     }
 
     body {
@@ -27,7 +28,7 @@
     }
 
     .container {
-      max-width: 800px;
+      max-width: 850px;
       margin: 0 auto;
       background: var(--card-bg);
       padding: 30px;
@@ -40,6 +41,14 @@
       color: #0f172a;
       margin-top: 0;
       margin-bottom: 8px;
+    }
+
+    h2 {
+      color: #1e3a8a;
+      border-bottom: 2px solid var(--border-color);
+      padding-bottom: 8px;
+      margin-top: 35px;
+      font-size: 1.3rem;
     }
 
     .instructions {
@@ -142,13 +151,88 @@
       cursor: pointer;
     }
 
-    /* Кнопки и результаты */
+    /* Секция Аудио */
+    .audio-section {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      margin-top: 20px;
+    }
+
+    .audio-card {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      background-color: var(--audio-bg);
+      border: 1px solid var(--border-color);
+      padding: 15px 20px;
+      border-radius: 8px;
+      gap: 15px;
+    }
+
+    .audio-info {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .audio-title {
+      font-weight: bold;
+      font-size: 1.05rem;
+      color: #0f172a;
+    }
+
+    .btn-play {
+      background-color: #0284c7;
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: background-color 0.2s;
+    }
+
+    .btn-play:hover {
+      background-color: #0369a1;
+    }
+
+    .audio-select-wrap {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .audio-select {
+      padding: 8px 12px;
+      border-radius: 6px;
+      border: 1px solid var(--border-color);
+      font-size: 0.95rem;
+      background-color: white;
+      cursor: pointer;
+    }
+
+    .audio-select.correct {
+      border: 2px solid var(--correct-color);
+      background-color: #f0fdf4;
+    }
+
+    .audio-select.incorrect {
+      border: 2px solid var(--incorrect-color);
+      background-color: #fef2f2;
+    }
+
+    /* Кнопки управления */
     .controls {
       display: flex;
       flex-direction: column;
       align-items: center;
       gap: 15px;
-      margin-top: 30px;
+      margin-top: 35px;
     }
 
     .btn {
@@ -198,8 +282,11 @@
 <body>
 
 <div class="container">
-  <h1>Вводные слова и временная связь в тексте</h1>
-  <p class="instructions">Перетащите слова из верхнего блока в соответствующие пропуски в тексте. Вы также можете нажать на слово, а затем нажать на нужный пропуск.</p>
+  <h1>Вводные слова и аудирование в РКИ</h1>
+  
+  <!-- ЧАСТЬ 1 -->
+  <h2>Задание 1. Вставьте пропущенные слова</h2>
+  <p class="instructions">Перетащите слова в пропуски в тексте или нажмите на слово, а затем на соответствующий пропуск.</p>
 
   <!-- История 1 -->
   <div class="story-block" id="story-1">
@@ -253,9 +340,66 @@
     </div>
   </div>
 
+  <!-- ЧАСТЬ 2: АУДИО -->
+  <h2>Задание 2. Прослушайте аудио и соедините с историями</h2>
+  <p class="instructions">Прослушайте концовку каждой истории и выберите соответствующий номер истории.</p>
+
+  <div class="audio-section">
+    <!-- Аудио А -->
+    <div class="audio-card">
+      <div class="audio-info">
+        <span class="audio-title">Аудио А</span>
+        <button class="btn-play" onclick="playAudio('audioA')">▶ Слушать</button>
+      </div>
+      <div class="audio-select-wrap">
+        <label for="select-audioA">Подходит к:</label>
+        <select id="select-audioA" class="audio-select" data-correct="story-2">
+          <option value="">-- Выберите историю --</option>
+          <option value="story-1">История 1. Где мой билет?</option>
+          <option value="story-2">История 2. Встреча</option>
+          <option value="story-3">История 3. Собеседование</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Аудио Б -->
+    <div class="audio-card">
+      <div class="audio-info">
+        <span class="audio-title">Аудио Б</span>
+        <button class="btn-play" onclick="playAudio('audioB')">▶ Слушать</button>
+      </div>
+      <div class="audio-select-wrap">
+        <label for="select-audioB">Подходит к:</label>
+        <select id="select-audioB" class="audio-select" data-correct="story-1">
+          <option value="">-- Выберите историю --</option>
+          <option value="story-1">История 1. Где мой билет?</option>
+          <option value="story-2">История 2. Встреча</option>
+          <option value="story-3">История 3. Собеседование</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Аудио В -->
+    <div class="audio-card">
+      <div class="audio-info">
+        <span class="audio-title">Аудио В</span>
+        <button class="btn-play" onclick="playAudio('audioV')">▶ Слушать</button>
+      </div>
+      <div class="audio-select-wrap">
+        <label for="select-audioV">Подходит к:</label>
+        <select id="select-audioV" class="audio-select" data-correct="story-3">
+          <option value="">-- Выберите историю --</option>
+          <option value="story-1">История 1. Где мой билет?</option>
+          <option value="story-2">История 2. Встреча</option>
+          <option value="story-3">История 3. Собеседование</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
   <div class="controls">
     <div class="btn-group">
-      <button class="btn" onclick="checkAnswers()">Проверить</button>
+      <button class="btn" onclick="checkAnswers()">Проверить всё</button>
       <button class="btn btn-reset" onclick="resetExercise()">Сбросить</button>
     </div>
     <div id="result"></div>
@@ -265,10 +409,30 @@
 <script>
   let selectedCard = null;
 
+  // Тексты для аудио
+  const audioTexts = {
+    audioA: "Через полчаса мы стояли у входа небольшого двухэтажного дома. Я немного нервничала. Андрей позвонил в дверь. Дверь открыла красивая женщина. Мама, познакомься, это Алина, моя девушка. И тут я понимаю, что мама Андрея — это Татьяна Петровна, моя учительница из музыкальной школы, которая меня ненавидела.",
+    audioB: "В конце концов, я пошёл в зал, где уже начался спектакль. В результате спектакль нам не понравился. Во-первых, он был очень долгий, а мы были голодные. Во-вторых, сюжет был неинтересный, а в-третьих, актёры плохо играли.",
+    audioV: "Мы поздоровались с Иваном, и он сказал мне, что они уже нашли кандидата на эту вакансию. Я спросила, почему? Он ответил, что, во-первых, у меня небольшой опыт работы в сфере маркетинга, во-вторых, им нужен человек, который говорит по-испански, а в-третьих, я заняла его место на парковке."
+  };
+
   document.addEventListener('DOMContentLoaded', () => {
     initDragAndDrop();
     initClickToMove();
   });
+
+  // Озвучка текста через Web Speech API
+  function playAudio(audioKey) {
+    if ('speechSynthesis' in window) {
+      window.speechSynthesis.cancel(); // Остановка текущего воспроизведения
+      const utterance = new SpeechSynthesisUtterance(audioTexts[audioKey]);
+      utterance.lang = 'ru-RU';
+      utterance.rate = 0.9; // Слегка замедленный темп для учащихся РКИ
+      window.speechSynthesis.speak(utterance);
+    } else {
+      alert("К сожалению, ваш браузер не поддерживает синтез речи.");
+    }
+  }
 
   function initDragAndDrop() {
     const cards = document.querySelectorAll('.word-card');
@@ -320,7 +484,6 @@
       card.addEventListener('click', (e) => {
         e.stopPropagation();
         
-        // Если карточка в зоне ответа, клик возвращает её в банк этой истории
         if (card.parentElement.classList.contains('drop-zone')) {
           const storyBlock = card.closest('.story-block');
           const bank = storyBlock.querySelector('.word-bank');
@@ -329,7 +492,6 @@
           return;
         }
 
-        // Выбор карточки для клик-перемещения
         if (selectedCard === card) {
           clearSelection();
         } else {
@@ -360,7 +522,6 @@
   }
 
   function moveCard(card, targetZone) {
-    // Если зона ответа уже занята, возвращаем старую карточку в банк
     if (targetZone.classList.contains('drop-zone') && targetZone.children.length > 0) {
       const existingCard = targetZone.children[0];
       const storyBlock = targetZone.closest('.story-block');
@@ -369,8 +530,6 @@
     }
 
     targetZone.appendChild(card);
-    
-    // Сбрасываем стили проверки при изменении
     resetValidationStyles();
   }
 
@@ -385,15 +544,20 @@
     document.querySelectorAll('.drop-zone').forEach(zone => {
       zone.classList.remove('correct', 'incorrect');
     });
+    document.querySelectorAll('.audio-select').forEach(select => {
+      select.classList.remove('correct', 'incorrect');
+    });
     document.getElementById('result').textContent = '';
   }
 
   function checkAnswers() {
-    const dropZones = document.querySelectorAll('.drop-zone');
     let correctCount = 0;
-    const totalCount = dropZones.length;
+    let totalCount = 0;
 
+    // 1. Проверка пропусков в тексте
+    const dropZones = document.querySelectorAll('.drop-zone');
     dropZones.forEach(zone => {
+      totalCount++;
       zone.classList.remove('correct', 'incorrect');
       const card = zone.querySelector('.word-card');
       
@@ -412,8 +576,25 @@
       }
     });
 
+    // 2. Проверка соответствия аудио
+    const audioSelects = document.querySelectorAll('.audio-select');
+    audioSelects.forEach(select => {
+      totalCount++;
+      select.classList.remove('correct', 'incorrect');
+      const userChoice = select.value;
+      const correctChoice = select.getAttribute('data-correct');
+
+      if (userChoice === correctChoice) {
+        select.classList.add('correct');
+        correctCount++;
+      } else {
+        select.classList.add('incorrect');
+      }
+    });
+
+    // Результат
     const resultDiv = document.getElementById('result');
-    resultDiv.textContent = `Результат: ${correctCount} из ${totalCount} правильно.`;
+    resultDiv.textContent = `Общий результат: ${correctCount} из ${totalCount} правильно.`;
     
     if (correctCount === totalCount) {
       resultDiv.className = 'result-success';
@@ -423,11 +604,22 @@
   }
 
   function resetExercise() {
+    // Сброс карточек слов
     document.querySelectorAll('.story-block').forEach(story => {
       const bank = story.querySelector('.word-bank');
       const cards = story.querySelectorAll('.word-card');
       cards.forEach(card => bank.appendChild(card));
     });
+
+    // Сброс выборов аудио
+    document.querySelectorAll('.audio-select').forEach(select => {
+      select.value = '';
+    });
+
+    if ('speechSynthesis' in window) {
+      window.speechSynthesis.cancel();
+    }
+
     clearSelection();
     resetValidationStyles();
   }
