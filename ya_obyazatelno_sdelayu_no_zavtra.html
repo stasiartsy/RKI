@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Я обязательно сделаю, но завтра</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background: #f7f7f5;
+        color: #333;
+        max-width: 800px;
+        margin: 40px auto;
+        padding: 20px;
+        line-height: 1.7;
+    }
+    h2 { text-align: center; margin-bottom: 25px; }
+    .instruction { margin-bottom: 20px; }
+    .words {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        justify-content: center;
+        margin-bottom: 30px;
+    }
+    .word {
+        background: white;
+        border: 2px solid #777;
+        border-radius: 6px;
+        padding: 7px 14px;
+        cursor: grab;
+        user-select: none;
+        font-weight: bold;
+    }
+    .word:hover { background: #eeeeee; }
+    .word.selected { background: #dfe8ff; border-color: #4969a8; }
+    .text {
+        background: white;
+        padding: 25px;
+        border-radius: 10px;
+        border: 1px solid #ddd;
+        font-size: 18px;
+    }
+    .gap {
+        display: inline-flex;
+        min-width: 105px;
+        height: 30px;
+        border-bottom: 2px solid #555;
+        margin: 0 4px;
+        vertical-align: middle;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        font-weight: bold;
+    }
+    .gap.correct { color: #287a3e; border-color: #287a3e; }
+    .gap.incorrect { color: #b83232; border-color: #b83232; }
+    button {
+        display: block;
+        margin: 25px auto 0;
+        padding: 10px 25px;
+        border: none;
+        border-radius: 6px;
+        background: #555;
+        color: white;
+        font-size: 16px;
+        cursor: pointer;
+    }
+    button:hover { background: #333; }
+    #result { text-align: center; margin-top: 15px; font-weight: bold; }
+</style>
+</head>
+<body>
+
+<h2>Я обязательно сделаю, но завтра</h2>
+
+<p class="instruction"><strong>Вставьте подходящие глаголы в пропуски.</strong></p>
+
+<div class="words" id="words">
+    <div class="word" draggable="true" data-word="напишу">напишу</div>
+    <div class="word" draggable="true" data-word="позвоню">позвоню</div>
+    <div class="word" draggable="true" data-word="куплю">куплю</div>
+    <div class="word" draggable="true" data-word="приготовлю">приготовлю</div>
+    <div class="word" draggable="true" data-word="уберу">уберу</div>
+    <div class="word" draggable="true" data-word="прочитаю">прочитаю</div>
+    <div class="word" draggable="true" data-word="отправлю">отправлю</div>
+    <div class="word" draggable="true" data-word="выучу">выучу</div>
+    <div class="word" draggable="true" data-word="посмотрю">посмотрю</div>
+    <div class="word" draggable="true" data-word="позанимаюсь">позанимаюсь</div>
+    <div class="word" draggable="true" data-word="постираю">постираю</div>
+    <div class="word" draggable="true" data-word="сделаю">сделаю</div>
+</div>
+
+<div class="text">
+    Сегодня у меня много дел, но я всё сделаю завтра.<br><br>
+
+    Я <span class="gap" data-answer="напишу"></span> письмо,
+    <span class="gap" data-answer="позвоню"></span> другу и
+    <span class="gap" data-answer="куплю"></span> продукты.<br><br>
+
+    Утром я <span class="gap" data-answer="приготовлю"></span> завтрак и
+    <span class="gap" data-answer="уберу"></span> квартиру.<br><br>
+
+    Потом я <span class="gap" data-answer="прочитаю"></span> важный текст и
+    <span class="gap" data-answer="отправлю"></span> сообщение коллеге.<br><br>
+
+    После обеда я <span class="gap" data-answer="сделаю"></span>
+    домашнее задание и <span class="gap" data-answer="выучу"></span>
+    новые слова.<br><br>
+
+    Вечером я <span class="gap" data-answer="посмотрю"></span> фильм и
+    <span class="gap" data-answer="позанимаюсь"></span> спортом.<br><br>
+
+    Я ещё <span class="gap" data-answer="постираю"></span> одежду и
+    <span class="gap" data-answer="приготовлю"></span> ужин.<br><br>
+
+    Конечно, я всё <span class="gap" data-answer="сделаю"></span>,
+    но завтра!
+</div>
+
+<button id="check">Проверить</button>
+<div id="result" aria-live="polite"></div>
+
+<script>
+let draggedWord = null;
+let selectedWord = null;
+
+const words = document.querySelectorAll('.word');
+const gaps = document.querySelectorAll('.gap');
+
+words.forEach(word => {
+    word.addEventListener('dragstart', () => {
+        draggedWord = word;
+    });
+
+    word.addEventListener('click', () => {
+        words.forEach(w => w.classList.remove('selected'));
+        word.classList.add('selected');
+        selectedWord = word;
+    });
+});
+
+function placeWord(gap, word) {
+    gap.textContent = word.dataset.word;
+    gap.dataset.userAnswer = word.dataset.word;
+    word.style.visibility = 'hidden';
+    word.classList.remove('selected');
+    selectedWord = null;
+}
+
+gaps.forEach(gap => {
+    gap.addEventListener('dragover', e => e.preventDefault());
+
+    gap.addEventListener('drop', () => {
+        if (draggedWord) {
+            placeWord(gap, draggedWord);
+            draggedWord = null;
+        }
+    });
+
+    gap.addEventListener('click', () => {
+        if (selectedWord) placeWord(gap, selectedWord);
+    });
+});
+
+document.getElementById('check').addEventListener('click', () => {
+    let correct = 0;
+
+    gaps.forEach(gap => {
+        gap.classList.remove('correct', 'incorrect');
+
+        if (gap.dataset.userAnswer === gap.dataset.answer) {
+            gap.classList.add('correct');
+            correct++;
+        } else {
+            gap.classList.add('incorrect');
+        }
+    });
+
+    document.getElementById('result').textContent =
+        `Правильных ответов: ${correct} из ${gaps.length}`;
+});
+</script>
+
+</body>
+</html>
