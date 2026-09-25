@@ -6,7 +6,7 @@
   <title>Упражнение РКИ: Оранжевое настроение</title>
   <style>
     :root {
-      --primary-color: #f97316; /* Оранжевый цвет */
+      --primary-color: #f97316;
       --bg-color: #fff7ed;
       --card-bg: #ffffff;
       --text-color: #1e293b;
@@ -66,11 +66,34 @@
       font-size: 1.2rem;
     }
 
+    .timecode {
+      display: inline-block;
+      background-color: #ffedd5;
+      color: #c2410c;
+      font-weight: bold;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 0.85rem;
+      margin-left: 8px;
+    }
+
     .task-block {
       background: #fff3e0;
       padding: 15px 20px;
       border-radius: 8px;
       margin-bottom: 20px;
+    }
+
+    .stanza {
+      margin-bottom: 15px;
+      padding-bottom: 10px;
+      border-bottom: 1px dashed #fed7aa;
+    }
+
+    .stanza:last-child {
+      border-bottom: none;
+      margin-bottom: 0;
+      padding-bottom: 0;
     }
 
     input[type="text"] {
@@ -135,11 +158,11 @@
 
   <!-- Видео -->
   <div class="video-container">
-    <iframe src="https://www.youtube.com/embed/rKeGA0DgeCs?si=UNkcnwVQs_yi54Gn" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+    <iframe width="560" height="315" src="https://www.youtube.com/embed/rKeGA0DgeCs?si=UNkcnwVQs_yi54Gn" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
   </div>
 
   <!-- Часть 1 -->
-  <h2>Часть 1. Слушайте фрагмент и впишите пропущенные слова</h2>
+  <h2>Часть 1. Слушайте фрагмент и пишите слова <span class="timecode">⏱ 0:22–0:50</span></h2>
   <div class="task-block">
     <p>Бутылка кефира, полбатона<br>
     Бутылка кефира, полбатона<br>
@@ -148,56 +171,78 @@
     А я сегодня дома один<br>
     С утра я почитаю <input type="text" data-answer="газету" placeholder="слово"><br>
     И, может быть, сгоняю в <input type="text" data-answer="кино" placeholder="слово"><br>
-    И, в общем, все равно...</p>
+    И, в общем, все равно<br>
+    И, в общем, все равно<br>
+    И, в общем, все равно какое</p>
   </div>
 
   <!-- Часть 2 -->
-  <h2>Часть 2. Слушайте фрагмент и выберите правильный глагол</h2>
+  <h2>Часть 2. Слушайте фрагмент и выберите правильную альтернативу</h2>
   <div class="task-block">
-    <p>А потом, стоя на балконе<br>
-    Я 
-    <select data-answer="буду смотреть">
-      <option value="">-- выберите --</option>
-      <option value="буду смотреть">буду смотреть</option>
-      <option value="посмотрю">посмотрю</option>
-    </select> на прохожих...</p>
+    
+    <div class="stanza">
+      <p><strong>Строфа 1</strong> <span class="timecode">⏱ 1:06–1:10</span></p>
+      <p>А потом, стоя на балконе<br>
+      Я 
+      <select data-answer="буду смотреть">
+        <option value="">-- выберите --</option>
+        <option value="буду смотреть">буду смотреть</option>
+        <option value="посмотрю">посмотрю</option>
+      </select> на прохожих<br>
+      На девчонок<br>
+      На весенних девчонок<br>
+      На весенних девчонок и немного на парне-е-е-ей</p>
+    </div>
 
-    <p>А потом, проходя мимо зеркала<br>
-    Я 
-    <select data-answer="скажу">
-      <option value="">-- выберите --</option>
-      <option value="буду говорить">буду говорить</option>
-      <option value="скажу">скажу</option>
-    </select> : "А что, не так уж я и страшен"</p>
+    <div class="stanza">
+      <p><strong>Строфа 2</strong> <span class="timecode">⏱ 1:25–1:33</span></p>
+      <p>А потом, проходя мимо зеркала<br>
+      Я 
+      <select data-answer="скажу">
+        <option value="">-- выберите --</option>
+        <option value="буду говорить">буду говорить</option>
+        <option value="скажу">скажу</option>
+      </select> : "А что, не так уж я и страшен"<br>
+      Я даже немного<br>
+      Я даже немного<br>
+      Я даже немного ничего-о-о-о-о</p>
+    </div>
 
-    <p>А кефир я 
-    <select data-answer="допью">
-      <option value="">-- выберите --</option>
-      <option value="буду пить">буду пить</option>
-      <option value="допью">допью</option>
-    </select> ровно в десять<br>
-    А батон я 
-    <select data-answer="доем">
-      <option value="">-- выберите --</option>
-      <option value="буду есть">буду есть</option>
-      <option value="доем">доем</option>
-    </select> чуть пораньше<br>
-    И 
-    <select data-answer="скажу">
-      <option value="">-- выберите --</option>
-      <option value="буду говорить">буду говорить</option>
-      <option value="скажу">скажу</option>
-    </select> перед сном: "Ах, мама, до чего хорошо!"</p>
+    <div class="stanza">
+      <p><strong>Строфа 3</strong> <span class="timecode">⏱ 2:45–3:00</span></p>
+      <p>А кефир я 
+      <select data-answer="допью">
+        <option value="">-- выберите --</option>
+        <option value="буду пить">буду пить</option>
+        <option value="допью">допью</option>
+      </select> ровно в десять<br>
+      А батон я 
+      <select data-answer="доем">
+        <option value="">-- выберите --</option>
+        <option value="буду есть">буду есть</option>
+        <option value="доем">доем</option>
+      </select> чуть пораньше<br>
+      И перед сном<br>
+      И скажу перед сном<br>
+      И 
+      <select data-answer="скажу">
+        <option value="">-- выберите --</option>
+        <option value="буду говорить">буду говорить</option>
+        <option value="скажу">скажу</option>
+      </select> : "Ах, мама, до чего хорошо!"</p>
+    </div>
+
   </div>
 
   <!-- Часть 3 -->
-  <h2>Часть 3. Выберите правильное окончание прилагательных</h2>
+  <h2>Часть 3. Слушайте конец песни и выберите правильное окончание <span class="timecode">⏱ 3:22–3:40</span></h2>
   <div class="task-block">
     <p>Оранжев<select data-answer="ое"><option value="">--</option><option value="ая">ая</option><option value="ый">ый</option><option value="ое">ое</option></select> небо</p>
     <p>Оранжев<select data-answer="ое"><option value="">--</option><option value="ая">ая</option><option value="ые">ые</option><option value="ое">ое</option></select> солнце</p>
     <p>Оранжев<select data-answer="ая"><option value="">--</option><option value="ая">ая</option><option value="ый">ый</option><option value="ое">ое</option></select> мама</p>
     <p>Оранжев<select data-answer="ый"><option value="">--</option><option value="ая">ая</option><option value="ое">ое</option><option value="ый">ый</option></select> верблюд</p>
     <p>Оранжев<select data-answer="ые"><option value="">--</option><option value="ая">ая</option><option value="ые">ые</option><option value="ое">ое</option></select> песни</p>
+    <p>Оранжево поют, о-о-о!</p>
   </div>
 
   <div class="controls">
@@ -226,7 +271,7 @@
       }
     });
 
-    // Проверка селектов
+    // Проверка выпадающих списков
     const selects = document.querySelectorAll('select');
     selects.forEach(select => {
       total++;
