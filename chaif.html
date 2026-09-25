@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Упражнение РКИ: Оранжевое настроение</title>
+  <style>
+    :root {
+      --primary-color: #f97316; /* Оранжевый цвет */
+      --bg-color: #fff7ed;
+      --card-bg: #ffffff;
+      --text-color: #1e293b;
+      --border-color: #fed7aa;
+      --correct-color: #22c55e;
+      --incorrect-color: #ef4444;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      line-height: 1.7;
+      margin: 0;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      background: var(--card-bg);
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+      text-align: center;
+      color: #c2410c;
+      margin-top: 0;
+    }
+
+    .video-container {
+      position: relative;
+      padding-bottom: 56.25%;
+      height: 0;
+      overflow: hidden;
+      max-width: 100%;
+      background: #000;
+      border-radius: 8px;
+      margin-bottom: 25px;
+    }
+
+    .video-container iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    h2 {
+      color: #9a3412;
+      border-bottom: 2px solid var(--border-color);
+      padding-bottom: 6px;
+      margin-top: 30px;
+      font-size: 1.2rem;
+    }
+
+    .task-block {
+      background: #fff3e0;
+      padding: 15px 20px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+    }
+
+    input[type="text"] {
+      padding: 4px 8px;
+      border: 1px solid #cbd5e1;
+      border-radius: 4px;
+      font-size: 0.95rem;
+      width: 120px;
+    }
+
+    select {
+      padding: 4px 8px;
+      border: 1px solid #cbd5e1;
+      border-radius: 4px;
+      font-size: 0.95rem;
+      background-color: #fff;
+    }
+
+    .correct {
+      border: 2px solid var(--correct-color) !important;
+      background-color: #f0fdf4 !important;
+    }
+
+    .incorrect {
+      border: 2px solid var(--incorrect-color) !important;
+      background-color: #fef2f2 !important;
+    }
+
+    .controls {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+      margin-top: 30px;
+    }
+
+    .btn {
+      background-color: var(--primary-color);
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      font-size: 1rem;
+      font-weight: 600;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    .btn:hover {
+      background-color: #ea580c;
+    }
+
+    #result {
+      font-weight: bold;
+      font-size: 1.1rem;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <h1>ЧАЙФ — Оранжевое настроение</h1>
+
+  <!-- Видео -->
+  <div class="video-container">
+    <iframe src="https://www.youtube.com/embed/rKeGA0DgeCs?si=UNkcnwVQs_yi54Gn" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+  </div>
+
+  <!-- Часть 1 -->
+  <h2>Часть 1. Слушайте фрагмент и впишите пропущенные слова</h2>
+  <div class="task-block">
+    <p>Бутылка кефира, полбатона<br>
+    Бутылка кефира, полбатона<br>
+    А я сегодня <input type="text" data-answer="дома" placeholder="слово"><br>
+    А я сегодня <input type="text" data-answer="дома" placeholder="слово"><br>
+    А я сегодня дома один<br>
+    С утра я почитаю <input type="text" data-answer="газету" placeholder="слово"><br>
+    И, может быть, сгоняю в <input type="text" data-answer="кино" placeholder="слово"><br>
+    И, в общем, все равно...</p>
+  </div>
+
+  <!-- Часть 2 -->
+  <h2>Часть 2. Слушайте фрагмент и выберите правильный глагол</h2>
+  <div class="task-block">
+    <p>А потом, стоя на балконе<br>
+    Я 
+    <select data-answer="буду смотреть">
+      <option value="">-- выберите --</option>
+      <option value="буду смотреть">буду смотреть</option>
+      <option value="посмотрю">посмотрю</option>
+    </select> на прохожих...</p>
+
+    <p>А потом, проходя мимо зеркала<br>
+    Я 
+    <select data-answer="скажу">
+      <option value="">-- выберите --</option>
+      <option value="буду говорить">буду говорить</option>
+      <option value="скажу">скажу</option>
+    </select> : "А что, не так уж я и страшен"</p>
+
+    <p>А кефир я 
+    <select data-answer="допью">
+      <option value="">-- выберите --</option>
+      <option value="буду пить">буду пить</option>
+      <option value="допью">допью</option>
+    </select> ровно в десять<br>
+    А батон я 
+    <select data-answer="доем">
+      <option value="">-- выберите --</option>
+      <option value="буду есть">буду есть</option>
+      <option value="доем">доем</option>
+    </select> чуть пораньше<br>
+    И 
+    <select data-answer="скажу">
+      <option value="">-- выберите --</option>
+      <option value="буду говорить">буду говорить</option>
+      <option value="скажу">скажу</option>
+    </select> перед сном: "Ах, мама, до чего хорошо!"</p>
+  </div>
+
+  <!-- Часть 3 -->
+  <h2>Часть 3. Выберите правильное окончание прилагательных</h2>
+  <div class="task-block">
+    <p>Оранжев<select data-answer="ое"><option value="">--</option><option value="ая">ая</option><option value="ый">ый</option><option value="ое">ое</option></select> небо</p>
+    <p>Оранжев<select data-answer="ое"><option value="">--</option><option value="ая">ая</option><option value="ые">ые</option><option value="ое">ое</option></select> солнце</p>
+    <p>Оранжев<select data-answer="ая"><option value="">--</option><option value="ая">ая</option><option value="ый">ый</option><option value="ое">ое</option></select> мама</p>
+    <p>Оранжев<select data-answer="ый"><option value="">--</option><option value="ая">ая</option><option value="ое">ое</option><option value="ый">ый</option></select> верблюд</p>
+    <p>Оранжев<select data-answer="ые"><option value="">--</option><option value="ая">ая</option><option value="ые">ые</option><option value="ое">ое</option></select> песни</p>
+  </div>
+
+  <div class="controls">
+    <button class="btn" onclick="checkAnswers()">Проверить ответы</button>
+    <div id="result"></div>
+  </div>
+</div>
+
+<script>
+  function checkAnswers() {
+    let correct = 0;
+    let total = 0;
+
+    // Проверка текстовых полей
+    const inputs = document.querySelectorAll('input[type="text"]');
+    inputs.forEach(input => {
+      total++;
+      const userVal = input.value.trim().toLowerCase();
+      const targetVal = input.getAttribute('data-answer').toLowerCase();
+
+      if (userVal === targetVal) {
+        input.className = 'correct';
+        correct++;
+      } else {
+        input.className = 'incorrect';
+      }
+    });
+
+    // Проверка селектов
+    const selects = document.querySelectorAll('select');
+    selects.forEach(select => {
+      total++;
+      const userVal = select.value;
+      const targetVal = select.getAttribute('data-answer');
+
+      if (userVal === targetVal) {
+        select.className = 'correct';
+        correct++;
+      } else {
+        select.className = 'incorrect';
+      }
+    });
+
+    const resultDiv = document.getElementById('result');
+    resultDiv.textContent = `Результат: ${correct} из ${total} правильно!`;
+    resultDiv.style.color = (correct === total) ? '#22c55e' : '#ef4444';
+  }
+</script>
+
+</body>
+</html>
