@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Упражнение РКИ: Глаголы позиции</title>
+  <style>
+    :root {
+      --primary-color: #0284c7;
+      --primary-hover: #0369a1;
+      --bg-color: #f0f9ff;
+      --card-bg: #ffffff;
+      --text-color: #1e293b;
+      --border-color: #bae6fd;
+      --correct-color: #22c55e;
+      --incorrect-color: #ef4444;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      line-height: 1.7;
+      margin: 0;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 850px;
+      margin: 0 auto;
+      background: var(--card-bg);
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    }
+
+    h1 {
+      text-align: center;
+      color: #0369a1;
+      margin-top: 0;
+      margin-bottom: 10px;
+    }
+
+    .subtitle {
+      text-align: center;
+      color: #64748b;
+      margin-bottom: 30px;
+      font-size: 1.05rem;
+    }
+
+    h2 {
+      color: #0369a1;
+      border-bottom: 2px solid var(--border-color);
+      padding-bottom: 8px;
+      margin-top: 30px;
+      font-size: 1.25rem;
+    }
+
+    .instructions {
+      color: #475569;
+      margin-bottom: 20px;
+      font-size: 0.95rem;
+      background-color: #e0f2fe;
+      padding: 10px 15px;
+      border-radius: 6px;
+    }
+
+    .task-block {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      margin-bottom: 30px;
+    }
+
+    .item-card {
+      background: #f8fafc;
+      padding: 14px 18px;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+    }
+
+    .dialogue-line {
+      margin: 6px 0;
+    }
+
+    select {
+      padding: 5px 10px;
+      border: 1px solid #cbd5e1;
+      border-radius: 6px;
+      font-size: 0.95rem;
+      background-color: #ffffff;
+      color: #0f172a;
+      cursor: pointer;
+      font-weight: 500;
+      transition: all 0.2s ease;
+      margin: 0 2px;
+    }
+
+    select:focus {
+      outline: 2px solid var(--primary-color);
+    }
+
+    select.correct {
+      border: 2px solid var(--correct-color) !important;
+      background-color: #f0fdf4 !important;
+      color: #15803d;
+    }
+
+    select.incorrect {
+      border: 2px solid var(--incorrect-color) !important;
+      background-color: #fef2f2 !important;
+      color: #b91c1c;
+    }
+
+    .ending-select {
+      padding: 2px 6px;
+      font-weight: bold;
+    }
+
+    /* Кнопки управления */
+    .controls {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 15px;
+      margin-top: 35px;
+    }
+
+    .btn-group {
+      display: flex;
+      gap: 12px;
+    }
+
+    .btn {
+      background-color: var(--primary-color);
+      color: white;
+      border: none;
+      padding: 12px 28px;
+      font-size: 1rem;
+      font-weight: 600;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background-color 0.2s ease;
+    }
+
+    .btn:hover {
+      background-color: var(--primary-hover);
+    }
+
+    .btn-reset {
+      background-color: #64748b;
+    }
+
+    .btn-reset:hover {
+      background-color: #475569;
+    }
+
+    #result {
+      font-weight: bold;
+      font-size: 1.15rem;
+      text-align: center;
+    }
+
+    .result-success {
+      color: var(--correct-color);
+    }
+
+    .result-partial {
+      color: var(--incorrect-color);
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <h1>Упражнение по РКИ</h1>
+  <div class="subtitle">Тема: Глаголы позиции (стоять, лежать, висеть / ставить, класть, вешать)</div>
+
+  <!-- ЗАДАНИЕ 1 -->
+  <h2>Задание 1. Вставьте подходящий глагол</h2>
+  <div class="instructions">Выберите правильный глагол из выпадающего списка в каждом предложении:</div>
+
+  <div class="task-block">
+
+    <!-- 1 -->
+    <div class="item-card">
+      <div class="dialogue-line">1) — Куда ты 
+        <select data-answer="положил">
+          <option value="">-- выберите --</option>
+          <option value="поставил">поставил</option>
+          <option value="положил">положил</option>
+          <option value="повесил">повесил</option>
+        </select> ключ от комнаты?
+      </div>
+      <div class="dialogue-line">— Вот он, 
+        <select data-answer="лежит">
+          <option value="">-- выберите --</option>
+          <option value="стоит">стоит</option>
+          <option value="лежит">лежит</option>
+          <option value="висит">висит</option>
+        </select> на столе.
+      </div>
+    </div>
+
+    <!-- 2 -->
+    <div class="item-card">
+      <div class="dialogue-line">2) — Ты не знаешь, где мой словарь?</div>
+      <div class="dialogue-line">— Кажется, ты 
+        <select data-answer="положила">
+          <option value="">-- выберите --</option>
+          <option value="поставила">поставила</option>
+          <option value="повесила">повесила</option>
+          <option value="положила">положила</option>
+        </select> его на стол.
+      </div>
+    </div>
+
+    <!-- 3 -->
+    <div class="item-card">
+      <div class="dialogue-line">3) — Ты не знаешь, где моя куртка?</div>
+      <div class="dialogue-line">— Ты 
+        <select data-answer="повесила">
+          <option value="">-- выберите --</option>
+          <option value="поставила">поставила</option>
+          <option value="положила">положила</option>
+          <option value="повесила">повесила</option>
+        </select> её в шкаф.
+      </div>
+    </div>
+
+    <!-- 4 -->
+    <div class="item-card">
+      <div class="dialogue-line">4) — Куда вы 
+        <select data-answer="поставили">
+          <option value="">-- выберите --</option>
+          <option value="поставили">поставили</option>
+          <option value="положили">положили</option>
+          <option value="повесили">повесили</option>
+        </select> новый стол?
+      </div>
+      <div class="dialogue-line">— Он 
+        <select data-answer="стоит">
+          <option value="">-- выберите --</option>
+          <option value="стоит">стоит</option>
+          <option value="лежит">лежит</option>
+          <option value="висит">висит</option>
+        </select> в кабинете.
+      </div>
+    </div>
+
+    <!-- 5 -->
+    <div class="item-card">
+      <div class="dialogue-line">5) — Ты 
+        <select data-answer="поставила">
+          <option value="">-- выберите --</option>
+          <option value="поставила">поставила</option>
+          <option value="положила">положила</option>
+          <option value="повесила">повесила</option>
+        </select> словарь на полку?
+      </div>
+      <div class="dialogue-line">— Да, он 
+        <select data-answer="стоит">
+          <option value="">-- выберите --</option>
+          <option value="стоит">стоит</option>
+          <option value="лежит">лежит</option>
+          <option value="висит">висит</option>
+        </select> на полке.
+      </div>
+    </div>
+
+    <!-- 6 -->
+    <div class="item-card">
+      <div class="dialogue-line">6) — Куда ты 
+        <select data-answer="ставишь">
+          <option value="">-- выберите --</option>
+          <option value="ставишь">ставишь</option>
+          <option value="кладёшь">кладёшь</option>
+        </select> словарь?
+      </div>
+      <div class="dialogue-line">— Он 
+        <select data-answer="стоит">
+          <option value="">-- выберите --</option>
+          <option value="стоит">стоит</option>
+          <option value="лежит">лежит</option>
+          <option value="висит">висит</option>
+        </select> на полке.
+      </div>
+    </div>
+
+    <!-- 7 -->
+    <div class="item-card">
+      <div class="dialogue-line">7) — Вы купили холодильник? Куда вы его 
+        <select data-answer="поставите">
+          <option value="">-- выберите --</option>
+          <option value="поставите">поставите</option>
+          <option value="ставите">ставите</option>
+        </select>?
+      </div>
+      <div class="dialogue-line">— Мы хотим 
+        <select data-answer="поставить">
+          <option value="">-- выберите --</option>
+          <option value="поставить">поставить</option>
+          <option value="ставить">ставить</option>
+        </select> его на кухню. Он будет 
+        <select data-answer="стоять">
+          <option value="">-- выберите --</option>
+          <option value="стоять">стоять</option>
+          <option value="лежать">лежать</option>
+        </select> около окна.
+      </div>
+    </div>
+
+    <!-- 8 -->
+    <div class="item-card">
+      <div class="dialogue-line">8) — Ты уже собрался в дорогу? Куда ты 
+        <select data-answer="положишь">
+          <option value="">-- выберите --</option>
+          <option value="кладёшь">кладёшь</option>
+          <option value="положишь">положишь</option>
+        </select> свои вещи?
+      </div>
+      <div class="dialogue-line">— Конечно, собрался. Вещи уже 
+        <select data-answer="лежат">
+          <option value="">-- выберите --</option>
+          <option value="лежат">лежат</option>
+          <option value="положили">положили</option>
+        </select> в чемодане.
+      </div>
+    </div>
+
+    <!-- 9 -->
+    <div class="item-card">
+      <div class="dialogue-line">9) — Какие прекрасные цветы! Спасибо! Я 
+        <select data-answer="поставлю">
+          <option value="">-- выберите --</option>
+          <option value="ставлю">ставлю</option>
+          <option value="поставлю">поставлю</option>
+          <option value="положу">положу</option>
+          <option value="кладу">кладу</option>
+        </select> их в вазу.
+      </div>
+      <div class="dialogue-line">В прошлый раз твои цветы 
+        <select data-answer="стояли">
+          <option value="">-- выберите --</option>
+          <option value="поставили">поставили</option>
+          <option value="стояли">стояли</option>
+        </select> в вазе почти неделю.
+      </div>
+    </div>
+
+    <!-- 10 -->
+    <div class="item-card">
+      <div class="dialogue-line">10) — Ты не знаешь, где мои очки?</div>
+      <div class="dialogue-line">— Они на столе. Почему ты всегда ищешь свои очки? Всегда 
+        <select data-answer="клади">
+          <option value="">-- выберите --</option>
+          <option value="положи">положи</option>
+          <option value="клади">клади</option>
+        </select> их в одно место.
+      </div>
+    </div>
+
+    <!-- 11 -->
+    <div class="item-card">
+      <div class="dialogue-line">11) — Ты 
+        <select data-answer="поставила">
+          <option value="">-- выберите --</option>
+          <option value="ставила">ставила</option>
+          <option value="поставила">поставила</option>
+          <option value="положила">положила</option>
+        </select> дорогую вазу на край стола. Это опасно.
+      </div>
+      <div class="dialogue-line">— Эта ваза всегда 
+        <select data-answer="стоит">
+          <option value="">-- выберите --</option>
+          <option value="ставит">ставит</option>
+          <option value="стоит">стоит</option>
+          <option value="лежит">лежит</option>
+        </select> здесь.
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ЗАДАНИЕ 2 -->
+  <h2>Задание 2. Выберите правильное окончание</h2>
+  <div class="instructions">Выберите правильное окончание для каждого слова:</div>
+
+  <div class="task-block">
+
+    <!-- 1 -->
+    <div class="item-card">
+      <div class="dialogue-line">1. Словарь стоит на полк<select class="ending-select" data-answer="е"><option value="">--</option><option value="а">а</option><option value="у">у</option><option value="е">е</option></select>.</div>
+      <div class="dialogue-line">Виктор поставил словарь на полк<select class="ending-select" data-answer="у"><option value="">--</option><option value="а">а</option><option value="у">у</option><option value="е">е</option></select>.</div>
+    </div>
+
+    <!-- 2 -->
+    <div class="item-card">
+      <div class="dialogue-line">2. Наташа положила газет<select class="ending-select" data-answer="у"><option value="">--</option><option value="а">а</option><option value="у">у</option><option value="е">е</option></select> на стол<select class="ending-select" data-answer="-"><option value="">--</option><option value="-">-</option><option value="у">у</option><option value="е">е</option></select>.</div>
+      <div class="dialogue-line">Газета лежит на стол<select class="ending-select" data-answer="е"><option value="">--</option><option value="-">-</option><option value="у">у</option><option value="е">е</option></select>.</div>
+    </div>
+
+    <!-- 3 -->
+    <div class="item-card">
+      <div class="dialogue-line">3. Маша поставила бутылк<select class="ending-select" data-answer="у"><option value="">--</option><option value="а">а</option><option value="у">у</option><option value="е">е</option></select> молока в холодильник<select class="ending-select" data-answer="-"><option value="">--</option><option value="-">-</option><option value="у">у</option><option value="е">е</option></select>.</div>
+      <div class="dialogue-line">Бутылка стоит в холодильник<select class="ending-select" data-answer="е"><option value="">--</option><option value="-">-</option><option value="у">у</option><option value="е">е</option></select>.</div>
+    </div>
+
+    <!-- 4 -->
+    <div class="item-card">
+      <div class="dialogue-line">4. Антон повесил куртк<select class="ending-select" data-answer="у"><option value="">--</option><option value="а">а</option><option value="у">у</option><option value="е">е</option></select> на вешалк<select class="ending-select" data-answer="у"><option value="">--</option><option value="а">а</option><option value="у">у</option><option value="е">е</option></select>.</div>
+      <div class="dialogue-line">Куртка висит на вешалк<select class="ending-select" data-answer="е"><option value="">--</option><option value="а">а</option><option value="у">у</option><option value="е">е</option></select>.</div>
+    </div>
+
+  </div>
+
+  <div class="controls">
+    <div class="btn-group">
+      <button class="btn" onclick="checkAnswers()">Проверить ответы</button>
+      <button class="btn btn-reset" onclick="resetExercise()">Сбросить</button>
+    </div>
+    <div id="result"></div>
+  </div>
+
+</div>
+
+<script>
+  function checkAnswers() {
+    let correctCount = 0;
+    let totalCount = 0;
+
+    const selects = document.querySelectorAll('select');
+    selects.forEach(select => {
+      totalCount++;
+      select.classList.remove('correct', 'incorrect');
+      const userVal = select.value;
+      const targetVal = select.getAttribute('data-answer');
+
+      if (userVal === targetVal) {
+        select.classList.add('correct');
+        correctCount++;
+      } else {
+        select.classList.add('incorrect');
+      }
+    });
+
+    const resultDiv = document.getElementById('result');
+    resultDiv.textContent = `Результат: ${correctCount} из ${totalCount} правильно.`;
+
+    if (correctCount === totalCount) {
+      resultDiv.className = 'result-success';
+    } else {
+      resultDiv.className = 'result-partial';
+    }
+  }
+
+  function resetExercise() {
+    const selects = document.querySelectorAll('select');
+    selects.forEach(select => {
+      select.value = '';
+      select.classList.remove('correct', 'incorrect');
+    });
+
+    const resultDiv = document.getElementById('result');
+    resultDiv.textContent = '';
+    resultDiv.className = '';
+  }
+</script>
+
+</body>
+</html>
