@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Упражнения РКИ (А1/А2) — Виды глагола</title>
+  <style>
+    :root {
+      --primary-color: #0284c7;
+      --primary-hover: #0369a1;
+      --bg-color: #f0f9ff;
+      --card-bg: #ffffff;
+      --text-color: #1e293b;
+      --border-color: #bae6fd;
+      --correct-color: #22c55e;
+      --incorrect-color: #ef4444;
+      --section-bg: #f8fafc;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      line-height: 1.7;
+      margin: 0;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 850px;
+      margin: 0 auto;
+      background: var(--card-bg);
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    }
+
+    h1 {
+      text-align: center;
+      color: #0369a1;
+      margin-top: 0;
+      margin-bottom: 8px;
+    }
+
+    .subtitle {
+      text-align: center;
+      color: #64748b;
+      margin-bottom: 30px;
+      font-size: 1.05rem;
+    }
+
+    h2 {
+      color: #0369a1;
+      border-bottom: 2px solid var(--border-color);
+      padding-bottom: 8px;
+      margin-top: 35px;
+      font-size: 1.25rem;
+    }
+
+    h3 {
+      color: #334155;
+      font-size: 1.05rem;
+      margin-top: 15px;
+      margin-bottom: 10px;
+    }
+
+    .instructions {
+      color: #475569;
+      margin-bottom: 20px;
+      font-size: 0.95rem;
+      background-color: #e0f2fe;
+      padding: 10px 15px;
+      border-radius: 6px;
+    }
+
+    .task-block {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      margin-bottom: 20px;
+    }
+
+    .item-card {
+      background: var(--section-bg);
+      padding: 12px 18px;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+    }
+
+    .item-card p {
+      margin: 6px 0;
+    }
+
+    select {
+      padding: 5px 10px;
+      border: 1px solid #cbd5e1;
+      border-radius: 6px;
+      font-size: 0.95rem;
+      background-color: #ffffff;
+      color: #0f172a;
+      cursor: pointer;
+      font-weight: 500;
+      transition: all 0.2s ease;
+      margin: 0 3px;
+    }
+
+    input[type="text"] {
+      padding: 5px 10px;
+      border: 1px solid #cbd5e1;
+      border-radius: 6px;
+      font-size: 0.95rem;
+      width: 130px;
+      transition: all 0.2s ease;
+      margin: 0 3px;
+    }
+
+    select:focus, input[type="text"]:focus {
+      outline: 2px solid var(--primary-color);
+    }
+
+    .correct {
+      border: 2px solid var(--correct-color) !important;
+      background-color: #f0fdf4 !important;
+      color: #15803d !important;
+    }
+
+    .incorrect {
+      border: 2px solid var(--incorrect-color) !important;
+      background-color: #fef2f2 !important;
+      color: #b91c1c !important;
+    }
+
+    .controls {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 10px;
+      margin-top: 20px;
+      padding-top: 15px;
+      border-top: 1px dashed #cbd5e1;
+    }
+
+    .btn-group {
+      display: flex;
+      gap: 10px;
+    }
+
+    .btn {
+      background-color: var(--primary-color);
+      color: white;
+      border: none;
+      padding: 10px 22px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background-color 0.2s ease;
+    }
+
+    .btn:hover {
+      background-color: var(--primary-hover);
+    }
+
+    .btn-reset {
+      background-color: #64748b;
+    }
+
+    .btn-reset:hover {
+      background-color: #475569;
+    }
+
+    .result-box {
+      font-weight: bold;
+      font-size: 1.05rem;
+    }
+
+    .result-success {
+      color: var(--correct-color);
+    }
+
+    .result-partial {
+      color: var(--incorrect-color);
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <h1>Упражнения по РКИ (А1/А2)</h1>
+  <div class="subtitle">Тема: Виды глагола (НСВ / СВ)</div>
+
+  <!-- ================= ЗАДАНИЕ 1 ================= -->
+  <h2>Задание 1. Выберите правильный глагол</h2>
+  <div class="instructions">Выберите подходящую форму глагола из выпадающего списка:</div>
+
+  <div class="task-block" id="task1-container">
+
+    <!-- 1 -->
+    <div class="item-card">
+      <p>1. Писать / написать</p>
+      <p>Месяц назад я 
+        <select data-answer="написал">
+          <option value="">-- выберите --</option>
+          <option value="писал">писал</option>
+          <option value="написал">написал</option>
+        </select> книгу, сейчас её читают мои друзья.
+      </p>
+      <p>Я долго 
+        <select data-answer="писал">
+          <option value="">-- выберите --</option>
+          <option value="писал">писал</option>
+          <option value="написал">написал</option>
+        </select> книгу, потому что это трудно.
+      </p>
+    </div>
+
+    <!-- 2 -->
+    <div class="item-card">
+      <p>2. Готовить / приготовить</p>
+      <p>Бабушка вчера 
+        <select data-answer="приготовила">
+          <option value="">-- выберите --</option>
+          <option value="готовила">готовила</option>
+          <option value="приготовила">приготовила</option>
+        </select> очень вкусный борщ.
+      </p>
+      <p>Она два часа 
+        <select data-answer="готовила">
+          <option value="">-- выберите --</option>
+          <option value="готовила">готовила</option>
+          <option value="приготовила">приготовила</option>
+        </select> борщ.
+      </p>
+    </div>
+
+    <!-- 3 -->
+    <div class="item-card">
+      <p>3. Пить / выпить</p>
+      <p>Он 
+        <select data-answer="пил">
+          <option value="">-- выберите --</option>
+          <option value="пил">пил</option>
+          <option value="выпил">выпил</option>
+        </select> кофе весь вечер.
+      </p>
+      <p>Он 
+        <select data-answer="выпил">
+          <option value="">-- выберите --</option>
+          <option value="пил">пил</option>
+          <option value="выпил">выпил</option>
+        </select> пять чашек кофе и сейчас не может спать.
+      </p>
+    </div>
+
+    <!-- 4 -->
+    <div class="item-card">
+      <p>4. Смотреть / посмотреть</p>
+      <p>Она весь вечер 
+        <select data-answer="смотрела">
+          <option value="">-- выберите --</option>
+          <option value="смотрела">смотрела</option>
+          <option value="посмотрела">посмотрела</option>
+        </select> телевизор.
+      </p>
+      <p>Она 
+        <select data-answer="посмотрела">
+          <option value="">-- выберите --</option>
+          <option value="смотрела">смотрела</option>
+          <option value="посмотрела">посмотрела</option>
+        </select> два фильма.
+      </p>
+    </div>
+
+    <!-- 5 -->
+    <div class="item-card">
+      <p>5. Есть / съесть, пить / выпить, петь / спеть</p>
+      <p>Вчера у нас были гости. Мы 
+        <select data-answer="ели">
+          <option value="">-- выберите --</option>
+          <option value="ели">ели</option>
+          <option value="съели">съели</option>
+        </select>, 
+        <select data-answer="пили">
+          <option value="">-- выберите --</option>
+          <option value="пили">пили</option>
+          <option value="выпили">выпили</option>
+        </select> и 
+        <select data-answer="пели">
+          <option value="">-- выберите --</option>
+          <option value="пели">пели</option>
+          <option value="спели">спели</option>
+        </select> весь вечер.
+      </p>
+      <p>Мы 
+        <select data-answer="съели">
+          <option value="">-- выберите --</option>
+          <option value="ели">ели</option>
+          <option value="съели">съели</option>
+        </select> и 
+        <select data-answer="выпили">
+          <option value="">-- выберите --</option>
+          <option value="пили">пили</option>
+          <option value="выпили">выпили</option>
+        </select> всё, что было на столе, и 
+        <select data-answer="спели">
+          <option value="">-- выберите --</option>
+          <option value="пели">пели</option>
+          <option value="спели">спели</option>
+        </select> все песни, которые знали.
+      </p>
+    </div>
+
+    <!-- 6 -->
+    <div class="item-card">
+      <p>6. Читать / прочитать</p>
+      <p>Мой сын очень любит 
+        <select data-answer="читать">
+          <option value="">-- выберите --</option>
+          <option value="читать">читать</option>
+          <option value="прочитать">прочитать</option>
+        </select>.
+      </p>
+      <p>Он 
+        <select data-answer="прочитал">
+          <option value="">-- выберите --</option>
+          <option value="читал">читал</option>
+          <option value="прочитал">прочитал</option>
+        </select> все книги, которые есть у нас дома.
+      </p>
+    </div>
+
+    <!-- 7 -->
+    <div class="item-card">
+      <p>7. Смотреть / посмотреть</p>
+      <p>Все мои друзья 
+        <select data-answer="смотрели">
+          <option value="">-- выберите --</option>
+          <option value="смотрели">смотрели</option>
+          <option value="посмотрели">посмотрели</option>
+        </select> этот фильм, а я не 
+        <select data-answer="смотрел">
+          <option value="">-- выберите --</option>
+          <option value="смотрел">смотрел</option>
+          <option value="посмотрел">посмотрел</option>
+        </select>.
+      </p>
+      <p>Вчера я наконец его 
+        <select data-answer="посмотрел">
+          <option value="">-- выберите --</option>
+          <option value="смотрел">смотрел</option>
+          <option value="посмотрел">посмотрел</option>
+        </select>. Отличный фильм!
+      </p>
+    </div>
+
+  </div>
+
+  <div class="controls">
+    <div class="btn-group">
+      <button class="btn" onclick="checkTask1()">Проверить Задание 1</button>
+      <button class="btn btn-reset" onclick="resetTask1()">Сбросить</button>
+    </div>
+    <div id="result-task1" class="result-box"></div>
+  </div>
+
+
+  <!-- ================= ЗАДАНИЕ 2 ================= -->
+  <h2>Задание 2. Напишите правильную форму глагола</h2>
+  <div class="instructions">Впишите глагол в нужной форме в текстовое поле:</div>
+
+  <div class="task-block" id="task2-container">
+
+    <h3>а) Будущее время</h3>
+
+    <div class="item-card">
+      <p>1. Завтра я (написать) <input type="text" data-answer="напишу" placeholder="глагол"> ответ на его письмо.</p>
+    </div>
+
+    <div class="item-card">
+      <p>2. Ты (пить) <input type="text" data-answer="пьёшь" placeholder="глагол"> слишком много кофе. Сегодня ты (выпить) <input type="text" data-answer="выпил" placeholder="глагол"> уже четыре литра кофе. Интересно, сколько ты <input type="text" data-answer="выпьешь" placeholder="глагол"> завтра?</p>
+    </div>
+
+    <div class="item-card">
+      <p>3. Мы вчера весь вечер (слушать) <input type="text" data-answer="слушали" placeholder="глагол"> музыку. Мы (послушать) <input type="text" data-answer="послушали" placeholder="глагол"> эту песню только один раз.</p>
+    </div>
+
+    <div class="item-card">
+      <p>4. Завтра я (посмотреть) <input type="text" data-answer="посмотрю" placeholder="глагол"> этот фильм ещё раз.</p>
+    </div>
+
+    <div class="item-card">
+      <p>5. В комнате было тихо, но вдруг он (услышать) <input type="text" data-answer="услышал" placeholder="глагол"> шум.</p>
+    </div>
+
+    <h3>б) Прошедшее время</h3>
+
+    <div class="item-card">
+      <p>1. Машина быстро (постирать) <input type="text" data-answer="постирала" placeholder="глагол"> нашу одежду. Всё уже чистое.</p>
+    </div>
+
+    <div class="item-card">
+      <p>2. Я сегодня утром (съесть) <input type="text" data-answer="съем" placeholder="глагол"> только один бутерброд.</p>
+    </div>
+
+    <div class="item-card">
+      <p>3. Папа (вымыть и почистить) <input type="text" data-answer="вымыл" placeholder="глагол"> и <input type="text" data-answer="почистил" placeholder="глагол"> фрукты и (сделать) <input type="text" data-answer="сделал" placeholder="глагол"> фруктовый салат.</p>
+    </div>
+
+    <div class="item-card">
+      <p>4. Он (нарезать) <input type="text" data-answer="нарезал" placeholder="глагол"> весь хлеб.</p>
+    </div>
+
+    <div class="item-card">
+      <p>5. Моя жена красиво (спеть) <input type="text" data-answer="спела" placeholder="глагол"> эту песню.</p>
+    </div>
+
+  </div>
+
+  <div class="controls">
+    <div class="btn-group">
+      <button class="btn" onclick="checkTask2()">Проверить Задание 2</button>
+      <button class="btn btn-reset" onclick="resetTask2()">Сбросить</button>
+    </div>
+    <div id="result-task2" class="result-box"></div>
+  </div>
+
+</div>
+
+<script>
+  // Проверка Задания 1
+  function checkTask1() {
+    const container = document.getElementById('task1-container');
+    const selects = container.querySelectorAll('select');
+    let correct = 0;
+    let total = selects.length;
+
+    selects.forEach(select => {
+      select.classList.remove('correct', 'incorrect');
+      const userVal = select.value.trim().toLowerCase();
+      const targetVal = select.getAttribute('data-answer').toLowerCase();
+
+      if (userVal === targetVal) {
+        select.classList.add('correct');
+        correct++;
+      } else {
+        select.classList.add('incorrect');
+      }
+    });
+
+    const resultDiv = document.getElementById('result-task1');
+    resultDiv.textContent = `Результат Задания 1: ${correct} из ${total} правильно.`;
+    resultDiv.className = `result-box ${correct === total ? 'result-success' : 'result-partial'}`;
+  }
+
+  function resetTask1() {
+    const container = document.getElementById('task1-container');
+    const selects = container.querySelectorAll('select');
+    selects.forEach(select => {
+      select.value = '';
+      select.classList.remove('correct', 'incorrect');
+    });
+    const resultDiv = document.getElementById('result-task1');
+    resultDiv.textContent = '';
+    resultDiv.className = 'result-box';
+  }
+
+  // Проверка Задания 2
+  function checkTask2() {
+    const container = document.getElementById('task2-container');
+    const inputs = container.querySelectorAll('input[type="text"]');
+    let correct = 0;
+    let total = inputs.length;
+
+    inputs.forEach(input => {
+      input.classList.remove('correct', 'incorrect');
+      const userVal = input.value.trim().toLowerCase();
+      const targetVal = input.getAttribute('data-answer').toLowerCase();
+
+      if (userVal === targetVal) {
+        input.classList.add('correct');
+        correct++;
+      } else {
+        input.classList.add('incorrect');
+      }
+    });
+
+    const resultDiv = document.getElementById('result-task2');
+    resultDiv.textContent = `Результат Задания 2: ${correct} из ${total} правильно.`;
+    resultDiv.className = `result-box ${correct === total ? 'result-success' : 'result-partial'}`;
+  }
+
+  function resetTask2() {
+    const container = document.getElementById('task2-container');
+    const inputs = container.querySelectorAll('input[type="text"]');
+    inputs.forEach(input => {
+      input.value = '';
+      input.classList.remove('correct', 'incorrect');
+    });
+    const resultDiv = document.getElementById('result-task2');
+    resultDiv.textContent = '';
+    resultDiv.className = 'result-box';
+  }
+</script>
+
+</body>
+</html>
