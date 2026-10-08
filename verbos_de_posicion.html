@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Интерактивное упражнение РКИ — Глаголы движения и положения</title>
+  <style>
+    :root {
+      --primary-color: #0284c7;
+      --primary-hover: #0369a1;
+      --bg-color: #f0f9ff;
+      --card-bg: #ffffff;
+      --text-color: #1e293b;
+      --border-color: #bae6fd;
+      --correct-color: #16a34a;
+      --incorrect-color: #dc2626;
+      --bank-bg: #f8fafc;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      line-height: 1.7;
+      margin: 0;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 950px;
+      margin: 0 auto;
+      background: var(--card-bg);
+      padding: 30px;
+      border-radius: 14px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+    }
+
+    h1 {
+      text-align: center;
+      color: #0369a1;
+      margin-top: 0;
+      margin-bottom: 8px;
+      font-size: 1.6rem;
+    }
+
+    .subtitle {
+      text-align: center;
+      color: #64748b;
+      margin-bottom: 25px;
+      font-size: 1rem;
+    }
+
+    h2 {
+      color: #0369a1;
+      border-bottom: 2px solid var(--border-color);
+      padding-bottom: 8px;
+      margin-top: 35px;
+      font-size: 1.25rem;
+    }
+
+    .instructions {
+      color: #334155;
+      margin-bottom: 20px;
+      font-size: 0.95rem;
+      background-color: #e0f2fe;
+      padding: 12px 18px;
+      border-radius: 8px;
+      border-left: 4px solid var(--primary-color);
+    }
+
+    /* --- Задание 1 (Drag and Drop) --- */
+    .exercise-item {
+      display: flex;
+      gap: 20px;
+      align-items: stretch;
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      padding: 18px;
+      border-radius: 10px;
+      margin-bottom: 18px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    }
+
+    .sentence-box {
+      flex: 1;
+      font-size: 1.05rem;
+      line-height: 2.2;
+    }
+
+    .sentence-num {
+      font-weight: bold;
+      color: var(--primary-color);
+      margin-right: 4px;
+    }
+
+    .word-bank-wrapper {
+      width: 200px;
+      min-width: 180px;
+      background: var(--bank-bg);
+      border: 2px dashed #cbd5e1;
+      padding: 12px;
+      border-radius: 8px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-content: flex-start;
+      justify-content: center;
+    }
+
+    .drag-item {
+      background: var(--primary-color);
+      color: white;
+      padding: 5px 12px;
+      border-radius: 6px;
+      cursor: grab;
+      font-weight: 500;
+      font-size: 0.95rem;
+      user-select: none;
+      transition: all 0.2s ease;
+      display: inline-block;
+      text-align: center;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    .drag-item:active {
+      cursor: grabbing;
+    }
+
+    .drag-item.selected {
+      outline: 3px solid #f59e0b;
+      background-color: #0369a1;
+      transform: scale(1.05);
+    }
+
+    .drop-zone {
+      display: inline-flex;
+      min-width: 100px;
+      height: 36px;
+      border: 2px dashed var(--primary-color);
+      border-radius: 6px;
+      vertical-align: middle;
+      background: #f0f9ff;
+      margin: 0 4px;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s ease;
+      padding: 0 4px;
+      box-sizing: border-box;
+    }
+
+    .drop-zone.hover {
+      background-color: #bae6fd;
+    }
+
+    .drop-zone .drag-item {
+      margin: 0;
+      width: 100%;
+      box-sizing: border-box;
+      box-shadow: none;
+    }
+
+    /* --- Задание 2 (Select) --- */
+    .text-card {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      padding: 22px;
+      border-radius: 10px;
+      font-size: 1.05rem;
+      line-height: 2.3;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    }
+
+    select {
+      padding: 5px 10px;
+      border: 1px solid #cbd5e1;
+      border-radius: 6px;
+      font-size: 0.95rem;
+      background-color: #ffffff;
+      color: #0f172a;
+      cursor: pointer;
+      font-weight: 500;
+      transition: all 0.2s ease;
+      margin: 0 3px;
+    }
+
+    select:focus {
+      outline: 2px solid var(--primary-color);
+    }
+
+    /* Статусы проверки */
+    .correct {
+      border: 2px solid var(--correct-color) !important;
+      background-color: #f0fdf4 !important;
+      color: #15803d !important;
+    }
+
+    .incorrect {
+      border: 2px solid var(--incorrect-color) !important;
+      background-color: #fef2f2 !important;
+      color: #b91c1c !important;
+    }
+
+    /* Управление */
+    .controls {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 12px;
+      margin-top: 20px;
+      padding-top: 15px;
+      border-top: 1px dashed #cbd5e1;
+    }
+
+    .btn-group {
+      display: flex;
+      gap: 12px;
+    }
+
+    .btn {
+      background-color: var(--primary-color);
+      color: white;
+      border: none;
+      padding: 10px 24px;
+      font-size: 1rem;
+      font-weight: 600;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background-color 0.2s ease;
+    }
+
+    .btn:hover {
+      background-color: var(--primary-hover);
+    }
+
+    .btn-reset {
+      background-color: #64748b;
+    }
+
+    .btn-reset:hover {
+      background-color: #475569;
+    }
+
+    .result-box {
+      font-weight: bold;
+      font-size: 1.05rem;
+    }
+
+    .result-success {
+      color: var(--correct-color);
+    }
+
+    .result-partial {
+      color: var(--incorrect-color);
+    }
+
+    @media (max-width: 650px) {
+      .exercise-item {
+        flex-direction: column;
+      }
+      .word-bank-wrapper {
+        width: 100%;
+        min-width: auto;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <h1>Упражнения по РКИ</h1>
+  <div class="subtitle">Тема: Глаголы положения и движения (сидеть / сесть / садиться, лежать / лечь / ложиться)</div>
+
+  <!-- ================= ЗАДАНИЕ 1 ================= -->
+  <h2>Задание 1. Перетащите подходящий глагол</h2>
+  <div class="instructions">
+    Вставьте подходящий глагол. Перетащите прямоугольник с нужным глаголом из правого блока в пропуск (или нажмите на прямоугольник, а затем на пропуск в тексте).
+  </div>
+
+  <div id="task1-container">
+
+    <!-- 1 -->
+    <div class="exercise-item">
+      <div class="sentence-box">
+        <span class="sentence-num">1)</span> Антон всегда 
+        <div class="drop-zone" data-answer="ложится"></div> 
+        спать в 11 часов вечера. Вчера он тоже 
+        <div class="drop-zone" data-answer="лёг"></div> 
+        спать в 11 часов. А завтра будет вечеринка, поэтому он 
+        <div class="drop-zone" data-answer="ляжет"></div> 
+        спать поздно.
+      </div>
+      <div class="word-bank-wrapper" data-words="ложится|лёг|ляжет|лежит"></div>
+    </div>
+
+    <!-- 2 -->
+    <div class="exercise-item">
+      <div class="sentence-box">
+        <span class="sentence-num">2)</span> В аудитории место Виктора находится у окна. Он всегда 
+        <div class="drop-zone" data-answer="садится"></div> 
+        на своё место. Но сегодня на его место 
+        <div class="drop-zone" data-answer="сел"></div> 
+        новый студент, а Виктор 
+        <div class="drop-zone" data-answer="сел"></div> 
+        на другое место.
+      </div>
+      <div class="word-bank-wrapper" data-words="садится|сел|сел|сядет"></div>
+    </div>
+
+    <!-- 3 -->
+    <div class="exercise-item">
+      <div class="sentence-box">
+        <span class="sentence-num">3)</span> Антон сделал домашнее задание и 
+        <div class="drop-zone" data-answer="лёг"></div> 
+        спать. Он всегда 
+        <div class="drop-zone" data-answer="ложится"></div> 
+        спать в 11 часов.
+      </div>
+      <div class="word-bank-wrapper" data-words="лёг|ложится|лежит"></div>
+    </div>
+
+    <!-- 4 -->
+    <div class="exercise-item">
+      <div class="sentence-box">
+        <span class="sentence-num">4)</span> Ира вошла в кафе и 
+        <div class="drop-zone" data-answer="села"></div> 
+        за свободный столик. Она любит 
+        <div class="drop-zone" data-answer="сидеть"></div> 
+        у окна. Она 
+        <div class="drop-zone" data-answer="сидит"></div> 
+        у окна и смотрит на улицу.
+      </div>
+      <div class="word-bank-wrapper" data-words="села|сидеть|сидит|садится"></div>
+    </div>
+
+    <!-- 5 -->
+    <div class="exercise-item">
+      <div class="sentence-box">
+        <span class="sentence-num">5)</span> Андрей вернулся домой, разделся, 
+        <div class="drop-zone" data-answer="сел"></div> 
+        за стол, включил компьютер и вошёл в Интернет. Он 
+        <div class="drop-zone" data-answer="сидел"></div> 
+        в Интернете 4 часа. Потом у него заболели глаза, он встал из-за стола и 
+        <div class="drop-zone" data-answer="сел"></div> 
+        на диван.
+      </div>
+      <div class="word-bank-wrapper" data-words="сел|сидел|сел|садился"></div>
+    </div>
+
+    <!-- 6 -->
+    <div class="exercise-item">
+      <div class="sentence-box">
+        <span class="sentence-num">6)</span> Сейчас утро. Игорь едет на автобусе на работу. В автобусе много людей. Все места заняты. Вдруг в автобус вошла пожилая женщина. Игорь встал и сказал: « 
+        <div class="drop-zone" data-answer="садитесь"></div> 
+        , пожалуйста!» Женщина улыбнулась и 
+        <div class="drop-zone" data-answer="села"></div> .
+      </div>
+      <div class="word-bank-wrapper" data-words="садитесь|села|сидела"></div>
+    </div>
+
+  </div>
+
+  <div class="controls">
+    <div class="btn-group">
+      <button class="btn" onclick="checkTask1()">Проверить Задание 1</button>
+      <button class="btn btn-reset" onclick="resetTask1()">Сбросить</button>
+    </div>
+    <div id="result-task1" class="result-box"></div>
+  </div>
+
+
+  <!-- ================= ЗАДАНИЕ 2 ================= -->
+  <h2>Задание 2. Выберите правильную альтернативу</h2>
+  <div class="instructions">
+    Прочитайте текст и выберите правильную форму глагола из выпадающего списка.
+  </div>
+
+  <div class="text-card" id="task2-container">
+    Вадим пришёл в поликлинику. Он вошёл в кабинет и увидел врача. Врач 
+    <select data-answer="сидел">
+      <option value="">-- выберите --</option>
+      <option value="сел">сел</option>
+      <option value="сидел">сидел</option>
+      <option value="садился">садился</option>
+    </select>
+    за столом и писал. Он увидел Вадима и сказал: «Проходите, 
+    <select data-answer="садитесь">
+      <option value="">-- выберите --</option>
+      <option value="садитесь">садитесь</option>
+      <option value="сидите">сидите</option>
+    </select>
+    на стул. Что у вас болит? На что жалуетесь?» Вадим сказал, что у него болит живот. Врач сказал: «Раздевайтесь и 
+    <select data-answer="ложитесь">
+      <option value="">-- выберите --</option>
+      <option value="лежите">лежите</option>
+      <option value="ложитесь">ложитесь</option>
+    </select>
+    на этот диван, я должен вас осмотреть». Вадим разделся и 
+    <select data-answer="лёг">
+      <option value="">-- выберите --</option>
+      <option value="ложился">ложился</option>
+      <option value="лежал">лежал</option>
+      <option value="лёг">лёг</option>
+    </select>
+    на диван. Вадим 
+    <select data-answer="лежал">
+      <option value="">-- выберите --</option>
+      <option value="ложился">ложился</option>
+      <option value="лежал">лежал</option>
+      <option value="лёг">лёг</option>
+    </select>
+    на диване приме́рно 5 минут. Когда врач осмотрел Вадима, Вадим встал, оделся и снова 
+    <select data-answer="сел">
+      <option value="">-- выберите --</option>
+      <option value="сел">сел</option>
+      <option value="садился">садился</option>
+      <option value="сидел">сидел</option>
+    </select>
+    на стул. Врач писал рецепт, а Вадим 
+    <select data-answer="сидел">
+      <option value="">-- выберите --</option>
+      <option value="сел">сел</option>
+      <option value="садился">садился</option>
+      <option value="сидел">сидел</option>
+    </select>
+    на стуле и ждал. Вадим получил рецепт и вышел из кабинета. В коридоре у кабинета другой пацие́нт 
+    <select data-answer="сидел">
+      <option value="">-- выберите --</option>
+      <option value="сел">сел</option>
+      <option value="садился">садился</option>
+      <option value="сидел">сидел</option>
+    </select>
+    и ждал свое́й о́череди.
+  </div>
+
+  <div class="controls">
+    <div class="btn-group">
+      <button class="btn" onclick="checkTask2()">Проверить Задание 2</button>
+      <button class="btn btn-reset" onclick="resetTask2()">Сбросить</button>
+    </div>
+    <div id="result-task2" class="result-box"></div>
+  </div>
+
+</div>
+
+<script>
+  let selectedTile = null;
+
+  /* ================= JAVASCRIPT ЗАДАНИЕ 1 ================= */
+  function initTask1() {
+    const wrappers = document.querySelectorAll('#task1-container .word-bank-wrapper');
+    let globalIndex = 0;
+
+    wrappers.forEach((wrapper) => {
+      wrapper.innerHTML = '';
+      const words = wrapper.getAttribute('data-words').split('|');
+      const shuffled = [...words].sort(() => Math.random() - 0.5);
+
+      shuffled.forEach((word) => {
+        globalIndex++;
+        const tile = document.createElement('div');
+        tile.className = 'drag-item';
+        tile.textContent = word;
+        tile.id = `tile-${globalIndex}`;
+        tile.setAttribute('draggable', 'true');
+
+        tile.addEventListener('dragstart', handleDragStart);
+        tile.addEventListener('click', handleTileClick);
+
+        wrapper.appendChild(tile);
+      });
+
+      wrapper.addEventListener('dragover', handleDragOver);
+      wrapper.addEventListener('drop', handleDropToBank);
+      wrapper.addEventListener('click', handleBankClick);
+    });
+
+    const zones = document.querySelectorAll('#task1-container .drop-zone');
+    zones.forEach(zone => {
+      zone.innerHTML = '';
+      zone.classList.remove('correct', 'incorrect');
+      zone.addEventListener('dragover', handleDragOver);
+      zone.addEventListener('dragleave', handleDragLeave);
+      zone.addEventListener('drop', handleDrop);
+      zone.addEventListener('click', handleZoneClick);
+    });
+  }
+
+  function handleDragStart(e) {
+    e.dataTransfer.setData('text/plain', e.target.id);
+  }
+
+  function handleDragOver(e) {
+    e.preventDefault();
+    if (e.currentTarget.classList.contains('drop-zone')) {
+      e.currentTarget.classList.add('hover');
+    }
+  }
+
+  function handleDragLeave(e) {
+    if (e.currentTarget.classList.contains('drop-zone')) {
+      e.currentTarget.classList.remove('hover');
+    }
+  }
+
+  function handleDrop(e) {
+    e.preventDefault();
+    const zone = e.currentTarget;
+    zone.classList.remove('hover');
+    const tileId = e.dataTransfer.getData('text/plain');
+    const tile = document.getElementById(tileId);
+
+    if (tile) {
+      const parentItem = zone.closest('.exercise-item');
+      const tileBank = parentItem.querySelector('.word-bank-wrapper');
+
+      if (zone.children.length > 0) {
+        tileBank.appendChild(zone.children[0]);
+      }
+      zone.appendChild(tile);
+    }
+  }
+
+  function handleDropToBank(e) {
+    e.preventDefault();
+    const tileId = e.dataTransfer.getData('text/plain');
+    const tile = document.getElementById(tileId);
+    if (tile) {
+      e.currentTarget.appendChild(tile);
+    }
+  }
+
+  function handleTileClick(e) {
+    e.stopPropagation();
+    if (selectedTile) {
+      selectedTile.classList.remove('selected');
+    }
+    if (selectedTile === e.currentTarget) {
+      selectedTile = null;
+    } else {
+      selectedTile = e.currentTarget;
+      selectedTile.classList.add('selected');
+    }
+  }
+
+  function handleZoneClick(e) {
+    if (selectedTile) {
+      const zone = e.currentTarget;
+      const parentItem = zone.closest('.exercise-item');
+      const tileBank = parentItem.querySelector('.word-bank-wrapper');
+
+      if (zone.children.length > 0) {
+        tileBank.appendChild(zone.children[0]);
+      }
+      zone.appendChild(selectedTile);
+      selectedTile.classList.remove('selected');
+      selectedTile = null;
+    }
+  }
+
+  function handleBankClick(e) {
+    if (selectedTile && e.currentTarget.classList.contains('word-bank-wrapper')) {
+      e.currentTarget.appendChild(selectedTile);
+      selectedTile.classList.remove('selected');
+      selectedTile = null;
+    }
+  }
+
+  function checkTask1() {
+    const zones = document.querySelectorAll('#task1-container .drop-zone');
+    let correctCount = 0;
+    const totalCount = zones.length;
+
+    zones.forEach(zone => {
+      zone.classList.remove('correct', 'incorrect');
+      const expected = zone.getAttribute('data-answer').trim().toLowerCase();
+      const currentTile = zone.querySelector('.drag-item');
+
+      if (currentTile && currentTile.textContent.trim().toLowerCase() === expected) {
+        zone.classList.add('correct');
+        correctCount++;
+      } else {
+        zone.classList.add('incorrect');
+      }
+    });
+
+    const resultDiv = document.getElementById('result-task1');
+    resultDiv.textContent = `Результат Задания 1: ${correctCount} из ${totalCount} правильно.`;
+    resultDiv.className = `result-box ${correctCount === totalCount ? 'result-success' : 'result-partial'}`;
+  }
+
+  function resetTask1() {
+    if (selectedTile) {
+      selectedTile.classList.remove('selected');
+      selectedTile = null;
+    }
+    initTask1();
+    const resultDiv = document.getElementById('result-task1');
+    resultDiv.textContent = '';
+    resultDiv.className = 'result-box';
+  }
+
+  /* ================= JAVASCRIPT ЗАДАНИЕ 2 ================= */
+  function checkTask2() {
+    const container = document.getElementById('task2-container');
+    const selects = container.querySelectorAll('select');
+    let correctCount = 0;
+    const totalCount = selects.length;
+
+    selects.forEach(select => {
+      select.classList.remove('correct', 'incorrect');
+      const userVal = select.value.trim().toLowerCase();
+      const targetVal = select.getAttribute('data-answer').toLowerCase();
+
+      if (userVal !== '' && userVal === targetVal) {
+        select.classList.add('correct');
+        correctCount++;
+      } else {
+        select.classList.add('incorrect');
+      }
+    });
+
+    const resultDiv = document.getElementById('result-task2');
+    resultDiv.textContent = `Результат Задания 2: ${correctCount} из ${totalCount} правильно.`;
+    resultDiv.className = `result-box ${correctCount === totalCount ? 'result-success' : 'result-partial'}`;
+  }
+
+  function resetTask2() {
+    const container = document.getElementById('task2-container');
+    const selects = container.querySelectorAll('select');
+    selects.forEach(select => {
+      select.value = '';
+      select.classList.remove('correct', 'incorrect');
+    });
+    const resultDiv = document.getElementById('result-task2');
+    resultDiv.textContent = '';
+    resultDiv.className = 'result-box';
+  }
+
+  // Запуск при загрузке страницы
+  window.onload = function() {
+    initTask1();
+  };
+</script>
+
+</body>
+</html>
