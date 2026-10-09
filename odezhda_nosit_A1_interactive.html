@@ -381,3 +381,279 @@
 
   <div class="controls">
     <div class="btn-group">
+      <button class="btn" onclick="checkTask2()">Проверить Задание 2</button>
+      <button class="btn btn-reset" onclick="resetTask2()">Сбросить</button>
+    </div>
+    <div id="result-task2" class="result-box"></div>
+  </div>
+
+
+  <!-- ================= ЗАДАНИЕ 3 ================= -->
+  <h2>Задание 3. Напишите правильную форму глагола «НОСИТЬ»</h2>
+  <div class="instructions">Впишите нужную форму глагола в текстовое поле:</div>
+
+  <div class="task-block" id="task3-container">
+    <div class="item-card">
+      <p>1. Я никогда не <input type="text" class="input-short" data-answer="ношу" placeholder="глагол"> костюм.</p>
+    </div>
+
+    <div class="item-card">
+      <p>2. Он <input type="text" class="input-short" data-answer="носит" placeholder="глагол"> спортивный костюм дома.</p>
+    </div>
+
+    <div class="item-card">
+      <p>3. Ты <input type="text" class="input-short" data-answer="носишь" placeholder="глагол"> платья на работе?</p>
+    </div>
+
+    <div class="item-card">
+      <p>4. Моя мама <input type="text" class="input-short" data-answer="носит" placeholder="глагол"> чёрное пальто осенью.</p>
+    </div>
+
+    <div class="item-card">
+      <p>5. Японки <input type="text" class="input-short" data-answer="носят" placeholder="глагол"> кимоно.</p>
+    </div>
+
+    <div class="item-card">
+      <p>6. Мы <input type="text" class="input-short" data-answer="носим" placeholder="глагол"> шорты и футболки летом.</p>
+    </div>
+
+    <div class="item-card">
+      <p>7. Что вы обычно <input type="text" class="input-short" data-answer="носите" placeholder="глагол"> в спортзале?</p>
+    </div>
+  </div>
+
+  <div class="controls">
+    <div class="btn-group">
+      <button class="btn" onclick="checkTask3()">Проверить Задание 3</button>
+      <button class="btn btn-reset" onclick="resetTask3()">Сбросить</button>
+    </div>
+    <div id="result-task3" class="result-box"></div>
+  </div>
+
+
+  <!-- ================= ЗАДАНИЕ 4 ================= -->
+  <h2>Задание 4. Составьте предложения из слов</h2>
+  <div class="instructions">Используйте глагол «носить» в правильной форме. Можно начинать как с заглавной, так и со строчной буквы:</div>
+  
+  <div class="example-box">Пример: я / летом / футболки ➔ Я ношу футболки летом.</div>
+
+  <div class="task-block" id="task4-container">
+    <div class="item-card">
+      <p>1. она / часто / платья</p>
+      <input type="text" class="input-full" data-answer="она часто носит платья" placeholder="Напишите предложение целиком...">
+    </div>
+
+    <div class="item-card">
+      <p>2. мы / тёплые куртки / зимой</p>
+      <input type="text" class="input-full" data-answer="мы носим тёплые куртки зимой" placeholder="Напишите предложение целиком...">
+    </div>
+
+    <div class="item-card">
+      <p>3. ты / обычно / джинсы</p>
+      <input type="text" class="input-full" data-answer="ты обычно носишь джинсы" placeholder="Напишите предложение целиком...">
+    </div>
+
+    <div class="item-card">
+      <p>4. мой брат / не / рубашки</p>
+      <input type="text" class="input-full" data-answer="мой брат не носит рубашки" placeholder="Напишите предложение целиком...">
+    </div>
+
+    <div class="item-card">
+      <p>5. они / шорты / летом</p>
+      <input type="text" class="input-full" data-answer="они носят шорты летом" placeholder="Напишите предложение целиком...">
+    </div>
+
+    <div class="item-card">
+      <p>6. вы / шапки / зимой ?</p>
+      <input type="text" class="input-full" data-answer="вы носите шапки зимой" placeholder="Напишите предложение целиком...">
+    </div>
+
+    <div class="item-card">
+      <p>7. моя подруга / очки</p>
+      <input type="text" class="input-full" data-answer="моя подруга носит очки" placeholder="Напишите предложение целиком...">
+    </div>
+
+    <div class="item-card">
+      <p>8. я / не / костюмы</p>
+      <input type="text" class="input-full" data-answer="я не ношу костюмы" placeholder="Напишите предложение целиком...">
+    </div>
+  </div>
+
+  <div class="controls">
+    <div class="btn-group">
+      <button class="btn" onclick="checkTask4()">Проверить Задание 4</button>
+      <button class="btn btn-reset" onclick="resetTask4()">Сбросить</button>
+    </div>
+    <div id="result-task4" class="result-box"></div>
+  </div>
+
+</div>
+
+<script>
+  // Вспомогательная функция нормализации текста
+  function normalizeText(str) {
+    return str
+      .trim()
+      .toLowerCase()
+      .replace(/[.!?]/g, '')
+      .replace(/\s+/g, ' ');
+  }
+
+  // --- Задание 1 ---
+  function selectWord(element) {
+    const group = element.closest('.word-group');
+    const buttons = group.querySelectorAll('.word-btn');
+    buttons.forEach(btn => btn.classList.remove('selected'));
+    element.classList.add('selected');
+  }
+
+  function checkTask1() {
+    const groups = document.querySelectorAll('#task1-container .word-group');
+    let correct = 0;
+    let total = groups.length;
+
+    groups.forEach(group => {
+      const targetWord = group.getAttribute('data-answer').toLowerCase();
+      const selectedBtn = group.querySelector('.word-btn.selected');
+      const allButtons = group.querySelectorAll('.word-btn');
+
+      allButtons.forEach(btn => btn.classList.remove('correct', 'incorrect'));
+
+      if (selectedBtn) {
+        const userWord = selectedBtn.textContent.trim().toLowerCase();
+        if (userWord === targetWord) {
+          selectedBtn.classList.add('correct');
+          correct++;
+        } else {
+          selectedBtn.classList.add('incorrect');
+        }
+      }
+    });
+
+    const resultDiv = document.getElementById('result-task1');
+    resultDiv.textContent = `Результат Задания 1: ${correct} из ${total} правильно.`;
+    resultDiv.className = `result-box ${correct === total ? 'result-success' : 'result-partial'}`;
+  }
+
+  function resetTask1() {
+    const buttons = document.querySelectorAll('#task1-container .word-btn');
+    buttons.forEach(btn => btn.classList.remove('selected', 'correct', 'incorrect'));
+    const resultDiv = document.getElementById('result-task1');
+    resultDiv.textContent = '';
+    resultDiv.className = 'result-box';
+  }
+
+  // --- Задание 2 ---
+  function checkTask2() {
+    const container = document.getElementById('task2-container');
+    const selects = container.querySelectorAll('select');
+    let correct = 0;
+    let total = selects.length;
+
+    selects.forEach(select => {
+      select.classList.remove('correct', 'incorrect');
+      const userVal = select.value.trim().toLowerCase();
+      const targetVal = select.getAttribute('data-answer').toLowerCase();
+
+      if (userVal !== '' && userVal === targetVal) {
+        select.classList.add('correct');
+        correct++;
+      } else {
+        select.classList.add('incorrect');
+      }
+    });
+
+    const resultDiv = document.getElementById('result-task2');
+    resultDiv.textContent = `Результат Задания 2: ${correct} из ${total} правильно.`;
+    resultDiv.className = `result-box ${correct === total ? 'result-success' : 'result-partial'}`;
+  }
+
+  function resetTask2() {
+    const container = document.getElementById('task2-container');
+    const selects = container.querySelectorAll('select');
+    selects.forEach(select => {
+      select.value = '';
+      select.classList.remove('correct', 'incorrect');
+    });
+    const resultDiv = document.getElementById('result-task2');
+    resultDiv.textContent = '';
+    resultDiv.className = 'result-box';
+  }
+
+  // --- Задание 3 ---
+  function checkTask3() {
+    const container = document.getElementById('task3-container');
+    const inputs = container.querySelectorAll('input[type="text"]');
+    let correct = 0;
+    let total = inputs.length;
+
+    inputs.forEach(input => {
+      input.classList.remove('correct', 'incorrect');
+      const userVal = normalizeText(input.value);
+      const targetVal = normalizeText(input.getAttribute('data-answer'));
+
+      if (userVal !== '' && userVal === targetVal) {
+        input.classList.add('correct');
+        correct++;
+      } else {
+        input.classList.add('incorrect');
+      }
+    });
+
+    const resultDiv = document.getElementById('result-task3');
+    resultDiv.textContent = `Результат Задания 3: ${correct} из ${total} правильно.`;
+    resultDiv.className = `result-box ${correct === total ? 'result-success' : 'result-partial'}`;
+  }
+
+  function resetTask3() {
+    const container = document.getElementById('task3-container');
+    const inputs = container.querySelectorAll('input[type="text"]');
+    inputs.forEach(input => {
+      input.value = '';
+      input.classList.remove('correct', 'incorrect');
+    });
+    const resultDiv = document.getElementById('result-task3');
+    resultDiv.textContent = '';
+    resultDiv.className = 'result-box';
+  }
+
+  // --- Задание 4 ---
+  function checkTask4() {
+    const container = document.getElementById('task4-container');
+    const inputs = container.querySelectorAll('input[type="text"]');
+    let correct = 0;
+    let total = inputs.length;
+
+    inputs.forEach(input => {
+      input.classList.remove('correct', 'incorrect');
+      const userVal = normalizeText(input.value);
+      const targetVal = normalizeText(input.getAttribute('data-answer'));
+
+      if (userVal !== '' && userVal === targetVal) {
+        input.classList.add('correct');
+        correct++;
+      } else {
+        input.classList.add('incorrect');
+      }
+    });
+
+    const resultDiv = document.getElementById('result-task4');
+    resultDiv.textContent = `Результат Задания 4: ${correct} из ${total} правильно.`;
+    resultDiv.className = `result-box ${correct === total ? 'result-success' : 'result-partial'}`;
+  }
+
+  function resetTask4() {
+    const container = document.getElementById('task4-container');
+    const inputs = container.querySelectorAll('input[type="text"]');
+    inputs.forEach(input => {
+      input.value = '';
+      input.classList.remove('correct', 'incorrect');
+    });
+    const resultDiv = document.getElementById('result-task4');
+    resultDiv.textContent = '';
+    resultDiv.className = 'result-box';
+  }
+</script>
+
+</body>
+</html>
