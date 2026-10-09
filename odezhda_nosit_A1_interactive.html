@@ -1,206 +1,665 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Одежда и глагол «носить» — РКИ A1</title>
-<style>
-  :root { --ink:#253047; --accent:#4169a1; --pale:#eef3fa; --line:#d7dfeb; --good:#247347; --bad:#b33b3b; }
-  * { box-sizing: border-box; }
-  body { margin:0; background:#f5f7fb; color:var(--ink); font:16px/1.55 Arial, sans-serif; }
-  main { max-width:900px; margin:0 auto; padding:24px 16px 56px; }
-  header { background:linear-gradient(135deg,#e7effa,#f8f4ed); border-radius:18px; padding:24px; margin-bottom:22px; }
-  h1 { margin:0 0 8px; font-size:clamp(1.6rem,4vw,2.3rem); }
-  h2 { margin-top:0; font-size:1.35rem; }
-  .subtitle { margin:0; color:#526078; }
-  section { background:white; border:1px solid var(--line); border-radius:16px; padding:22px; margin:18px 0; box-shadow:0 3px 12px #243b5308; }
-  .hint { background:var(--pale); padding:12px 14px; border-radius:10px; margin:12px 0; }
-  .wordbank { display:flex; flex-wrap:wrap; gap:8px; margin:14px 0; }
-  .word { border:1px solid #b9c9e0; background:#f1f6fd; border-radius:8px; padding:6px 10px; }
-  .item { padding:13px 0; border-bottom:1px solid #edf0f5; }
-  .item:last-child { border-bottom:0; }
-  .prompt { font-weight:600; margin-bottom:8px; }
-  select, input[type="text"] { font:inherit; color:var(--ink); background:white; border:1px solid #aebbd0; border-radius:8px; padding:8px 10px; max-width:100%; }
-  select { min-width:145px; }
-  input[type="text"] { width:min(300px,100%); }
-  .sentence { display:flex; align-items:center; flex-wrap:wrap; gap:7px; }
-  button { border:0; border-radius:9px; background:var(--accent); color:white; font:600 15px Arial,sans-serif; padding:11px 16px; cursor:pointer; margin:8px 8px 0 0; }
-  button.secondary { background:#e8edf5; color:var(--ink); }
-  button:hover { filter:brightness(.96); }
-  .feedback { margin-top:7px; font-size:.94rem; min-height:1.2em; }
-  .correct { color:var(--good); font-weight:600; }
-  .incorrect { color:var(--bad); font-weight:600; }
-  .score { font-weight:700; margin-top:12px; }
-  .small { font-size:.92rem; color:#59667a; }
-  @media (max-width:600px) { section { padding:16px; } header { padding:18px; } }
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Упражнения РКИ — Одежда и глагол НОСИТЬ</title>
+  <style>
+    :root {
+      --primary-color: #0284c7;
+      --primary-hover: #0369a1;
+      --bg-color: #f0f9ff;
+      --card-bg: #ffffff;
+      --text-color: #1e293b;
+      --border-color: #bae6fd;
+      --correct-color: #22c55e;
+      --incorrect-color: #ef4444;
+      --section-bg: #f8fafc;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      line-height: 1.7;
+      margin: 0;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 850px;
+      margin: 0 auto;
+      background: var(--card-bg);
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    }
+
+    h1 {
+      text-align: center;
+      color: #0369a1;
+      margin-top: 0;
+      margin-bottom: 8px;
+    }
+
+    .subtitle {
+      text-align: center;
+      color: #64748b;
+      margin-bottom: 30px;
+      font-size: 1.05rem;
+    }
+
+    h2 {
+      color: #0369a1;
+      border-bottom: 2px solid var(--border-color);
+      padding-bottom: 8px;
+      margin-top: 35px;
+      font-size: 1.25rem;
+    }
+
+    .instructions {
+      color: #475569;
+      margin-bottom: 20px;
+      font-size: 0.95rem;
+      background-color: #e0f2fe;
+      padding: 10px 15px;
+      border-radius: 6px;
+    }
+
+    .example-box {
+      background-color: #f1f5f9;
+      border-left: 4px solid var(--primary-color);
+      padding: 8px 14px;
+      margin-bottom: 15px;
+      font-style: italic;
+      color: #334155;
+      border-radius: 0 6px 6px 0;
+    }
+
+    .task-block {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      margin-bottom: 20px;
+    }
+
+    .item-card {
+      background: var(--section-bg);
+      padding: 12px 18px;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+    }
+
+    .item-card p {
+      margin: 6px 0;
+    }
+
+    /* Задание 1: Выбор лишнего слова */
+    .word-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 6px;
+    }
+
+    .word-btn {
+      background-color: #ffffff;
+      border: 1px solid #cbd5e1;
+      padding: 6px 14px;
+      border-radius: 20px;
+      cursor: pointer;
+      font-size: 0.95rem;
+      font-weight: 500;
+      transition: all 0.2s ease;
+      user-select: none;
+    }
+
+    .word-btn:hover {
+      border-color: var(--primary-color);
+      background-color: #f0f9ff;
+    }
+
+    .word-btn.selected {
+      background-color: #e0f2fe;
+      border-color: var(--primary-color);
+      color: #0369a1;
+      font-weight: 600;
+    }
+
+    /* Элементы ввода */
+    select {
+      padding: 5px 10px;
+      border: 1px solid #cbd5e1;
+      border-radius: 6px;
+      font-size: 0.95rem;
+      background-color: #ffffff;
+      color: #0f172a;
+      cursor: pointer;
+      font-weight: 500;
+      transition: all 0.2s ease;
+      margin: 0 3px;
+    }
+
+    input[type="text"] {
+      padding: 6px 10px;
+      border: 1px solid #cbd5e1;
+      border-radius: 6px;
+      font-size: 0.95rem;
+      transition: all 0.2s ease;
+      margin: 0 3px;
+    }
+
+    .input-short {
+      width: 120px;
+    }
+
+    .input-full {
+      width: 100%;
+      box-sizing: border-box;
+      margin-top: 8px;
+    }
+
+    select:focus, input[type="text"]:focus {
+      outline: 2px solid var(--primary-color);
+    }
+
+    /* Подсветка ответов */
+    .correct {
+      border: 2px solid var(--correct-color) !important;
+      background-color: #f0fdf4 !important;
+      color: #15803d !important;
+    }
+
+    .incorrect {
+      border: 2px solid var(--incorrect-color) !important;
+      background-color: #fef2f2 !important;
+      color: #b91c1c !important;
+    }
+
+    .word-btn.correct {
+      background-color: #dcfce7 !important;
+      border-color: var(--correct-color) !important;
+      color: #15803d !important;
+    }
+
+    .word-btn.incorrect {
+      background-color: #fee2e2 !important;
+      border-color: var(--incorrect-color) !important;
+      color: #b91c1c !important;
+    }
+
+    /* Управление */
+    .controls {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 10px;
+      margin-top: 20px;
+      padding-top: 15px;
+      border-top: 1px dashed #cbd5e1;
+    }
+
+    .btn-group {
+      display: flex;
+      gap: 10px;
+    }
+
+    .btn {
+      background-color: var(--primary-color);
+      color: white;
+      border: none;
+      padding: 10px 22px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background-color 0.2s ease;
+    }
+
+    .btn:hover {
+      background-color: var(--primary-hover);
+    }
+
+    .btn-reset {
+      background-color: #64748b;
+    }
+
+    .btn-reset:hover {
+      background-color: #475569;
+    }
+
+    .result-box {
+      font-weight: bold;
+      font-size: 1.05rem;
+    }
+
+    .result-success {
+      color: var(--correct-color);
+    }
+
+    .result-partial {
+      color: var(--incorrect-color);
+    }
+  </style>
 </head>
 <body>
-<main>
-<header>
-  <h1>Одежда и глагол «носить»</h1>
-  <p class="subtitle">Русский как иностранный · Уровень A1</p>
-  <p>Выполняйте задания по порядку. После каждого упражнения нажмите «Проверить».</p>
-</header>
 
-<section id="ex2">
-  <h2>Задание 2. Что это?</h2>
-  <p>Выберите правильное слово для каждой картинки-описания.</p>
-  <div class="hint">Слова: джинсы, платье, куртка, футболка, кроссовки, шапка.</div>
-  <div id="vocabItems"></div>
-  <button onclick="checkVocab()">Проверить</button><button class="secondary" onclick="resetVocab()">Сбросить</button>
-  <div class="score" id="vocabScore" aria-live="polite"></div>
-</section>
+<div class="container">
+  <h1>Упражнения по РКИ</h1>
+  <div class="subtitle">Тема: Одежда и глагол «НОСИТЬ»</div>
 
-<section id="ex3">
-  <h2>Задание 3. Выбери правильную форму</h2>
-  <p>Выберите правильную форму глагола «носить».</p>
-  <div id="verbItems"></div>
-  <button onclick="checkVerb()">Проверить</button><button class="secondary" onclick="resetVerb()">Сбросить</button>
-  <div class="score" id="verbScore" aria-live="polite"></div>
-</section>
+  <!-- ================= ЗАДАНИЕ 1 ================= -->
+  <h2>Задание 1. Выберите лишнее слово из списка</h2>
+  <div class="instructions">Нажмите на слово, которое не подходит по смыслу к остальным:</div>
 
-<section id="ex4">
-  <h2>Задание 4. Что ты носишь?</h2>
-  <p>Вставьте подходящее слово из списка. Каждое слово можно использовать один раз.</p>
-  <div class="wordbank">
-    <span class="word">джинсы</span><span class="word">платье</span><span class="word">кроссовки</span>
-    <span class="word">куртку</span><span class="word">очки</span><span class="word">свитер</span>
-    <span class="word">шапку</span><span class="word">футболку</span>
+  <div class="task-block" id="task1-container">
+    <div class="item-card">
+      <p>1. Одежда:</p>
+      <div class="word-group" data-answer="шорты">
+        <span class="word-btn" onclick="selectWord(this)">куртка</span>
+        <span class="word-btn" onclick="selectWord(this)">шапка</span>
+        <span class="word-btn" onclick="selectWord(this)">шорты</span>
+        <span class="word-btn" onclick="selectWord(this)">свитер</span>
+      </div>
+    </div>
+
+    <div class="item-card">
+      <p>2. Стиль одежды:</p>
+      <div class="word-group" data-answer="костюм">
+        <span class="word-btn" onclick="selectWord(this)">джинсы</span>
+        <span class="word-btn" onclick="selectWord(this)">костюм</span>
+        <span class="word-btn" onclick="selectWord(this)">футболка</span>
+        <span class="word-btn" onclick="selectWord(this)">кроссовки</span>
+      </div>
+    </div>
+
+    <div class="item-card">
+      <p>3. Обувь:</p>
+      <div class="word-group" data-answer="шарф">
+        <span class="word-btn" onclick="selectWord(this)">шарф</span>
+        <span class="word-btn" onclick="selectWord(this)">кроссовки</span>
+        <span class="word-btn" onclick="selectWord(this)">ботинки</span>
+        <span class="word-btn" onclick="selectWord(this)">кеды</span>
+      </div>
+    </div>
+
+    <div class="item-card">
+      <p>4. Летняя одежда:</p>
+      <div class="word-group" data-answer="куртка">
+        <span class="word-btn" onclick="selectWord(this)">бикини</span>
+        <span class="word-btn" onclick="selectWord(this)">сандалии</span>
+        <span class="word-btn" onclick="selectWord(this)">шорты</span>
+        <span class="word-btn" onclick="selectWord(this)">куртка</span>
+      </div>
+    </div>
+
+    <div class="item-card">
+      <p>5. Одежда для ног:</p>
+      <div class="word-group" data-answer="шапка">
+        <span class="word-btn" onclick="selectWord(this)">шапка</span>
+        <span class="word-btn" onclick="selectWord(this)">брюки</span>
+        <span class="word-btn" onclick="selectWord(this)">шорты</span>
+        <span class="word-btn" onclick="selectWord(this)">джинсы</span>
+      </div>
+    </div>
   </div>
-  <div id="clozeItems"></div>
-  <button onclick="checkCloze()">Проверить</button><button class="secondary" onclick="resetCloze()">Сбросить</button>
-  <div class="score" id="clozeScore" aria-live="polite"></div>
-  <p class="small">Возможны и другие логичные варианты, но в этом упражнении используйте каждое слово один раз.</p>
-</section>
 
-<section id="ex5">
-  <h2>Задание 5. Составь предложение</h2>
-  <p>Составьте предложение из слов. Выберите правильную форму глагола и заполните пропуск.</p>
-  <div class="hint">Пример: я / летом / футболки → Я <b>ношу</b> футболки летом.</div>
-  <div id="sentenceItems"></div>
-  <button onclick="checkSentences()">Проверить</button><button class="secondary" onclick="resetSentences()">Сбросить</button>
-  <div class="score" id="sentenceScore" aria-live="polite"></div>
-</section>
+  <div class="controls">
+    <div class="btn-group">
+      <button class="btn" onclick="checkTask1()">Проверить Задание 1</button>
+      <button class="btn btn-reset" onclick="resetTask1()">Сбросить</button>
+    </div>
+    <div id="result-task1" class="result-box"></div>
+  </div>
+
+
+  <!-- ================= ЗАДАНИЕ 2 ================= -->
+  <h2>Задание 2. Выберите правильную форму глагола</h2>
+  <div class="instructions">Выберите подходящий вариант из выпадающего списка:</div>
+
+  <div class="task-block" id="task2-container">
+    <div class="item-card">
+      <p>1. Я 
+        <select data-answer="ношу">
+          <option value="">-- выберите --</option>
+          <option value="носит">носит</option>
+          <option value="ношу">ношу</option>
+          <option value="носим">носим</option>
+        </select> джинсы каждый день.
+      </p>
+    </div>
+
+    <div class="item-card">
+      <p>2. Моя сестра 
+        <select data-answer="носит">
+          <option value="">-- выберите --</option>
+          <option value="носит">носит</option>
+          <option value="носить">носить</option>
+          <option value="носите">носите</option>
+        </select> платья.
+      </p>
+    </div>
+
+    <div class="item-card">
+      <p>3. Мы 
+        <select data-answer="носим">
+          <option value="">-- выберите --</option>
+          <option value="носят">носят</option>
+          <option value="носите">носите</option>
+          <option value="носим">носим</option>
+        </select> тёплые куртки зимой.
+      </p>
+    </div>
+
+    <div class="item-card">
+      <p>4. Русские 
+        <select data-answer="носят">
+          <option value="">-- выберите --</option>
+          <option value="носят">носят</option>
+          <option value="носите">носите</option>
+          <option value="носим">носим</option>
+        </select> формальную одежду в театре.
+      </p>
+    </div>
+
+    <div class="item-card">
+      <p>5. Что ты 
+        <select data-answer="носишь">
+          <option value="">-- выберите --</option>
+          <option value="носите">носите</option>
+          <option value="ношу">ношу</option>
+          <option value="носишь">носишь</option>
+        </select> на работе?
+      </p>
+    </div>
+
+    <div class="item-card">
+      <p>6. Что вы 
+        <select data-answer="носите">
+          <option value="">-- выберите --</option>
+          <option value="носите">носите</option>
+          <option value="ношу">ношу</option>
+          <option value="носишь">носишь</option>
+        </select> дома?
+      </p>
+    </div>
+  </div>
+
+  <div class="controls">
+    <div class="btn-group">
+      <button class="btn" onclick="checkTask2()">Проверить Задание 2</button>
+      <button class="btn btn-reset" onclick="resetTask2()">Сбросить</button>
+    </div>
+    <div id="result-task2" class="result-box"></div>
+  </div>
+
+
+  <!-- ================= ЗАДАНИЕ 3 ================= -->
+  <h2>Задание 3. Напишите правильную форму глагола «НОСИТЬ»</h2>
+  <div class="instructions">Впишите нужную форму глагола в текстовое поле:</div>
+
+  <div class="task-block" id="task3-container">
+    <div class="item-card">
+      <p>1. Я никогда не <input type="text" class="input-short" data-answer="ношу" placeholder="глагол"> костюм.</p>
+    </div>
+
+    <div class="item-card">
+      <p>2. Он <input type="text" class="input-short" data-answer="носит" placeholder="глагол"> спортивный костюм дома.</p>
+    </div>
+
+    <div class="item-card">
+      <p>3. Ты <input type="text" class="input-short" data-answer="носишь" placeholder="глагол"> платья на работе?</p>
+    </div>
+
+    <div class="item-card">
+      <p>4. Моя мама <input type="text" class="input-short" data-answer="носит" placeholder="глагол"> чёрное пальто осенью.</p>
+    </div>
+
+    <div class="item-card">
+      <p>5. Японки <input type="text" class="input-short" data-answer="носят" placeholder="глагол"> кимоно.</p>
+    </div>
+
+    <div class="item-card">
+      <p>6. Мы <input type="text" class="input-short" data-answer="носим" placeholder="глагол"> шорты и футболки летом.</p>
+    </div>
+
+    <div class="item-card">
+      <p>7. Что вы обычно <input type="text" class="input-short" data-answer="носите" placeholder="глагол"> в спортзале?</p>
+    </div>
+  </div>
+
+  <div class="controls">
+    <div class="btn-group">
+      <button class="btn" onclick="checkTask3()">Проверить Задание 3</button>
+      <button class="btn btn-reset" onclick="resetTask3()">Сбросить</button>
+    </div>
+    <div id="result-task3" class="result-box"></div>
+  </div>
+
+
+  <!-- ================= ЗАДАНИЕ 4 ================= -->
+  <h2>Задание 4. Составьте предложения из слов</h2>
+  <div class="instructions">Используйте глагол «носить» в правильной форме. Можно начинать как с заглавной, так и со строчной буквы:</div>
+  
+  <div class="example-box">Пример: я / летом / футболки ➔ Я ношу футболки летом.</div>
+
+  <div class="task-block" id="task4-container">
+    <div class="item-card">
+      <p>1. она / часто / платья</p>
+      <input type="text" class="input-full" data-answer="она часто носит платья" placeholder="Напишите предложение целиком...">
+    </div>
+
+    <div class="item-card">
+      <p>2. мы / тёплые куртки / зимой</p>
+      <input type="text" class="input-full" data-answer="мы носим тёплые куртки зимой" placeholder="Напишите предложение целиком...">
+    </div>
+
+    <div class="item-card">
+      <p>3. ты / обычно / джинсы</p>
+      <input type="text" class="input-full" data-answer="ты обычно носишь джинсы" placeholder="Напишите предложение целиком...">
+    </div>
+
+    <div class="item-card">
+      <p>4. мой брат / не / рубашки</p>
+      <input type="text" class="input-full" data-answer="мой брат не носит рубашки" placeholder="Напишите предложение целиком...">
+    </div>
+
+    <div class="item-card">
+      <p>5. они / шорты / летом</p>
+      <input type="text" class="input-full" data-answer="они носят шорты летом" placeholder="Напишите предложение целиком...">
+    </div>
+
+    <div class="item-card">
+      <p>6. вы / шапки / зимой ?</p>
+      <input type="text" class="input-full" data-answer="вы носите шапки зимой" placeholder="Напишите предложение целиком...">
+    </div>
+
+    <div class="item-card">
+      <p>7. моя подруга / очки</p>
+      <input type="text" class="input-full" data-answer="моя подруга носит очки" placeholder="Напишите предложение целиком...">
+    </div>
+
+    <div class="item-card">
+      <p>8. я / не / костюмы</p>
+      <input type="text" class="input-full" data-answer="я не ношу костюмы" placeholder="Напишите предложение целиком...">
+    </div>
+  </div>
+
+  <div class="controls">
+    <div class="btn-group">
+      <button class="btn" onclick="checkTask4()">Проверить Задание 4</button>
+      <button class="btn btn-reset" onclick="resetTask4()">Сбросить</button>
+    </div>
+    <div id="result-task4" class="result-box"></div>
+  </div>
+
+</div>
 
 <script>
-const vocab = [
-  {clue:"Синие брюки из денима", answer:"джинсы", options:["джинсы","платье","шапка"]},
-  {clue:"Одежда, которую обычно носят женщины; бывает длинной или короткой", answer:"платье", options:["куртка","платье","кроссовки"]},
-  {clue:"Верхняя одежда, которую надевают, когда холодно", answer:"куртка", options:["футболка","джинсы","куртка"]},
-  {clue:"Лёгкая одежда с короткими рукавами", answer:"футболка", options:["футболка","шапка","платье"]},
-  {clue:"Удобная спортивная обувь", answer:"кроссовки", options:["кроссовки","куртка","джинсы"]},
-  {clue:"Головной убор для холодной погоды", answer:"шапка", options:["платье","шапка","футболка"]}
-];
-const verbs = [
-  {q:"Я ___ джинсы каждый день.", a:"ношу", opts:["носит","ношу","носим"]},
-  {q:"Моя сестра ___ платья.", a:"носит", opts:["носят","носишь","носит"]},
-  {q:"Мы ___ тёплые куртки зимой.", a:"носим", opts:["носим","носите","ношу"]},
-  {q:"Что ты ___ летом?", a:"носишь", opts:["носят","носишь","носит"]},
-  {q:"Они ___ кроссовки.", a:"носят", opts:["носим","носите","носят"]},
-  {q:"Вы ___ очки?", a:"носите", opts:["носите","носят","ношу"]},
-  {q:"Мой папа ___ рубашки на работу.", a:"носит", opts:["ношу","носит","носят"]},
-  {q:"Мои друзья ___ джинсы и футболки.", a:"носят", opts:["носишь","носим","носят"]}
-];
-const cloze = [
-  {q:"Летом я часто ношу ___.", a:"джинсы"},
-  {q:"Зимой я ношу тёплую ___.", a:"куртку"},
-  {q:"На прогулку я обычно надеваю и ношу ___.", a:"кроссовки"},
-  {q:"Когда холодно, я ношу ___.", a:"свитер"},
-  {q:"Моя мама любит носить ___.", a:"платье"},
-  {q:"Я ношу ___, потому что плохо вижу.", a:"очки"},
-  {q:"Осенью я ношу ___ и джинсы.", a:"футболку"},
-  {q:"Когда очень холодно, я ношу ___.", a:"шапку"}
-];
-const sentences = [
-  {q:"Она часто ___ платья.", a:"носит", opts:["ношу","носит","носят"]},
-  {q:"Мы ___ тёплые куртки зимой.", a:"носим", opts:["носим","носите","носит"]},
-  {q:"Ты обычно ___ джинсы?", a:"носишь", opts:["носят","носишь","ношу"]},
-  {q:"Мой брат не ___ рубашки.", a:"носит", opts:["носит","носим","ношу"]},
-  {q:"Они ___ шорты летом.", a:"носят", opts:["носите","носят","носишь"]},
-  {q:"Вы ___ шапки зимой?", a:"носите", opts:["носит","носят","носите"]},
-  {q:"Моя подруга ___ очки.", a:"носит", opts:["носят","ношу","носит"]},
-  {q:"Я не ___ костюмы.", a:"ношу", opts:["ношу","носит","носят"]}
-];
-function renderSelectItems(target, data, type) {
-  const root=document.getElementById(target);
-  root.innerHTML=data.map((x,i)=>`<div class="item" data-index="${i}">
-    <div class="prompt">${i+1}. ${x.q || x.clue}</div>
-    <select aria-label="Ответ ${i+1}" id="${type}-${i}">
-      <option value="">— Выберите —</option>
-      ${x.opts.map(o=>`<option value="${o}">${o}</option>`).join("")}
-    </select>
-    <div class="feedback" id="${type}-fb-${i}"></div>
-  </div>`).join("");
-}
-function renderCloze(){
-  document.getElementById("clozeItems").innerHTML=cloze.map((x,i)=>`<div class="item">
-    <div class="prompt">${i+1}. ${x.q}</div>
-    <input type="text" id="cloze-${i}" autocomplete="off" aria-label="Ответ ${i+1}">
-    <div class="feedback" id="cloze-fb-${i}"></div>
-  </div>`).join("");
-}
-function renderSentences(){
-  document.getElementById("sentenceItems").innerHTML=sentences.map((x,i)=>`<div class="item">
-    <div class="prompt">${i+1}. ${x.q.replace("___","________")}</div>
-    <p class="small">Формы глагола: ${x.opts.join(" · ")}</p>
-    <select id="sent-${i}" aria-label="Форма глагола, предложение ${i+1}">
-      <option value="">— Выберите форму —</option>${x.opts.map(o=>`<option value="${o}">${o}</option>`).join("")}
-    </select>
-    <div class="feedback" id="sent-fb-${i}"></div>
-  </div>`).join("");
-}
-function grade(data, prefix, scoreId){
-  let score=0;
-  data.forEach((x,i)=>{
-    const el=document.getElementById(`${prefix}-${i}`);
-    const fb=document.getElementById(`${prefix}-fb-${i}`);
-    const ok=el.value.trim().toLowerCase()===x.answer?.toLowerCase() || el.value===x.a;
-    fb.textContent=ok?"Верно!":`Правильный ответ: ${x.answer || x.a}`;
-    fb.className="feedback "+(ok?"correct":"incorrect");
-    if(ok) score++;
-  });
-  document.getElementById(scoreId).textContent=`Результат: ${score} из ${data.length}`;
-}
-function checkVocab(){grade(vocab,"vocab","vocabScore");}
-function checkVerb(){grade(verbs,"verb","verbScore");}
-function checkCloze(){
-  let score=0;
-  cloze.forEach((x,i)=>{
-    const val=document.getElementById(`cloze-${i}`).value.trim().toLowerCase().replace(/[.!?]/g,"");
-    const fb=document.getElementById(`cloze-fb-${i}`);
-    const ok=val===x.a;
-    fb.textContent=ok?"Верно!":`Ожидаемый ответ: ${x.a}`;
-    fb.className="feedback "+(ok?"correct":"incorrect");
-    if(ok)score++;
-  });
-  document.getElementById("clozeScore").textContent=`Результат: ${score} из ${cloze.length}`;
-}
-function checkSentences(){
-  let score=0;
-  sentences.forEach((x,i)=>{
-    const val=document.getElementById(`sent-${i}`).value;
-    const fb=document.getElementById(`sent-fb-${i}`);
-    const ok=val===x.a;
-    fb.textContent=ok?"Верно!":`Правильная форма: ${x.a}`;
-    fb.className="feedback "+(ok?"correct":"incorrect");
-    if(ok)score++;
-  });
-  document.getElementById("sentenceScore").textContent=`Результат: ${score} из ${sentences.length}`;
-}
-function resetGroup(prefix, count, scoreId, input=false){
-  for(let i=0;i<count;i++){const el=document.getElementById(`${prefix}-${i}`);el.value="";const fb=document.getElementById(`${prefix}-fb-${i}`);if(fb)fb.textContent="";}
-  document.getElementById(scoreId).textContent="";
-}
-function resetVocab(){resetGroup("vocab",vocab.length,"vocabScore");}
-function resetVerb(){resetGroup("verb",verbs.length,"verbScore");}
-function resetCloze(){resetGroup("cloze",cloze.length,"clozeScore");}
-function resetSentences(){resetGroup("sent",sentences.length,"sentenceScore");}
-renderSelectItems("vocabItems",vocab,"vocab");
-renderSelectItems("verbItems",verbs,"verb");
-renderCloze();
-renderSentences();
+  // Вспомогательная функция нормализации текста
+  function normalizeText(str) {
+    return str
+      .trim()
+      .toLowerCase()
+      .replace(/[.!?]/g, '')
+      .replace(/\s+/g, ' ');
+  }
+
+  // --- Задание 1 ---
+  function selectWord(element) {
+    const group = element.closest('.word-group');
+    const buttons = group.querySelectorAll('.word-btn');
+    buttons.forEach(btn => btn.classList.remove('selected'));
+    element.classList.add('selected');
+  }
+
+  function checkTask1() {
+    const groups = document.querySelectorAll('#task1-container .word-group');
+    let correct = 0;
+    let total = groups.length;
+
+    groups.forEach(group => {
+      const targetWord = group.getAttribute('data-answer').toLowerCase();
+      const selectedBtn = group.querySelector('.word-btn.selected');
+      const allButtons = group.querySelectorAll('.word-btn');
+
+      allButtons.forEach(btn => btn.classList.remove('correct', 'incorrect'));
+
+      if (selectedBtn) {
+        const userWord = selectedBtn.textContent.trim().toLowerCase();
+        if (userWord === targetWord) {
+          selectedBtn.classList.add('correct');
+          correct++;
+        } else {
+          selectedBtn.classList.add('incorrect');
+        }
+      }
+    });
+
+    const resultDiv = document.getElementById('result-task1');
+    resultDiv.textContent = `Результат Задания 1: ${correct} из ${total} правильно.`;
+    resultDiv.className = `result-box ${correct === total ? 'result-success' : 'result-partial'}`;
+  }
+
+  function resetTask1() {
+    const buttons = document.querySelectorAll('#task1-container .word-btn');
+    buttons.forEach(btn => btn.classList.remove('selected', 'correct', 'incorrect'));
+    const resultDiv = document.getElementById('result-task1');
+    resultDiv.textContent = '';
+    resultDiv.className = 'result-box';
+  }
+
+  // --- Задание 2 ---
+  function checkTask2() {
+    const container = document.getElementById('task2-container');
+    const selects = container.querySelectorAll('select');
+    let correct = 0;
+    let total = selects.length;
+
+    selects.forEach(select => {
+      select.classList.remove('correct', 'incorrect');
+      const userVal = select.value.trim().toLowerCase();
+      const targetVal = select.getAttribute('data-answer').toLowerCase();
+
+      if (userVal !== '' && userVal === targetVal) {
+        select.classList.add('correct');
+        correct++;
+      } else {
+        select.classList.add('incorrect');
+      }
+    });
+
+    const resultDiv = document.getElementById('result-task2');
+    resultDiv.textContent = `Результат Задания 2: ${correct} из ${total} правильно.`;
+    resultDiv.className = `result-box ${correct === total ? 'result-success' : 'result-partial'}`;
+  }
+
+  function resetTask2() {
+    const container = document.getElementById('task2-container');
+    const selects = container.querySelectorAll('select');
+    selects.forEach(select => {
+      select.value = '';
+      select.classList.remove('correct', 'incorrect');
+    });
+    const resultDiv = document.getElementById('result-task2');
+    resultDiv.textContent = '';
+    resultDiv.className = 'result-box';
+  }
+
+  // --- Задание 3 ---
+  function checkTask3() {
+    const container = document.getElementById('task3-container');
+    const inputs = container.querySelectorAll('input[type="text"]');
+    let correct = 0;
+    let total = inputs.length;
+
+    inputs.forEach(input => {
+      input.classList.remove('correct', 'incorrect');
+      const userVal = normalizeText(input.value);
+      const targetVal = normalizeText(input.getAttribute('data-answer'));
+
+      if (userVal !== '' && userVal === targetVal) {
+        input.classList.add('correct');
+        correct++;
+      } else {
+        input.classList.add('incorrect');
+      }
+    });
+
+    const resultDiv = document.getElementById('result-task3');
+    resultDiv.textContent = `Результат Задания 3: ${correct} из ${total} правильно.`;
+    resultDiv.className = `result-box ${correct === total ? 'result-success' : 'result-partial'}`;
+  }
+
+  function resetTask3() {
+    const container = document.getElementById('task3-container');
+    const inputs = container.querySelectorAll('input[type="text"]');
+    inputs.forEach(input => {
+      input.value = '';
+      input.classList.remove('correct', 'incorrect');
+    });
+    const resultDiv = document.getElementById('result-task3');
+    resultDiv.textContent = '';
+    resultDiv.className = 'result-box';
+  }
+
+  // --- Задание 4 ---
+  function checkTask4() {
+    const container = document.getElementById('task4-container');
+    const inputs = container.querySelectorAll('input[type="text"]');
+    let correct = 0;
+    let total = inputs.length;
+
+    inputs.forEach(input => {
+      input.classList.remove('correct', 'incorrect');
+      const userVal = normalizeText(input.value);
+      const targetVal = normalizeText(input.getAttribute('data-answer'));
+
+      if (userVal !== '' && userVal === targetVal) {
+        input.classList.add('correct');
+        correct++;
+      } else {
+        input.classList.add('incorrect');
+      }
+    });
+
+    const resultDiv = document.getElementById('result-task4');
+    resultDiv.textContent = `Результат Задания 4: ${correct} из ${total} правильно.`;
+    resultDiv.className = `result-box ${correct === total ? 'result-success' : 'result-partial'}`;
+  }
+
+  function resetTask4() {
+    const container = document.getElementById('task4-container');
+    const inputs = container.querySelectorAll('input[type="text"]');
+    inputs.forEach(input => {
+      input.value = '';
+      input.classList.remove('correct', 'incorrect');
+    });
+    const resultDiv = document.getElementById('result-task4');
+    resultDiv.textContent = '';
+    resultDiv.className = 'result-box';
+  }
 </script>
-</main>
+
 </body>
 </html>
