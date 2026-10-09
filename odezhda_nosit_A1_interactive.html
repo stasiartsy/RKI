@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Одежда и глагол «носить» — РКИ A1</title>
+<style>
+  :root { --ink:#253047; --accent:#4169a1; --pale:#eef3fa; --line:#d7dfeb; --good:#247347; --bad:#b33b3b; }
+  * { box-sizing: border-box; }
+  body { margin:0; background:#f5f7fb; color:var(--ink); font:16px/1.55 Arial, sans-serif; }
+  main { max-width:900px; margin:0 auto; padding:24px 16px 56px; }
+  header { background:linear-gradient(135deg,#e7effa,#f8f4ed); border-radius:18px; padding:24px; margin-bottom:22px; }
+  h1 { margin:0 0 8px; font-size:clamp(1.6rem,4vw,2.3rem); }
+  h2 { margin-top:0; font-size:1.35rem; }
+  .subtitle { margin:0; color:#526078; }
+  section { background:white; border:1px solid var(--line); border-radius:16px; padding:22px; margin:18px 0; box-shadow:0 3px 12px #243b5308; }
+  .hint { background:var(--pale); padding:12px 14px; border-radius:10px; margin:12px 0; }
+  .wordbank { display:flex; flex-wrap:wrap; gap:8px; margin:14px 0; }
+  .word { border:1px solid #b9c9e0; background:#f1f6fd; border-radius:8px; padding:6px 10px; }
+  .item { padding:13px 0; border-bottom:1px solid #edf0f5; }
+  .item:last-child { border-bottom:0; }
+  .prompt { font-weight:600; margin-bottom:8px; }
+  select, input[type="text"] { font:inherit; color:var(--ink); background:white; border:1px solid #aebbd0; border-radius:8px; padding:8px 10px; max-width:100%; }
+  select { min-width:145px; }
+  input[type="text"] { width:min(300px,100%); }
+  .sentence { display:flex; align-items:center; flex-wrap:wrap; gap:7px; }
+  button { border:0; border-radius:9px; background:var(--accent); color:white; font:600 15px Arial,sans-serif; padding:11px 16px; cursor:pointer; margin:8px 8px 0 0; }
+  button.secondary { background:#e8edf5; color:var(--ink); }
+  button:hover { filter:brightness(.96); }
+  .feedback { margin-top:7px; font-size:.94rem; min-height:1.2em; }
+  .correct { color:var(--good); font-weight:600; }
+  .incorrect { color:var(--bad); font-weight:600; }
+  .score { font-weight:700; margin-top:12px; }
+  .small { font-size:.92rem; color:#59667a; }
+  @media (max-width:600px) { section { padding:16px; } header { padding:18px; } }
+</style>
+</head>
+<body>
+<main>
+<header>
+  <h1>Одежда и глагол «носить»</h1>
+  <p class="subtitle">Русский как иностранный · Уровень A1</p>
+  <p>Выполняйте задания по порядку. После каждого упражнения нажмите «Проверить».</p>
+</header>
+
+<section id="ex2">
+  <h2>Задание 2. Что это?</h2>
+  <p>Выберите правильное слово для каждой картинки-описания.</p>
+  <div class="hint">Слова: джинсы, платье, куртка, футболка, кроссовки, шапка.</div>
+  <div id="vocabItems"></div>
+  <button onclick="checkVocab()">Проверить</button><button class="secondary" onclick="resetVocab()">Сбросить</button>
+  <div class="score" id="vocabScore" aria-live="polite"></div>
+</section>
+
+<section id="ex3">
+  <h2>Задание 3. Выбери правильную форму</h2>
+  <p>Выберите правильную форму глагола «носить».</p>
+  <div id="verbItems"></div>
+  <button onclick="checkVerb()">Проверить</button><button class="secondary" onclick="resetVerb()">Сбросить</button>
+  <div class="score" id="verbScore" aria-live="polite"></div>
+</section>
+
+<section id="ex4">
+  <h2>Задание 4. Что ты носишь?</h2>
+  <p>Вставьте подходящее слово из списка. Каждое слово можно использовать один раз.</p>
+  <div class="wordbank">
+    <span class="word">джинсы</span><span class="word">платье</span><span class="word">кроссовки</span>
+    <span class="word">куртку</span><span class="word">очки</span><span class="word">свитер</span>
+    <span class="word">шапку</span><span class="word">футболку</span>
+  </div>
+  <div id="clozeItems"></div>
+  <button onclick="checkCloze()">Проверить</button><button class="secondary" onclick="resetCloze()">Сбросить</button>
+  <div class="score" id="clozeScore" aria-live="polite"></div>
+  <p class="small">Возможны и другие логичные варианты, но в этом упражнении используйте каждое слово один раз.</p>
+</section>
+
+<section id="ex5">
+  <h2>Задание 5. Составь предложение</h2>
+  <p>Составьте предложение из слов. Выберите правильную форму глагола и заполните пропуск.</p>
+  <div class="hint">Пример: я / летом / футболки → Я <b>ношу</b> футболки летом.</div>
+  <div id="sentenceItems"></div>
+  <button onclick="checkSentences()">Проверить</button><button class="secondary" onclick="resetSentences()">Сбросить</button>
+  <div class="score" id="sentenceScore" aria-live="polite"></div>
+</section>
+
+<script>
+const vocab = [
+  {clue:"Синие брюки из денима", answer:"джинсы", options:["джинсы","платье","шапка"]},
+  {clue:"Одежда, которую обычно носят женщины; бывает длинной или короткой", answer:"платье", options:["куртка","платье","кроссовки"]},
+  {clue:"Верхняя одежда, которую надевают, когда холодно", answer:"куртка", options:["футболка","джинсы","куртка"]},
+  {clue:"Лёгкая одежда с короткими рукавами", answer:"футболка", options:["футболка","шапка","платье"]},
+  {clue:"Удобная спортивная обувь", answer:"кроссовки", options:["кроссовки","куртка","джинсы"]},
+  {clue:"Головной убор для холодной погоды", answer:"шапка", options:["платье","шапка","футболка"]}
+];
+const verbs = [
+  {q:"Я ___ джинсы каждый день.", a:"ношу", opts:["носит","ношу","носим"]},
+  {q:"Моя сестра ___ платья.", a:"носит", opts:["носят","носишь","носит"]},
+  {q:"Мы ___ тёплые куртки зимой.", a:"носим", opts:["носим","носите","ношу"]},
+  {q:"Что ты ___ летом?", a:"носишь", opts:["носят","носишь","носит"]},
+  {q:"Они ___ кроссовки.", a:"носят", opts:["носим","носите","носят"]},
+  {q:"Вы ___ очки?", a:"носите", opts:["носите","носят","ношу"]},
+  {q:"Мой папа ___ рубашки на работу.", a:"носит", opts:["ношу","носит","носят"]},
+  {q:"Мои друзья ___ джинсы и футболки.", a:"носят", opts:["носишь","носим","носят"]}
+];
+const cloze = [
+  {q:"Летом я часто ношу ___.", a:"джинсы"},
+  {q:"Зимой я ношу тёплую ___.", a:"куртку"},
+  {q:"На прогулку я обычно надеваю и ношу ___.", a:"кроссовки"},
+  {q:"Когда холодно, я ношу ___.", a:"свитер"},
+  {q:"Моя мама любит носить ___.", a:"платье"},
+  {q:"Я ношу ___, потому что плохо вижу.", a:"очки"},
+  {q:"Осенью я ношу ___ и джинсы.", a:"футболку"},
+  {q:"Когда очень холодно, я ношу ___.", a:"шапку"}
+];
+const sentences = [
+  {q:"Она часто ___ платья.", a:"носит", opts:["ношу","носит","носят"]},
+  {q:"Мы ___ тёплые куртки зимой.", a:"носим", opts:["носим","носите","носит"]},
+  {q:"Ты обычно ___ джинсы?", a:"носишь", opts:["носят","носишь","ношу"]},
+  {q:"Мой брат не ___ рубашки.", a:"носит", opts:["носит","носим","ношу"]},
+  {q:"Они ___ шорты летом.", a:"носят", opts:["носите","носят","носишь"]},
+  {q:"Вы ___ шапки зимой?", a:"носите", opts:["носит","носят","носите"]},
+  {q:"Моя подруга ___ очки.", a:"носит", opts:["носят","ношу","носит"]},
+  {q:"Я не ___ костюмы.", a:"ношу", opts:["ношу","носит","носят"]}
+];
+function renderSelectItems(target, data, type) {
+  const root=document.getElementById(target);
+  root.innerHTML=data.map((x,i)=>`<div class="item" data-index="${i}">
+    <div class="prompt">${i+1}. ${x.q || x.clue}</div>
+    <select aria-label="Ответ ${i+1}" id="${type}-${i}">
+      <option value="">— Выберите —</option>
+      ${x.opts.map(o=>`<option value="${o}">${o}</option>`).join("")}
+    </select>
+    <div class="feedback" id="${type}-fb-${i}"></div>
+  </div>`).join("");
+}
+function renderCloze(){
+  document.getElementById("clozeItems").innerHTML=cloze.map((x,i)=>`<div class="item">
+    <div class="prompt">${i+1}. ${x.q}</div>
+    <input type="text" id="cloze-${i}" autocomplete="off" aria-label="Ответ ${i+1}">
+    <div class="feedback" id="cloze-fb-${i}"></div>
+  </div>`).join("");
+}
+function renderSentences(){
+  document.getElementById("sentenceItems").innerHTML=sentences.map((x,i)=>`<div class="item">
+    <div class="prompt">${i+1}. ${x.q.replace("___","________")}</div>
+    <p class="small">Формы глагола: ${x.opts.join(" · ")}</p>
+    <select id="sent-${i}" aria-label="Форма глагола, предложение ${i+1}">
+      <option value="">— Выберите форму —</option>${x.opts.map(o=>`<option value="${o}">${o}</option>`).join("")}
+    </select>
+    <div class="feedback" id="sent-fb-${i}"></div>
+  </div>`).join("");
+}
+function grade(data, prefix, scoreId){
+  let score=0;
+  data.forEach((x,i)=>{
+    const el=document.getElementById(`${prefix}-${i}`);
+    const fb=document.getElementById(`${prefix}-fb-${i}`);
+    const ok=el.value.trim().toLowerCase()===x.answer?.toLowerCase() || el.value===x.a;
+    fb.textContent=ok?"Верно!":`Правильный ответ: ${x.answer || x.a}`;
+    fb.className="feedback "+(ok?"correct":"incorrect");
+    if(ok) score++;
+  });
+  document.getElementById(scoreId).textContent=`Результат: ${score} из ${data.length}`;
+}
+function checkVocab(){grade(vocab,"vocab","vocabScore");}
+function checkVerb(){grade(verbs,"verb","verbScore");}
+function checkCloze(){
+  let score=0;
+  cloze.forEach((x,i)=>{
+    const val=document.getElementById(`cloze-${i}`).value.trim().toLowerCase().replace(/[.!?]/g,"");
+    const fb=document.getElementById(`cloze-fb-${i}`);
+    const ok=val===x.a;
+    fb.textContent=ok?"Верно!":`Ожидаемый ответ: ${x.a}`;
+    fb.className="feedback "+(ok?"correct":"incorrect");
+    if(ok)score++;
+  });
+  document.getElementById("clozeScore").textContent=`Результат: ${score} из ${cloze.length}`;
+}
+function checkSentences(){
+  let score=0;
+  sentences.forEach((x,i)=>{
+    const val=document.getElementById(`sent-${i}`).value;
+    const fb=document.getElementById(`sent-fb-${i}`);
+    const ok=val===x.a;
+    fb.textContent=ok?"Верно!":`Правильная форма: ${x.a}`;
+    fb.className="feedback "+(ok?"correct":"incorrect");
+    if(ok)score++;
+  });
+  document.getElementById("sentenceScore").textContent=`Результат: ${score} из ${sentences.length}`;
+}
+function resetGroup(prefix, count, scoreId, input=false){
+  for(let i=0;i<count;i++){const el=document.getElementById(`${prefix}-${i}`);el.value="";const fb=document.getElementById(`${prefix}-fb-${i}`);if(fb)fb.textContent="";}
+  document.getElementById(scoreId).textContent="";
+}
+function resetVocab(){resetGroup("vocab",vocab.length,"vocabScore");}
+function resetVerb(){resetGroup("verb",verbs.length,"verbScore");}
+function resetCloze(){resetGroup("cloze",cloze.length,"clozeScore");}
+function resetSentences(){resetGroup("sent",sentences.length,"sentenceScore");}
+renderSelectItems("vocabItems",vocab,"vocab");
+renderSelectItems("verbItems",verbs,"verb");
+renderCloze();
+renderSentences();
+</script>
+</main>
+</body>
+</html>
