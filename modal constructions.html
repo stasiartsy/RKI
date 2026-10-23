@@ -1,835 +1,1623 @@
 <!DOCTYPE html>
-<html>
+<html lang="ru">
 <head>
-	<meta http-equiv="content-type" content="text/html; charset=utf-8"/>
-	<title></title>
-	<meta name="generator" content="LibreOffice 26.8.0.3 (Linux)"/>
-	<meta name="created" content="00:00:00"/>
-	<meta name="changed" content="00:00:00"/>
-	<style type="text/css">
-		@page { size: 8.27in 11.69in; margin: 0.79in }
-		p { margin-bottom: 0.1in; line-height: 115%; background: transparent }
-		pre { font-size: 10pt; font-family: "Liberation Mono", monospace; background: transparent }
-		h1 { margin-bottom: 0.08in; background: transparent; page-break-after: avoid }
-		h1.western { font-family: "Liberation Serif", serif; font-size: 24pt; font-weight: bold }
-		h1.cjk { font-family: "AR PL SungtiL GB"; font-size: 24pt; font-weight: bold }
-		h1.ctl { font-size: 24pt; font-family: "Noto Sans Devanagari"; font-weight: bold }
-		h2 { margin-top: 0.14in; margin-bottom: 0.08in; background: transparent; page-break-after: avoid }
-		h2.western { font-family: "Liberation Serif", serif; font-size: 18pt; font-weight: bold }
-		h2.cjk { font-family: "AR PL SungtiL GB"; font-size: 18pt; font-weight: bold }
-		h2.ctl { font-size: 18pt; font-family: "Noto Sans Devanagari"; font-weight: bold }
-		strong { font-weight: bold }
-	</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Модальные конструкции — интерактивные упражнения РКИ</title>
+  <style>
+    :root {
+      --ink: #24313d;
+      --muted: #667582;
+      --paper: #f5f7f8;
+      --surface: #ffffff;
+      --line: #dce4e8;
+      --accent: #315f72;
+      --accent-dark: #214756;
+      --accent-soft: #eaf2f5;
+      --orange: #d9854b;
+      --good: #207a57;
+      --good-bg: #e9f6ef;
+      --bad: #b64040;
+      --bad-bg: #fff0ee;
+      --shadow: 0 12px 34px rgba(35, 57, 68, .07);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: var(--paper);
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.55;
+    }
+
+    .hero {
+      padding: 42px 20px 34px;
+      color: #fff;
+      background: linear-gradient(135deg, #244958 0%, #376f7e 100%);
+      border-bottom: 5px solid var(--orange);
+    }
+
+    .hero-inner, main {
+      width: min(1080px, calc(100% - 32px));
+      margin: 0 auto;
+    }
+
+    .eyebrow {
+      margin: 0 0 7px;
+      font-size: .78rem;
+      letter-spacing: .13em;
+      text-transform: uppercase;
+      opacity: .82;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      line-height: 1.15;
+    }
+
+    .hero p:last-child {
+      max-width: 700px;
+      margin: 14px 0 0;
+      color: #e7f0f3;
+    }
+
+    main { padding: 26px 0 55px; }
+
+    .summary {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      margin: 0 0 22px;
+      padding: 15px 18px;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 15px;
+      box-shadow: var(--shadow);
+    }
+
+    .summary-text {
+      color: var(--muted);
+      font-size: .95rem;
+    }
+
+    .summary strong { color: var(--ink); }
+
+    .task {
+      margin: 0 0 24px;
+      padding: clamp(18px, 3vw, 30px);
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      box-shadow: var(--shadow);
+    }
+
+    .task-heading {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      margin-bottom: 9px;
+    }
+
+    .task-number {
+      display: grid;
+      place-items: center;
+      flex: 0 0 40px;
+      height: 40px;
+      border-radius: 12px;
+      background: var(--accent-soft);
+      color: var(--accent-dark);
+      font-weight: 800;
+    }
+
+    h2 {
+      margin: 0 0 4px;
+      font-size: clamp(1.15rem, 2.5vw, 1.5rem);
+      line-height: 1.3;
+    }
+
+    .instruction {
+      color: var(--muted);
+      margin: 0 0 22px;
+    }
+
+    .question-list {
+      display: grid;
+      gap: 12px;
+    }
+
+    .question {
+      display: grid;
+      grid-template-columns: 28px minmax(180px, 1fr) minmax(160px, 220px);
+      align-items: center;
+      gap: 10px;
+      padding: 13px 14px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      transition: border-color .15s, background .15s;
+    }
+
+    .q-number {
+      color: var(--muted);
+      font-weight: 700;
+      font-size: .9rem;
+    }
+
+    .q-text { min-width: 0; }
+
+    select, button { font: inherit; }
+
+    select {
+      width: 100%;
+      min-width: 0;
+      padding: 9px 34px 9px 11px;
+      color: var(--ink);
+      background: #fff;
+      border: 1px solid #bdcbd2;
+      border-radius: 9px;
+      cursor: pointer;
+    }
+
+    select:focus,
+    button:focus-visible,
+    .dropzone:focus-visible,
+    .drop-tile:focus-visible {
+      outline: 3px solid rgba(49, 95, 114, .25);
+      outline-offset: 2px;
+    }
+
+    .question.correct,
+    .answer-row.correct {
+      border-color: #9acdb3;
+      background: var(--good-bg);
+    }
+
+    .question.incorrect,
+    .answer-row.incorrect {
+      border-color: #edb6ae;
+      background: var(--bad-bg);
+    }
+
+    .inline-feedback {
+      grid-column: 2 / -1;
+      margin-top: -2px;
+      color: var(--muted);
+      font-size: .88rem;
+    }
+
+    .correct .inline-feedback { color: var(--good); }
+    .incorrect .inline-feedback { color: var(--bad); }
+
+    .task-actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      align-items: center;
+      margin-top: 20px;
+    }
+
+    button {
+      border: 0;
+      border-radius: 10px;
+      padding: 10px 16px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform .12s, background .12s;
+    }
+
+    button:active { transform: translateY(1px); }
+
+    .primary {
+      color: #fff;
+      background: var(--accent);
+    }
+
+    .primary:hover { background: var(--accent-dark); }
+
+    .secondary {
+      color: var(--accent-dark);
+      background: var(--accent-soft);
+    }
+
+    .secondary:hover { background: #dcebef; }
+
+    .task-result {
+      margin-left: auto;
+      color: var(--muted);
+      font-size: .92rem;
+      font-weight: 650;
+    }
+
+    .task-result:empty { display: none; }
+
+    .tile-bank {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 9px;
+      min-height: 55px;
+      margin: 12px 0 20px;
+      padding: 14px;
+      border: 1px dashed #b8cbd3;
+      border-radius: 13px;
+      background: #f8fbfc;
+    }
+
+    .bank-label {
+      width: 100%;
+      color: var(--muted);
+      font-size: .86rem;
+      margin-bottom: 2px;
+    }
+
+    .drop-tile {
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 40px;
+      padding: 8px 13px;
+      background: #fff;
+      border: 1px solid #b5c9d2;
+      border-bottom: 3px solid #b5c9d2;
+      border-radius: 9px;
+      color: var(--accent-dark);
+      font-weight: 700;
+      cursor: grab;
+      user-select: none;
+      touch-action: manipulation;
+    }
+
+    .drop-tile:active { cursor: grabbing; }
+
+    .drop-tile.selected {
+      background: #fff2e8;
+      border-color: var(--orange);
+      box-shadow: 0 0 0 2px rgba(217,133,75,.14);
+    }
+
+    .drop-tile:focus {
+      outline: 3px solid rgba(49,95,114,.25);
+      outline-offset: 2px;
+    }
+
+    .table-wrap { overflow-x: auto; }
+
+    table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+      min-width: 510px;
+    }
+
+    th, td {
+      padding: 10px;
+      border-right: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      text-align: center;
+    }
+
+    th {
+      background: #edf3f5;
+      font-size: .95rem;
+    }
+
+    th:first-child, td:first-child {
+      border-left: 1px solid var(--line);
+    }
+
+    thead th { border-top: 1px solid var(--line); }
+
+    thead th:first-child { border-top-left-radius: 10px; }
+    thead th:last-child { border-top-right-radius: 10px; }
+
+    tbody tr:last-child td:first-child {
+      border-bottom-left-radius: 10px;
+    }
+
+    tbody tr:last-child td:last-child {
+      border-bottom-right-radius: 10px;
+    }
+
+    .pronoun { font-weight: 750; }
+
+    .dropzone {
+      min-height: 55px;
+      position: relative;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+      padding: 7px;
+      border: 1px dashed #bdcbd2;
+      border-radius: 9px;
+      background: #fff;
+      cursor: pointer;
+    }
+
+    .dropzone .drop-tile {
+      min-height: 35px;
+      padding: 5px 9px;
+    }
+
+    .dropzone .placeholder {
+      color: #9aa8b0;
+      font-size: .78rem;
+    }
+
+    .dropzone.filled .placeholder { display: none; }
+
+    .dropzone.correct {
+      border: 1px solid #88c5a5;
+      background: var(--good-bg);
+    }
+
+    .dropzone.incorrect {
+      border: 1px solid #e5a7a0;
+      background: var(--bad-bg);
+    }
+
+    .cell-note {
+      width: 100%;
+      color: var(--bad);
+      font-size: .75rem;
+    }
+
+    .hint {
+      margin: 9px 0 0;
+      color: var(--muted);
+      font-size: .88rem;
+    }
+
+    .test-options {
+      display: grid;
+      gap: 7px;
+      margin-top: 10px;
+    }
+
+    .option-label {
+      display: flex;
+      align-items: flex-start;
+      gap: 9px;
+      padding: 8px 10px;
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 9px;
+      cursor: pointer;
+    }
+
+    .option-label:hover { background: #f8fbfc; }
+
+    input[type="radio"] {
+      margin-top: 5px;
+      accent-color: var(--accent);
+    }
+
+    .question-test {
+      display: block;
+      padding: 15px;
+    }
+
+    .question-test .q-number {
+      display: inline-block;
+      margin-right: 5px;
+    }
+
+    .question-test .inline-feedback {
+      display: block;
+      margin: 8px 0 0;
+    }
+
+    .image-bank { margin-top: 10px; }
+
+    .image-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .image-card {
+      min-width: 0;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 13px;
+      background: #fff;
+    }
+
+    .image-frame {
+      display: grid;
+      place-items: center;
+      height: 178px;
+      padding: 10px;
+      background: #f5f7f8;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .image-frame img {
+      display: block;
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+    }
+
+    .image-fallback {
+      color: var(--muted);
+      font-size: .82rem;
+      text-align: center;
+    }
+
+    .image-card-bottom { padding: 12px; }
+
+    .image-caption {
+      margin: 0 0 9px;
+      color: var(--muted);
+      font-size: .83rem;
+    }
+
+    .image-card .dropzone { min-height: 64px; }
+
+    .image-card .dropzone .drop-tile {
+      width: 100%;
+      font-size: .87rem;
+      line-height: 1.3;
+    }
+
+    .image-card .dropzone .placeholder { text-align: center; }
+
+    footer {
+      color: var(--muted);
+      font-size: .85rem;
+      text-align: center;
+      padding: 0 16px 30px;
+    }
+
+    @media (max-width: 760px) {
+      .question {
+        grid-template-columns: 25px minmax(0, 1fr);
+      }
+
+      .question select { grid-column: 2; }
+      .inline-feedback { grid-column: 2; }
+
+      .image-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .task-result {
+        width: 100%;
+        margin-left: 0;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .hero { padding: 31px 16px 27px; }
+
+      .hero-inner, main {
+        width: min(100% - 22px, 1080px);
+      }
+
+      .task {
+        padding: 16px 12px;
+        border-radius: 14px;
+      }
+
+      .image-grid { grid-template-columns: 1fr; }
+      .image-frame { height: 205px; }
+      .summary { align-items: flex-start; }
+    }
+  </style>
 </head>
-<body lang="en-US" link="#000080" vlink="#800000" dir="ltr"><pre style="margin-bottom: 0.2in; background: #e1e1e1">body {<br/>
-  font-family: -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, Helvetica, Arial, sans-serif;<br/>
-  background-color: var(--bg-color);<br/>
-  color: var(--text-color);<br/>
-  line-height: 1.6;<br/>
-  margin: 0;<br/>
-  padding: 20px;<br/>
-}<br/>
-<br/>
-.container {<br/>
-  max-width: 900px;<br/>
-  margin: 0 auto;<br/>
-  background: var(--card-bg);<br/>
-  padding: 30px;<br/>
-  border-radius: 14px;<br/>
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);<br/>
-}<br/>
-<br/>
-h1 {<br/>
-  text-align: center;<br/>
-  color: var(--primary-color);<br/>
-  margin-top: 0;<br/>
-  margin-bottom: 5px;<br/>
-}<br/>
-<br/>
-.subtitle {<br/>
-  text-align: center;<br/>
-  color: #64748b;<br/>
-  margin-bottom: 30px;<br/>
-  font-weight: 500;<br/>
-}<br/>
-<br/>
-h2 {<br/>
-  color: #1e3a8a;<br/>
-  border-bottom: 2px solid #e2e8f0;<br/>
-  padding-bottom: 8px;<br/>
-  margin-top: 40px;<br/>
-  font-size: 1.25rem;<br/>
-}<br/>
-<br/>
-.instructions {<br/>
-  color: #334155;<br/>
-  margin-bottom: 16px;<br/>
-  font-size: 0.95rem;<br/>
-  background-color: #eff6ff;<br/>
-  padding: 12px 18px;<br/>
-  border-radius: 8px;<br/>
-  border-left: 4px solid var(--primary-color);<br/>
-}<br/>
-<br/>
-.task-block {<br/>
-  background: var(--section-bg);<br/>
-  padding: 20px;<br/>
-  border: 1px solid #e2e8f0;<br/>
-  border-radius: 10px;<br/>
-  margin-bottom: 20px;<br/>
-}<br/>
-<br/>
-.item-row {<br/>
-  margin-bottom: 12px;<br/>
-  display: flex;<br/>
-  align-items: center;<br/>
-  justify-content: space-between;<br/>
-  flex-wrap: wrap;<br/>
-  gap: 10px;<br/>
-}<br/>
-<br/>
-.item-row span {<br/>
-  flex: 1;<br/>
-  min-width: 250px;<br/>
-}<br/>
-<br/>
-select {<br/>
-  padding: 6px 12px;<br/>
-  border: 1px solid var(--border-color);<br/>
-  border-radius: 6px;<br/>
-  font-size: 0.95rem;<br/>
-  background-color: #ffffff;<br/>
-  color: #0f172a;<br/>
-  cursor: pointer;<br/>
-  font-weight: 500;<br/>
-  transition: all 0.2s ease;<br/>
-}<br/>
-<br/>
-select:focus {<br/>
-  outline: 2px solid var(--primary-color);<br/>
-}<br/>
-<br/>
-/* Таблица для Задания 2 */<br/>
-.drag-pool {<br/>
-  display: flex;<br/>
-  flex-wrap: wrap;<br/>
-  gap: 10px;<br/>
-  background: #ffffff;<br/>
-  padding: 15px;<br/>
-  border: 2px dashed var(--border-color);<br/>
-  border-radius: 8px;<br/>
-  margin-bottom: 20px;<br/>
-  min-height: 50px;<br/>
-}<br/>
-<br/>
-.draggable-item {<br/>
-  background-color: #e0f2fe;<br/>
-  color: #0369a1;<br/>
-  border: 1px solid #bae6fd;<br/>
-  padding: 8px 14px;<br/>
-  border-radius: 6px;<br/>
-  cursor: grab;<br/>
-  font-weight: 600;<br/>
-  user-select: none;<br/>
-  transition: background 0.2s;<br/>
-}<br/>
-<br/>
-.draggable-item:active {<br/>
-  cursor: grabbing;<br/>
-}<br/>
-<br/>
-.conjugation-table {<br/>
-  width: 100%;<br/>
-  border-collapse: collapse;<br/>
-  background: #ffffff;<br/>
-  border-radius: 8px;<br/>
-  overflow: hidden;<br/>
-  box-shadow: 0 1px 3px rgba(0,0,0,0.05);<br/>
-}<br/>
-<br/>
-.conjugation-table th, .conjugation-table td {<br/>
-  border: 1px solid #e2e8f0;<br/>
-  padding: 12px;<br/>
-  text-align: center;<br/>
-}<br/>
-<br/>
-.conjugation-table th {<br/>
-  background-color: #f1f5f9;<br/>
-  color: #334155;<br/>
-}<br/>
-<br/>
-.drop-target {<br/>
-  min-height: 40px;<br/>
-  background-color: #f8fafc;<br/>
-  border: 2px dashed #cbd5e1;<br/>
-  border-radius: 6px;<br/>
-  display: flex;<br/>
-  align-items: center;<br/>
-  justify-content: center;<br/>
-  padding: 4px;<br/>
-  transition: background 0.2s;<br/>
-}<br/>
-<br/>
-.drop-target.drag-over {<br/>
-  background-color: #e0f2fe;<br/>
-  border-color: var(--primary-color);<br/>
-}<br/>
-<br/>
-/* Задание 4: Картинки и дроп-зоны */<br/>
-.images-grid {<br/>
-  display: grid;<br/>
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));<br/>
-  gap: 20px;<br/>
-  margin-bottom: 20px;<br/>
-}<br/>
-<br/>
-.image-card {<br/>
-  background: #ffffff;<br/>
-  border: 1px solid #cbd5e1;<br/>
-  border-radius: 10px;<br/>
-  padding: 12px;<br/>
-  display: flex;<br/>
-  flex-direction: column;<br/>
-  align-items: center;<br/>
-  gap: 12px;<br/>
-}<br/>
-<br/>
-.image-card img {<br/>
-  width: 100%;<br/>
-  height: 160px;<br/>
-  object-fit: cover;<br/>
-  border-radius: 6px;<br/>
-  border: 1px solid #e2e8f0;<br/>
-}<br/>
-<br/>
-.sentence-pool {<br/>
-  display: flex;<br/>
-  flex-direction: column;<br/>
-  gap: 10px;<br/>
-  background: #ffffff;<br/>
-  padding: 15px;<br/>
-  border: 2px dashed var(--border-color);<br/>
-  border-radius: 8px;<br/>
-  margin-bottom: 20px;<br/>
-}<br/>
-<br/>
-.sentence-chip {<br/>
-  background-color: #fef3c7;<br/>
-  color: #92400e;<br/>
-  border: 1px solid #fde68a;<br/>
-  padding: 8px 12px;<br/>
-  border-radius: 6px;<br/>
-  cursor: grab;<br/>
-  font-weight: 500;<br/>
-  font-size: 0.95rem;<br/>
-  user-select: none;<br/>
-}<br/>
-<br/>
-/* Радио-кнопки для теста */<br/>
-.radio-group {<br/>
-  display: flex;<br/>
-  gap: 15px;<br/>
-  margin-top: 6px;<br/>
-  flex-wrap: wrap;<br/>
-}<br/>
-<br/>
-.radio-label {<br/>
-  cursor: pointer;<br/>
-  font-weight: 500;<br/>
-  display: flex;<br/>
-  align-items: center;<br/>
-  gap: 5px;<br/>
-}<br/>
-<br/>
-/* Статусы валидации */<br/>
-.correct {<br/>
-  border: 2px solid var(--correct-color) !important;<br/>
-  background-color: #f0fdf4 !important;<br/>
-  color: #15803d !important;<br/>
-}<br/>
-<br/>
-.incorrect {<br/>
-  border: 2px solid var(--incorrect-color) !important;<br/>
-  background-color: #fef2f2 !important;<br/>
-  color: #b91c1c !important;<br/>
-}<br/>
-<br/>
-.highlight-correct {<br/>
-  color: var(--correct-color);<br/>
-  font-weight: bold;<br/>
-}<br/>
-<br/>
-.highlight-incorrect {<br/>
-  color: var(--incorrect-color);<br/>
-  font-weight: bold;<br/>
-}<br/>
-<br/>
-/* Кнопки и результаты */<br/>
-.controls {<br/>
-  display: flex;<br/>
-  flex-direction: column;<br/>
-  align-items: flex-start;<br/>
-  gap: 10px;<br/>
-  margin-top: 15px;<br/>
-  padding-top: 10px;<br/>
-  border-top: 1px dashed #cbd5e1;<br/>
-}<br/>
-<br/>
-.btn-group {<br/>
-  display: flex;<br/>
-  gap: 10px;<br/>
-}<br/>
-<br/>
-.btn {<br/>
-  background-color: var(--primary-color);<br/>
-  color: white;<br/>
-  border: none;<br/>
-  padding: 10px 20px;<br/>
-  font-size: 0.95rem;<br/>
-  font-weight: 600;<br/>
-  border-radius: 6px;<br/>
-  cursor: pointer;<br/>
-  transition: background-color 0.2s ease;<br/>
-}<br/>
-<br/>
-.btn:hover {<br/>
-  background-color: var(--primary-hover);<br/>
-}<br/>
-<br/>
-.btn-reset {<br/>
-  background-color: #64748b;<br/>
-}<br/>
-<br/>
-.btn-reset:hover {<br/>
-  background-color: #475569;<br/>
-}<br/>
-<br/>
-.result-box {<br/>
-  font-weight: bold;<br/>
-  font-size: 1.05rem;<br/>
-}<br/>
-<br/>
-.total-score-card {<br/>
-  margin-top: 40px;<br/>
-  padding: 25px;<br/>
-  background: #eff6ff;<br/>
-  border: 2px solid var(--primary-color);<br/>
-  border-radius: 12px;<br/>
-  text-align: center;<br/>
-}<br/>
-<br/>
-.total-score-card h2 {<br/>
-  margin-top: 0;<br/>
-  color: var(--primary-color);<br/>
-  border: none;<br/>
-  font-size: 1.4rem;<br/>
-}<br/>
-<br/>
-#total-result {<br/>
-  font-size: 1.25rem;<br/>
-  font-weight: bold;<br/>
-  margin-top: 15px;<br/>
-}</pre><h1 class="western" style="line-height: 115%; margin-top: 0in; margin-bottom: 0.1in">
-Интерактивные упражнения РКИ</h1>
-<p style="margin-bottom: 0in">Тема: Модальные
-конструкции (Должен / Нужен, Хотеть /
-Мочь, Можно / Нельзя)</p>
-<h2 class="western">Задание 1. Должен или Нужен?</h2>
-<p style="margin-bottom: 0in">Выберите правильную
-альтернативу для каждого предложения.
-(10 баллов)</p>
-<p style="line-height: 100%; margin-bottom: 0in">1. Завтра у
-меня экзамен. Я -- выберите -- должен нужен
-много заниматься. 
-</p>
-<pre style="margin-bottom: 0.2in; background: #e1e1e1">&lt;div class=&quot;item-row&quot;&gt;<br/>
-  &lt;span&gt;2. У меня болит голова. Мне <br/>
-    &lt;select class=&quot;t1-select&quot; data-answer=&quot;нужен&quot;&gt;<br/>
-      &lt;option value=&quot;&quot;&gt;-- выберите --&lt;/option&gt;<br/>
-      &lt;option value=&quot;должен&quot;&gt;должен&lt;/option&gt;<br/>
-      &lt;option value=&quot;нужен&quot;&gt;нужен&lt;/option&gt;<br/>
-    &lt;/select&gt; Ибупрофен.<br/>
-  &lt;/span&gt;<br/>
-&lt;/div&gt;<br/>
-<br/>
-&lt;div class=&quot;item-row&quot;&gt;<br/>
-  &lt;span&gt;3. Мария заболела. Ей <br/>
-    &lt;select class=&quot;t1-select&quot; data-answer=&quot;нужно&quot;&gt;<br/>
-      &lt;option value=&quot;&quot;&gt;-- выберите --&lt;/option&gt;<br/>
-      &lt;option value=&quot;должно&quot;&gt;должно&lt;/option&gt;<br/>
-      &lt;option value=&quot;нужно&quot;&gt;нужно&lt;/option&gt;<br/>
-    &lt;/select&gt; остаться дома.<br/>
-  &lt;/span&gt;<br/>
-&lt;/div&gt;<br/>
-<br/>
-&lt;div class=&quot;item-row&quot;&gt;<br/>
-  &lt;span&gt;4. У Марии завтра дедлайн. Она <br/>
-    &lt;select class=&quot;t1-select&quot; data-answer=&quot;должна&quot;&gt;<br/>
-      &lt;option value=&quot;&quot;&gt;-- выберите --&lt;/option&gt;<br/>
-      &lt;option value=&quot;должна&quot;&gt;должна&lt;/option&gt;<br/>
-      &lt;option value=&quot;нужна&quot;&gt;нужна&lt;/option&gt;<br/>
-    &lt;/select&gt; написать преподавателю.<br/>
-  &lt;/span&gt;<br/>
-&lt;/div&gt;<br/>
-<br/>
-&lt;div class=&quot;item-row&quot;&gt;<br/>
-  &lt;span&gt;5. Для урока нам <br/>
-    &lt;select class=&quot;t1-select&quot; data-answer=&quot;нужен&quot;&gt;<br/>
-      &lt;option value=&quot;&quot;&gt;-- выберите --&lt;/option&gt;<br/>
-      &lt;option value=&quot;должен&quot;&gt;должен&lt;/option&gt;<br/>
-      &lt;option value=&quot;нужен&quot;&gt;нужен&lt;/option&gt;<br/>
-    &lt;/select&gt; словарь.<br/>
-  &lt;/span&gt;<br/>
-&lt;/div&gt;<br/>
-<br/>
-&lt;div class=&quot;item-row&quot;&gt;<br/>
-  &lt;span&gt;6. Студенты <br/>
-    &lt;select class=&quot;t1-select&quot; data-answer=&quot;должны&quot;&gt;<br/>
-      &lt;option value=&quot;&quot;&gt;-- выберите --&lt;/option&gt;<br/>
-      &lt;option value=&quot;должны&quot;&gt;должны&lt;/option&gt;<br/>
-      &lt;option value=&quot;нужны&quot;&gt;нужны&lt;/option&gt;<br/>
-    &lt;/select&gt; сдать работу до пятницы.<br/>
-  &lt;/span&gt;<br/>
-&lt;/div&gt;<br/>
-<br/>
-&lt;div class=&quot;item-row&quot;&gt;<br/>
-  &lt;span&gt;7. Для путешествия мне <br/>
-    &lt;select class=&quot;t1-select&quot; data-answer=&quot;нужны&quot;&gt;<br/>
-      &lt;option value=&quot;&quot;&gt;-- выберите --&lt;/option&gt;<br/>
-      &lt;option value=&quot;должны&quot;&gt;должны&lt;/option&gt;<br/>
-      &lt;option value=&quot;нужны&quot;&gt;нужны&lt;/option&gt;<br/>
-    &lt;/select&gt; деньги.<br/>
-  &lt;/span&gt;<br/>
-&lt;/div&gt;<br/>
-<br/>
-&lt;div class=&quot;item-row&quot;&gt;<br/>
-  &lt;span&gt;8. Мы <br/>
-    &lt;select class=&quot;t1-select&quot; data-answer=&quot;должны&quot;&gt;<br/>
-      &lt;option value=&quot;&quot;&gt;-- выберите --&lt;/option&gt;<br/>
-      &lt;option value=&quot;должны&quot;&gt;должны&lt;/option&gt;<br/>
-      &lt;option value=&quot;нужны&quot;&gt;нужны&lt;/option&gt;<br/>
-    &lt;/select&gt; купить билеты заранее.<br/>
-  &lt;/span&gt;<br/>
-&lt;/div&gt;<br/>
-<br/>
-&lt;div class=&quot;item-row&quot;&gt;<br/>
-  &lt;span&gt;9. Мне <br/>
-    &lt;select class=&quot;t1-select&quot; data-answer=&quot;нужна&quot;&gt;<br/>
-      &lt;option value=&quot;&quot;&gt;-- выберите --&lt;/option&gt;<br/>
-      &lt;option value=&quot;должна&quot;&gt;должна&lt;/option&gt;<br/>
-      &lt;option value=&quot;нужна&quot;&gt;нужна&lt;/option&gt;<br/>
-    &lt;/select&gt; помощь, я не могу сделать это задание.<br/>
-  &lt;/span&gt;<br/>
-&lt;/div&gt;<br/>
-<br/>
-&lt;div class=&quot;item-row&quot;&gt;<br/>
-  &lt;span&gt;10. Чтобы решить проблему, мне <br/>
-    &lt;select class=&quot;t1-select&quot; data-answer=&quot;нужно&quot;&gt;<br/>
-      &lt;option value=&quot;&quot;&gt;-- выберите --&lt;/option&gt;<br/>
-      &lt;option value=&quot;должно&quot;&gt;должно&lt;/option&gt;<br/>
-      &lt;option value=&quot;нужно&quot;&gt;нужно&lt;/option&gt;<br/>
-    &lt;/select&gt; время.<br/>
-  &lt;/span&gt;<br/>
-&lt;/div&gt;<br/>
-<br/>
-&lt;div class=&quot;controls&quot;&gt;<br/>
-  &lt;div class=&quot;btn-group&quot;&gt;<br/>
-    &lt;button class=&quot;btn&quot; onclick=&quot;checkTask1()&quot;&gt;Проверить Задание 1&lt;/button&gt;<br/>
-    &lt;button class=&quot;btn btn-reset&quot; onclick=&quot;resetTask1()&quot;&gt;Сбросить&lt;/button&gt;<br/>
-  &lt;/div&gt;<br/>
-  &lt;div id=&quot;result-task1&quot; class=&quot;result-box&quot;&gt;&lt;/div&gt;<br/>
-&lt;/div&gt;</pre><h2 class="western">
-Задание 2. Спряжение глаголов &quot;хотеть&quot;
-и &quot;мочь&quot;</h2>
-<p style="margin-bottom: 0in">Перетащите формы
-глаголов в соответствующие ячейки
-таблицы. (12 баллов)</p>
-<p style="line-height: 100%; margin-bottom: 0in"><br/>
 
-</p>
-<div id="task2-container" dir="ltr">
-	<div id="pool-task2" dir="ltr"><p style="line-height: 100%; margin-bottom: 0in">
-		<br/>
+<body>
+  <header class="hero">
+    <div class="hero-inner">
+      <p class="eyebrow">Русский как иностранный · грамматика</p>
+      <h1>Модальные конструкции</h1>
+      <p>
+        Тренируем конструкции <strong>должен / нужен</strong>,
+        формы глаголов <strong>хотеть / мочь</strong> и слова
+        <strong>можно / нельзя</strong>.
+      </p>
+    </div>
+  </header>
 
-		</p>
-		<div id="item-hocu" dir="ltr"><p style="line-height: 100%; margin-bottom: 0in">
-			хочу</p>
-		</div>
-		<div id="item-hoces" dir="ltr"><p style="line-height: 100%; margin-bottom: 0in">
-			хочешь</p>
-		</div>
-		<div id="item-hocet" dir="ltr"><p style="line-height: 100%; margin-bottom: 0in">
-			хочет</p>
-		</div>
-		<div id="item-hotim" dir="ltr"><p style="line-height: 100%; margin-bottom: 0in">
-			хотим</p>
-		</div>
-		<div id="item-hotite" dir="ltr"><p style="line-height: 100%; margin-bottom: 0in">
-			хотите</p>
-		</div>
-		<div id="item-hotyat" dir="ltr"><p style="line-height: 100%; margin-bottom: 0in">
-			хотят</p>
-		</div>
-		<div id="item-mogu" dir="ltr"><p style="line-height: 100%; margin-bottom: 0in">
-			могу</p>
-		</div>
-		<div id="item-mozes" dir="ltr"><p style="line-height: 100%; margin-bottom: 0in">
-			можешь</p>
-		</div>
-		<div id="item-mozet" dir="ltr"><p style="line-height: 100%; margin-bottom: 0in">
-			может</p>
-		</div>
-		<div id="item-mozem" dir="ltr"><p style="line-height: 100%; margin-bottom: 0in">
-			можем</p>
-		</div>
-		<div id="item-mozete" dir="ltr"><p style="line-height: 100%; margin-bottom: 0in">
-			можете</p>
-		</div>
-		<div id="item-mogut" dir="ltr"><p style="line-height: 100%; margin-bottom: 0in">
-			могут</p>
-		</div>
-	</div>
-</div>
-<pre style="margin-bottom: 0.2in; background: #e1e1e1">&lt;table class=&quot;conjugation-table&quot;&gt;<br/>
-  &lt;thead&gt;<br/>
-    &lt;tr&gt;<br/>
-      &lt;th&gt;Местоимение&lt;/th&gt;<br/>
-      &lt;th&gt;Глагол &quot;хотеть&quot;&lt;/th&gt;<br/>
-      &lt;th&gt;Глагол &quot;мочь&quot;&lt;/th&gt;<br/>
-    &lt;/tr&gt;<br/>
-  &lt;/thead&gt;<br/>
-  &lt;tbody&gt;<br/>
-    &lt;tr&gt;<br/>
-      &lt;td&gt;&lt;strong&gt;я&lt;/strong&gt;&lt;/td&gt;<br/>
-      &lt;td&gt;&lt;div class=&quot;drop-target&quot; data-answer=&quot;хочу&quot; ondragover=&quot;allowDrop(event)&quot; ondragleave=&quot;removeDropStyle(event)&quot; ondrop=&quot;drop(event)&quot;&gt;&lt;/div&gt;&lt;/td&gt;<br/>
-      &lt;td&gt;&lt;div class=&quot;drop-target&quot; data-answer=&quot;могу&quot; ondragover=&quot;allowDrop(event)&quot; ondragleave=&quot;removeDropStyle(event)&quot; ondrop=&quot;drop(event)&quot;&gt;&lt;/div&gt;&lt;/td&gt;<br/>
-    &lt;/tr&gt;<br/>
-    &lt;tr&gt;<br/>
-      &lt;td&gt;&lt;strong&gt;ты&lt;/strong&gt;&lt;/td&gt;<br/>
-      &lt;td&gt;&lt;div class=&quot;drop-target&quot; data-answer=&quot;хочешь&quot; ondragover=&quot;allowDrop(event)&quot; ondragleave=&quot;removeDropStyle(event)&quot; ondrop=&quot;drop(event)&quot;&gt;&lt;/div&gt;&lt;/td&gt;<br/>
-      &lt;td&gt;&lt;div class=&quot;drop-target&quot; data-answer=&quot;можешь&quot; ondragover=&quot;allowDrop(event)&quot; ondragleave=&quot;removeDropStyle(event)&quot; ondrop=&quot;drop(event)&quot;&gt;&lt;/div&gt;&lt;/td&gt;<br/>
-    &lt;/tr&gt;<br/>
-    &lt;tr&gt;<br/>
-      &lt;td&gt;&lt;strong&gt;он / она / оно&lt;/strong&gt;&lt;/td&gt;<br/>
-      &lt;td&gt;&lt;div class=&quot;drop-target&quot; data-answer=&quot;хочет&quot; ondragover=&quot;allowDrop(event)&quot; ondragleave=&quot;removeDropStyle(event)&quot; ondrop=&quot;drop(event)&quot;&gt;&lt;/div&gt;&lt;/td&gt;<br/>
-      &lt;td&gt;&lt;div class=&quot;drop-target&quot; data-answer=&quot;может&quot; ondragover=&quot;allowDrop(event)&quot; ondragleave=&quot;removeDropStyle(event)&quot; ondrop=&quot;drop(event)&quot;&gt;&lt;/div&gt;&lt;/td&gt;<br/>
-    &lt;/tr&gt;<br/>
-    &lt;tr&gt;<br/>
-      &lt;td&gt;&lt;strong&gt;мы&lt;/strong&gt;&lt;/td&gt;<br/>
-      &lt;td&gt;&lt;div class=&quot;drop-target&quot; data-answer=&quot;хотим&quot; ondragover=&quot;allowDrop(event)&quot; ondragleave=&quot;removeDropStyle(event)&quot; ondrop=&quot;drop(event)&quot;&gt;&lt;/div&gt;&lt;/td&gt;<br/>
-      &lt;td&gt;&lt;div class=&quot;drop-target&quot; data-answer=&quot;можем&quot; ondragover=&quot;allowDrop(event)&quot; ondragleave=&quot;removeDropStyle(event)&quot; ondrop=&quot;drop(event)&quot;&gt;&lt;/div&gt;&lt;/td&gt;<br/>
-    &lt;/tr&gt;<br/>
-    &lt;tr&gt;<br/>
-      &lt;td&gt;&lt;strong&gt;вы&lt;/strong&gt;&lt;/td&gt;<br/>
-      &lt;td&gt;&lt;div class=&quot;drop-target&quot; data-answer=&quot;хотите&quot; ondragover=&quot;allowDrop(event)&quot; ondragleave=&quot;removeDropStyle(event)&quot; ondrop=&quot;drop(event)&quot;&gt;&lt;/div&gt;&lt;/td&gt;<br/>
-      &lt;td&gt;&lt;div class=&quot;drop-target&quot; data-answer=&quot;можете&quot; ondragover=&quot;allowDrop(event)&quot; ondragleave=&quot;removeDropStyle(event)&quot; ondrop=&quot;drop(event)&quot;&gt;&lt;/div&gt;&lt;/td&gt;<br/>
-    &lt;/tr&gt;<br/>
-    &lt;tr&gt;<br/>
-      &lt;td&gt;&lt;strong&gt;они&lt;/strong&gt;&lt;/td&gt;<br/>
-      &lt;td&gt;&lt;div class=&quot;drop-target&quot; data-answer=&quot;хотят&quot; ondragover=&quot;allowDrop(event)&quot; ondragleave=&quot;removeDropStyle(event)&quot; ondrop=&quot;drop(event)&quot;&gt;&lt;/div&gt;&lt;/td&gt;<br/>
-      &lt;td&gt;&lt;div class=&quot;drop-target&quot; data-answer=&quot;могут&quot; ondragover=&quot;allowDrop(event)&quot; ondragleave=&quot;removeDropStyle(event)&quot; ondrop=&quot;drop(event)&quot;&gt;&lt;/div&gt;&lt;/td&gt;<br/>
-    &lt;/tr&gt;<br/>
-  &lt;/tbody&gt;<br/>
-&lt;/table&gt;<br/>
-<br/>
-&lt;div class=&quot;controls&quot;&gt;<br/>
-  &lt;div class=&quot;btn-group&quot;&gt;<br/>
-    &lt;button class=&quot;btn&quot; onclick=&quot;checkTask2()&quot;&gt;Проверить Задание 2&lt;/button&gt;<br/>
-    &lt;button class=&quot;btn btn-reset&quot; onclick=&quot;resetTask2()&quot;&gt;Сбросить&lt;/button&gt;<br/>
-  &lt;/div&gt;<br/>
-  &lt;div id=&quot;result-task2&quot; class=&quot;result-box&quot;&gt;&lt;/div&gt;<br/>
-&lt;/div&gt;</pre><h2 class="western">
-Задание 3. Заполнить пропуски (&quot;хотеть&quot;
-или &quot;мочь&quot;)</h2>
-<p style="margin-bottom: 0in">Выберите правильную
-форму глагола для каждого предложения.
-(10 баллов)</p>
-<p style="line-height: 100%; margin-bottom: 0in">1. Я -- выберите
--- хочу могу пить. У тебя есть вода? 
-</p>
-<pre style="margin-bottom: 0.2in; background: #e1e1e1">&lt;div class=&quot;item-row&quot;&gt;<br/>
-  &lt;span&gt;2. Анна <br/>
-    &lt;select class=&quot;t3-select&quot; data-answer=&quot;хочет&quot;&gt;<br/>
-      &lt;option value=&quot;&quot;&gt;-- выберите --&lt;/option&gt;<br/>
-      &lt;option value=&quot;хочет&quot;&gt;хочет&lt;/option&gt;<br/>
-      &lt;option value=&quot;может&quot;&gt;может&lt;/option&gt;<br/>
-    &lt;/select&gt; выучить русский язык, потому что она интересуется русской культурой.<br/>
-  &lt;/span&gt;<br/>
-&lt;/div&gt;<br/>
-<br/>
-&lt;div class=&quot;item-row&quot;&gt;<br/>
-  &lt;span&gt;3. Извини, я не <br/>
-    &lt;select class=&quot;t3-select&quot; data-answer=&quot;могу&quot;&gt;<br/>
-      &lt;option value=&quot;&quot;&gt;-- выберите --&lt;/option&gt;<br/>
-      &lt;option value=&quot;хочу&quot;&gt;хочу&lt;/option&gt;<br/>
-      &lt;option value=&quot;могу&quot;&gt;могу&lt;/option&gt;<br/>
-    &lt;/select&gt; пойти сегодня на концерт, у меня много работы.<br/>
-  &lt;/span&gt;<br/>
-&lt;/div&gt;<br/>
-<br/>
-&lt;div class=&quot;item-row&quot;&gt;<br/>
-  &lt;span&gt;4. Привет! Ты <br/>
-    &lt;select class=&quot;t3-select&quot; data-answer=&quot;хочешь&quot;&gt;<br/>
-      &lt;option value=&quot;&quot;&gt;-- выберите --&lt;/option&gt;<br/>
-      &lt;option value=&quot;хочешь&quot;&gt;хочешь&lt;/option&gt;<br/>
-      &lt;option value=&quot;можешь&quot;&gt;можешь&lt;/option&gt;<br/>
-    &lt;/select&gt; пойти с нами в кино?<br/>
-  &lt;/span&gt;<br/>
-&lt;/div&gt;<br/>
-<br/>
-&lt;div class=&quot;item-row&quot;&gt;<br/>
-  &lt;span&gt;5. Привет, как дела? Извини, ты <br/>
-    &lt;select class=&quot;t3-select&quot; data-answer=&quot;можешь&quot;&gt;<br/>
-      &lt;option value=&quot;&quot;&gt;-- выберите --&lt;/option&gt;<br/>
-      &lt;option value=&quot;хочешь&quot;&gt;хочешь&lt;/option&gt;<br/>
-      &lt;option value=&quot;можешь&quot;&gt;можешь&lt;/option&gt;<br/>
-    &lt;/select&gt; говорить сейчас?<br/>
-  &lt;/span&gt;<br/>
-&lt;/div&gt;<br/>
-<br/>
-&lt;div class=&quot;item-row&quot;&gt;<br/>
-  &lt;span&gt;6. Дети уже <br/>
-    &lt;select class=&quot;t3-select&quot; data-answer=&quot;могут&quot;&gt;<br/>
-      &lt;option value=&quot;&quot;&gt;-- выберите --&lt;/option&gt;<br/>
-      &lt;option value=&quot;хотят&quot;&gt;хотят&lt;/option&gt;<br/>
-      &lt;option value=&quot;могут&quot;&gt;могут&lt;/option&gt;<br/>
-    &lt;/select&gt; немного читать и писать.<br/>
-  &lt;/span&gt;<br/>
-&lt;/div&gt;<br/>
-<br/>
-&lt;div class=&quot;item-row&quot;&gt;<br/>
-  &lt;span&gt;7. Это Николай, наш специалист. Он <br/>
-    &lt;select class=&quot;t3-select&quot; data-answer=&quot;может&quot;&gt;<br/>
-      &lt;option value=&quot;&quot;&gt;-- выберите --&lt;/option&gt;<br/>
-      &lt;option value=&quot;хочет&quot;&gt;хочет&lt;/option&gt;<br/>
-      &lt;option value=&quot;может&quot;&gt;может&lt;/option&gt;<br/>
-    &lt;/select&gt; помочь вам.<br/>
-  &lt;/span&gt;<br/>
-&lt;/div&gt;<br/>
-<br/>
-&lt;div class=&quot;item-row&quot;&gt;<br/>
-  &lt;span&gt;8. Здравствуйте, что вы <br/>
-    &lt;select class=&quot;t3-select&quot; data-answer=&quot;хотите&quot;&gt;<br/>
-      &lt;option value=&quot;&quot;&gt;-- выберите --&lt;/option&gt;<br/>
-      &lt;option value=&quot;хотите&quot;&gt;хотите&lt;/option&gt;<br/>
-      &lt;option value=&quot;можете&quot;&gt;можете&lt;/option&gt;<br/>
-    &lt;/select&gt; заказать?<br/>
-  &lt;/span&gt;<br/>
-&lt;/div&gt;<br/>
-<br/>
-&lt;div class=&quot;item-row&quot;&gt;<br/>
-  &lt;span&gt;9. Извините, вы <br/>
-    &lt;select class=&quot;t3-select&quot; data-answer=&quot;можете&quot;&gt;<br/>
-      &lt;option value=&quot;&quot;&gt;-- выберите --&lt;/option&gt;<br/>
-      &lt;option value=&quot;хотите&quot;&gt;хотите&lt;/option&gt;<br/>
-      &lt;option value=&quot;можете&quot;&gt;можете&lt;/option&gt;<br/>
-    &lt;/select&gt; закрыть окно? Здесь холодно.<br/>
-  &lt;/span&gt;<br/>
-&lt;/div&gt;<br/>
-<br/>
-&lt;div class=&quot;item-row&quot;&gt;<br/>
-  &lt;span&gt;10. Дети не <br/>
-    &lt;select class=&quot;t3-select&quot; data-answer=&quot;хотят&quot;&gt;<br/>
-      &lt;option value=&quot;&quot;&gt;-- выберите --&lt;/option&gt;<br/>
-      &lt;option value=&quot;хотят&quot;&gt;хотят&lt;/option&gt;<br/>
-      &lt;option value=&quot;могут&quot;&gt;могут&lt;/option&gt;<br/>
-    &lt;/select&gt; есть суп.<br/>
-  &lt;/span&gt;<br/>
-&lt;/div&gt;<br/>
-<br/>
-&lt;div class=&quot;controls&quot;&gt;<br/>
-  &lt;div class=&quot;btn-group&quot;&gt;<br/>
-    &lt;button class=&quot;btn&quot; onclick=&quot;checkTask3()&quot;&gt;Проверить Задание 3&lt;/button&gt;<br/>
-    &lt;button class=&quot;btn btn-reset&quot; onclick=&quot;resetTask3()&quot;&gt;Сбросить&lt;/button&gt;<br/>
-  &lt;/div&gt;<br/>
-  &lt;div id=&quot;result-task3&quot; class=&quot;result-box&quot;&gt;&lt;/div&gt;<br/>
-&lt;/div&gt;</pre><h2 class="western">
-Задание 4. Можно или нельзя?</h2>
-<p style="margin-bottom: 0in">Перетащите правильные
-предложения под соответствующие
-изображения. (6 баллов)</p>
-<p style="line-height: 100%; margin-bottom: 0in"><br/>
+  <main>
+    <div class="summary" aria-live="polite">
+      <div>
+        <strong>Ваш результат</strong>
+        <div class="summary-text" id="overall-result">
+          Выполните задания и нажмите «Проверить».
+        </div>
+      </div>
+      <button class="secondary" type="button" id="reset-all">
+        Сбросить всё
+      </button>
+    </div>
 
-</p>
-<div id="task4-container" dir="ltr">
-	<div id="pool-task4" dir="ltr"><p style="line-height: 100%; margin-bottom: 0in">
-		<br/>
+    <!-- Задание 1 -->
+    <section class="task" id="task1">
+      <div class="task-heading">
+        <div class="task-number">1</div>
+        <div><h2>Должен или нужен?</h2></div>
+      </div>
+      <p class="instruction">
+        Выберите правильную альтернативу в каждом предложении.
+      </p>
+      <div id="task1-questions" class="question-list"></div>
+      <div class="task-actions">
+        <button class="primary" type="button" id="check1">
+          Проверить ответы
+        </button>
+        <button class="secondary" type="button" id="reset1">
+          Сбросить
+        </button>
+        <span class="task-result" id="result1" aria-live="polite"></span>
+      </div>
+    </section>
 
-		</p>
-		<div id="s1" dir="ltr"><p style="line-height: 100%; margin-bottom: 0in">
-			Здесь нельзя курить</p>
-		</div>
-		<div id="s2" dir="ltr"><p style="line-height: 100%; margin-bottom: 0in">
-			Здесь можно парковать машину</p>
-		</div>
-		<div id="s3" dir="ltr"><p style="line-height: 100%; margin-bottom: 0in">
-			Здесь нельзя пользоваться телефоном</p>
-		</div>
-		<div id="s4" dir="ltr"><p style="line-height: 100%; margin-bottom: 0in">
-			Здесь можно фотографировать</p>
-		</div>
-		<div id="s5" dir="ltr"><p style="line-height: 100%; margin-bottom: 0in">
-			Здесь нельзя гулять с собакой</p>
-		</div>
-		<div id="s6" dir="ltr"><p style="line-height: 100%; margin-bottom: 0in">
-			Здесь нельзя кормить птиц</p>
-		</div>
-	</div>
-</div>
-<pre style="margin-bottom: 0.2in; background: #e1e1e1">&lt;div class=&quot;images-grid&quot;&gt;<br/>
-  &lt;div class=&quot;image-card&quot;&gt;<br/>
-    &lt;img src=&quot;https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS6HVe9vlrk5luaLjgXe2SZ4dqYJ0ldEEAFAnUYKHT36w&amp;s=10&quot; alt=&quot;Знак 1&quot;&gt;<br/>
-    &lt;div class=&quot;drop-target&quot; style=&quot;width: 100%;&quot; data-answer=&quot;Здесь нельзя курить&quot; ondragover=&quot;allowDrop(event)&quot; ondragleave=&quot;removeDropStyle(event)&quot; ondrop=&quot;drop(event)&quot;&gt;&lt;/div&gt;<br/>
-  &lt;/div&gt;<br/>
-  &lt;div class=&quot;image-card&quot;&gt;<br/>
-    &lt;img src=&quot;https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSfkG33y3SYGkRiabR5uiJc7Md0ef9uEYtxNJ5EQzp5mQ&amp;s=10&quot; alt=&quot;Знак 2&quot;&gt;<br/>
-    &lt;div class=&quot;drop-target&quot; style=&quot;width: 100%;&quot; data-answer=&quot;Здесь можно парковать машину&quot; ondragover=&quot;allowDrop(event)&quot; ondragleave=&quot;removeDropStyle(event)&quot; ondrop=&quot;drop(event)&quot;&gt;&lt;/div&gt;<br/>
-  &lt;/div&gt;<br/>
-  &lt;div class=&quot;image-card&quot;&gt;<br/>
-    &lt;img src=&quot;https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ8K4wNGjUGjyxMgodZUWy7bvjK75a6ukYW2vLFLMNsf6um1BUaVAxap_4&amp;s=10&quot; alt=&quot;Знак 3&quot;&gt;<br/>
-    &lt;div class=&quot;drop-target&quot; style=&quot;width: 100%;&quot; data-answer=&quot;Здесь нельзя пользоваться телефоном&quot; ondragover=&quot;allowDrop(event)&quot; ondragleave=&quot;removeDropStyle(event)&quot; ondrop=&quot;drop(event)&quot;&gt;&lt;/div&gt;<br/>
-  &lt;/div&gt;<br/>
-  &lt;div class=&quot;image-card&quot;&gt;<br/>
-    &lt;img src=&quot;https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSX65KlmH82tCYWjOG7itHsrc2Yd3T8cQhS1DGHIuZ1xWytlWnZ2Tt5NRn4&amp;s=10&quot; alt=&quot;Знак 4&quot;&gt;<br/>
-    &lt;div class=&quot;drop-target&quot; style=&quot;width: 100%;&quot; data-answer=&quot;Здесь можно фотографировать&quot; ondragover=&quot;allowDrop(event)&quot; ondragleave=&quot;removeDropStyle(event)&quot; ondrop=&quot;drop(event)&quot;&gt;&lt;/div&gt;<br/>
-  &lt;/div&gt;<br/>
-  &lt;div class=&quot;image-card&quot;&gt;<br/>
-    &lt;img src=&quot;https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQPcsnjr9UE7NcK6FEMm5vbdzfFDUKkkAkWWkkRIxCDJmupIkMrCikY0zzp&amp;s=10&quot; alt=&quot;Знак 5&quot;&gt;<br/>
-    &lt;div class=&quot;drop-target&quot; style=&quot;width: 100%;&quot; data-answer=&quot;Здесь нельзя гулять с собакой&quot; ondragover=&quot;allowDrop(event)&quot; ondragleave=&quot;removeDropStyle(event)&quot; ondrop=&quot;drop(event)&quot;&gt;&lt;/div&gt;<br/>
-  &lt;/div&gt;<br/>
-  &lt;div class=&quot;image-card&quot;&gt;<br/>
-    &lt;img src=&quot;https://www.shutterstock.com/image-vector/do-not-feed-birds-sign-260nw-2288622477.jpg&quot; alt=&quot;Знак 6&quot;&gt;<br/>
-    &lt;div class=&quot;drop-target&quot; style=&quot;width: 100%;&quot; data-answer=&quot;Здесь нельзя кормить птиц&quot; ondragover=&quot;allowDrop(event)&quot; ondragleave=&quot;removeDropStyle(event)&quot; ondrop=&quot;drop(event)&quot;&gt;&lt;/div&gt;<br/>
-  &lt;/div&gt;<br/>
-&lt;/div&gt;<br/>
-<br/>
-&lt;div class=&quot;controls&quot;&gt;<br/>
-  &lt;div class=&quot;btn-group&quot;&gt;<br/>
-    &lt;button class=&quot;btn&quot; onclick=&quot;checkTask4()&quot;&gt;Проверить Задание 4&lt;/button&gt;<br/>
-    &lt;button class=&quot;btn btn-reset&quot; onclick=&quot;resetTask4()&quot;&gt;Сбросить&lt;/button&gt;<br/>
-  &lt;/div&gt;<br/>
-  &lt;div id=&quot;result-task4&quot; class=&quot;result-box&quot;&gt;&lt;/div&gt;<br/>
-&lt;/div&gt;</pre><h2 class="western">
-Задание 5. Тест</h2>
-<p style="margin-bottom: 0in">Выберите правильный
-вариант ответа для каждого предложения.
-(10 баллов)</p>
-<p style="line-height: 100%; margin-bottom: 0in"><strong>1. Я очень
-устал, но завтра экзамен. Я ...
-подготовиться.</strong><br/>
-а) хочу б) нужен
-в) должен 
-</p>
-<pre style="margin-bottom: 0.2in; background: #e1e1e1">&lt;div class=&quot;item-row&quot; data-answer=&quot;нужна&quot;&gt;<br/>
-  &lt;span&gt;&lt;strong&gt;2. У меня нет ручки. Мне ... ручка.&lt;/strong&gt;&lt;br&gt;<br/>
-    &lt;span class=&quot;radio-group&quot;&gt;<br/>
-      &lt;label class=&quot;radio-label&quot;&gt;&lt;input type=&quot;radio&quot; name=&quot;t5_2&quot; value=&quot;должна&quot;&gt; а) должна&lt;/label&gt;<br/>
-      &lt;label class=&quot;radio-label&quot;&gt;&lt;input type=&quot;radio&quot; name=&quot;t5_2&quot; value=&quot;нужна&quot;&gt; б) нужна&lt;/label&gt;<br/>
-      &lt;label class=&quot;radio-label&quot;&gt;&lt;input type=&quot;radio&quot; name=&quot;t5_2&quot; value=&quot;можно&quot;&gt; в) можно&lt;/label&gt;<br/>
-    &lt;/span&gt;<br/>
-  &lt;/span&gt;<br/>
-&lt;/div&gt;<br/>
-<br/>
-&lt;div class=&quot;item-row&quot; data-answer=&quot;хочу&quot;&gt;<br/>
-  &lt;span&gt;&lt;strong&gt;3. Я свободен вечером и ... посмотреть этот фильм.&lt;/strong&gt;&lt;br&gt;<br/>
-    &lt;span class=&quot;radio-group&quot;&gt;<br/>
-      &lt;label class=&quot;radio-label&quot;&gt;&lt;input type=&quot;radio&quot; name=&quot;t5_3&quot; value=&quot;хочу&quot;&gt; а) хочу&lt;/label&gt;<br/>
-      &lt;label class=&quot;radio-label&quot;&gt;&lt;input type=&quot;radio&quot; name=&quot;t5_3&quot; value=&quot;могу&quot;&gt; б) могу&lt;/label&gt;<br/>
-      &lt;label class=&quot;radio-label&quot;&gt;&lt;input type=&quot;radio&quot; name=&quot;t5_3&quot; value=&quot;должен&quot;&gt; в) должен&lt;/label&gt;<br/>
-    &lt;/span&gt;<br/>
-  &lt;/span&gt;<br/>
-&lt;/div&gt;<br/>
-<br/>
-&lt;div class=&quot;item-row&quot; data-answer=&quot;нельзя&quot;&gt;<br/>
-  &lt;span&gt;&lt;strong&gt;4. В самолёте ... курить.&lt;/strong&gt;&lt;br&gt;<br/>
-    &lt;span class=&quot;radio-group&quot;&gt;<br/>
-      &lt;label class=&quot;radio-label&quot;&gt;&lt;input type=&quot;radio&quot; name=&quot;t5_4&quot; value=&quot;нужно&quot;&gt; а) нужно&lt;/label&gt;<br/>
-      &lt;label class=&quot;radio-label&quot;&gt;&lt;input type=&quot;radio&quot; name=&quot;t5_4&quot; value=&quot;можно&quot;&gt; б) можно&lt;/label&gt;<br/>
-      &lt;label class=&quot;radio-label&quot;&gt;&lt;input type=&quot;radio&quot; name=&quot;t5_4&quot; value=&quot;нельзя&quot;&gt; в) нельзя&lt;/label&gt;<br/>
-    &lt;/span&gt;<br/>
-  &lt;/span&gt;<br/>
-&lt;/div&gt;<br/>
-<br/>
-&lt;div class=&quot;item-row&quot; data-answer=&quot;могу&quot;&gt;<br/>
-  &lt;span&gt;&lt;strong&gt;5. Извини, у меня много работы, я не ... встретиться сегодня.&lt;/strong&gt;&lt;br&gt;<br/>
-    &lt;span class=&quot;radio-group&quot;&gt;<br/>
-      &lt;label class=&quot;radio-label&quot;&gt;&lt;input type=&quot;radio&quot; name=&quot;t5_5&quot; value=&quot;могу&quot;&gt; а) могу&lt;/label&gt;<br/>
-      &lt;label class=&quot;radio-label&quot;&gt;&lt;input type=&quot;radio&quot; name=&quot;t5_5&quot; value=&quot;хочу&quot;&gt; б) хочу&lt;/label&gt;<br/>
-      &lt;label class=&quot;radio-label&quot;&gt;&lt;input type=&quot;radio&quot; name=&quot;t5_5&quot; value=&quot;должен&quot;&gt; в) должен&lt;/label&gt;<br/>
-    &lt;/span&gt;<br/>
-  &lt;/span&gt;<br/>
-&lt;/div&gt;<br/>
-<br/>
-&lt;div class=&quot;item-row&quot; data-answer=&quot;можно&quot;&gt;<br/>
-  &lt;span&gt;&lt;strong&gt;6. Это музей. Тут ... фотографировать, но без вспышки.&lt;/strong&gt;&lt;br&gt;<br/>
-    &lt;span class=&quot;radio-group&quot;&gt;<br/>
-      &lt;label class=&quot;radio-label&quot;&gt;&lt;input type=&quot;radio&quot; name=&quot;t5_6&quot; value=&quot;можно&quot;&gt; а) можно&lt;/label&gt;<br/>
-      &lt;label class=&quot;radio-label&quot;&gt;&lt;input type=&quot;radio&quot; name=&quot;t5_6&quot; value=&quot;нельзя&quot;&gt; б) нельзя&lt;/label&gt;<br/>
-      &lt;label class=&quot;radio-label&quot;&gt;&lt;input type=&quot;radio&quot; name=&quot;t5_6&quot; value=&quot;нужно&quot;&gt; в) нужно&lt;/label&gt;<br/>
-    &lt;/span&gt;<br/>
-  &lt;/span&gt;<br/>
-&lt;/div&gt;<br/>
-<br/>
-&lt;div class=&quot;item-row&quot; data-answer=&quot;должно&quot;&gt;<br/>
-  &lt;span&gt;&lt;strong&gt;7. В библиотеке ... быть тихо.&lt;/strong&gt;&lt;br&gt;<br/>
-    &lt;span class=&quot;radio-group&quot;&gt;<br/>
-      &lt;label class=&quot;radio-label&quot;&gt;&lt;input type=&quot;radio&quot; name=&quot;t5_7&quot; value=&quot;нужно&quot;&gt; а) нужно&lt;/label&gt;<br/>
-      &lt;label class=&quot;radio-label&quot;&gt;&lt;input type=&quot;radio&quot; name=&quot;t5_7&quot; value=&quot;можно&quot;&gt; б) можно&lt;/label&gt;<br/>
-      &lt;label class=&quot;radio-label&quot;&gt;&lt;input type=&quot;radio&quot; name=&quot;t5_7&quot; value=&quot;должно&quot;&gt; в) должно&lt;/label&gt;<br/>
-    &lt;/span&gt;<br/>
-  &lt;/span&gt;<br/>
-&lt;/div&gt;<br/>
-<br/>
-&lt;div class=&quot;item-row&quot; data-answer=&quot;должен&quot;&gt;<br/>
-  &lt;span&gt;&lt;strong&gt;8. У врача много пациентов. Он ... много работать.&lt;/strong&gt;&lt;br&gt;<br/>
-    &lt;span class=&quot;radio-group&quot;&gt;<br/>
-      &lt;label class=&quot;radio-label&quot;&gt;&lt;input type=&quot;radio&quot; name=&quot;t5_8&quot; value=&quot;должен&quot;&gt; а) должен&lt;/label&gt;<br/>
-      &lt;label class=&quot;radio-label&quot;&gt;&lt;input type=&quot;radio&quot; name=&quot;t5_8&quot; value=&quot;может&quot;&gt; б) может&lt;/label&gt;<br/>
-      &lt;label class=&quot;radio-label&quot;&gt;&lt;input type=&quot;radio&quot; name=&quot;t5_8&quot; value=&quot;нужен&quot;&gt; в) нужен&lt;/label&gt;<br/>
-    &lt;/span&gt;<br/>
-  &lt;/span&gt;<br/>
-&lt;/div&gt;<br/>
-<br/>
-&lt;div class=&quot;item-row&quot; data-answer=&quot;нужно&quot;&gt;<br/>
-  &lt;span&gt;&lt;strong&gt;9. Мне ... купить хлеб и молоко.&lt;/strong&gt;&lt;br&gt;<br/>
-    &lt;span class=&quot;radio-group&quot;&gt;<br/>
-      &lt;label class=&quot;radio-label&quot;&gt;&lt;input type=&quot;radio&quot; name=&quot;t5_9&quot; value=&quot;можно&quot;&gt; а) можно&lt;/label&gt;<br/>
-      &lt;label class=&quot;radio-label&quot;&gt;&lt;input type=&quot;radio&quot; name=&quot;t5_9&quot; value=&quot;нельзя&quot;&gt; б) нельзя&lt;/label&gt;<br/>
-      &lt;label class=&quot;radio-label&quot;&gt;&lt;input type=&quot;radio&quot; name=&quot;t5_9&quot; value=&quot;нужно&quot;&gt; в) нужно&lt;/label&gt;<br/>
-    &lt;/span&gt;<br/>
-  &lt;/span&gt;<br/>
-&lt;/div&gt;<br/>
-<br/>
-&lt;div class=&quot;item-row&quot; data-answer=&quot;нужны&quot;&gt;<br/>
-  &lt;span&gt;&lt;strong&gt;10. Чтобы купить хлеб и молоко, мне ... деньги.&lt;/strong&gt;&lt;br&gt;<br/>
-    &lt;span class=&quot;radio-group&quot;&gt;<br/>
-      &lt;label class=&quot;radio-label&quot;&gt;&lt;input type=&quot;radio&quot; name=&quot;t5_10&quot; value=&quot;должны&quot;&gt; а) должны&lt;/label&gt;<br/>
-      &lt;label class=&quot;radio-label&quot;&gt;&lt;input type=&quot;radio&quot; name=&quot;t5_10&quot; value=&quot;нужны&quot;&gt; б) нужны&lt;/label&gt;<br/>
-      &lt;label class=&quot;radio-label&quot;&gt;&lt;input type=&quot;radio&quot; name=&quot;t5_10&quot; value=&quot;можно&quot;&gt; в) можно&lt;/label&gt;<br/>
-    &lt;/span&gt;<br/>
-  &lt;/span&gt;<br/>
-&lt;/div&gt;<br/>
-<br/>
-&lt;div class=&quot;controls&quot;&gt;<br/>
-  &lt;div class=&quot;btn-group&quot;&gt;<br/>
-    &lt;button class=&quot;btn&quot; onclick=&quot;checkTask5()&quot;&gt;Проверить Тест&lt;/button&gt;<br/>
-    &lt;button class=&quot;btn btn-reset&quot; onclick=&quot;resetTask5()&quot;&gt;Сбросить&lt;/button&gt;<br/>
-  &lt;/div&gt;<br/>
-  &lt;div id=&quot;result-task5&quot; class=&quot;result-box&quot;&gt;&lt;/div&gt;<br/>
-&lt;/div&gt;</pre><h2 class="western">
-Итоговый результат</h2>
-<p style="margin-right: 0.05in; margin-left: 0.05in; margin-top: 0.05in; margin-bottom: 0.16in">
-<font color="#334155">Нажмите кнопку, чтобы
-рассчитать суммарный балл по всем
-упражнениям (Максимум: 48 баллов).</font></p>
-<div id="total-result" dir="ltr"><p><br/>
-<br/>
+    <!-- Задание 2 -->
+    <section class="task" id="task2">
+      <div class="task-heading">
+        <div class="task-number">2</div>
+        <div>
+          <h2>Спряжение глаголов «хотеть» и «мочь»</h2>
+        </div>
+      </div>
 
-	</p>
-</div>
-<p><br/>
-<br/>
+      <p class="instruction">
+        Перетащите формы глаголов в нужные ячейки.
+        На телефоне можно сначала нажать на прямоугольник,
+        а затем на ячейку таблицы.
+      </p>
 
-</p>
+      <div class="tile-bank" id="verb-bank" aria-label="Формы глаголов">
+        <div class="bank-label">Перетащите формы отсюда:</div>
+      </div>
+
+      <div class="table-wrap">
+        <table aria-label="Спряжение глаголов хотеть и мочь">
+          <thead>
+            <tr>
+              <th scope="col">Местоимение</th>
+              <th scope="col">Хотеть</th>
+              <th scope="col">Мочь</th>
+            </tr>
+          </thead>
+          <tbody id="conjugation-body"></tbody>
+        </table>
+      </div>
+
+      <p class="hint">
+        Чтобы переместить форму, нажмите на неё, а затем на другую ячейку.
+        Если ячейка занята, старая форма вернётся в набор.
+      </p>
+
+      <div class="task-actions">
+        <button class="primary" type="button" id="check2">
+          Проверить ответы
+        </button>
+        <button class="secondary" type="button" id="reset2">
+          Сбросить
+        </button>
+        <span class="task-result" id="result2" aria-live="polite"></span>
+      </div>
+    </section>
+
+    <!-- Задание 3 -->
+    <section class="task" id="task3">
+      <div class="task-heading">
+        <div class="task-number">3</div>
+        <div><h2>Хотеть или мочь?</h2></div>
+      </div>
+      <p class="instruction">
+        Выберите правильную форму глагола для каждого предложения.
+      </p>
+      <div id="task3-questions" class="question-list"></div>
+      <div class="task-actions">
+        <button class="primary" type="button" id="check3">
+          Проверить ответы
+        </button>
+        <button class="secondary" type="button" id="reset3">
+          Сбросить
+        </button>
+        <span class="task-result" id="result3" aria-live="polite"></span>
+      </div>
+    </section>
+
+    <!-- Задание 4 -->
+    <section class="task" id="task4">
+      <div class="task-heading">
+        <div class="task-number">4</div>
+        <div><h2>Можно или нельзя?</h2></div>
+      </div>
+
+      <p class="instruction">
+        Соотнесите предложения с изображениями.
+        Перетащите прямоугольник к подходящей картинке или нажмите
+        на предложение, а затем на область под изображением.
+      </p>
+
+      <div class="tile-bank image-bank" id="sentence-bank"
+           aria-label="Предложения для изображений">
+        <div class="bank-label">Предложения:</div>
+      </div>
+
+      <div class="image-grid" id="image-grid"></div>
+
+      <div class="task-actions">
+        <button class="primary" type="button" id="check4">
+          Проверить ответы
+        </button>
+        <button class="secondary" type="button" id="reset4">
+          Сбросить
+        </button>
+        <span class="task-result" id="result4" aria-live="polite"></span>
+      </div>
+    </section>
+
+    <!-- Задание 5 -->
+    <section class="task" id="task5">
+      <div class="task-heading">
+        <div class="task-number">5</div>
+        <div><h2>Проверь себя</h2></div>
+      </div>
+      <p class="instruction">
+        Выберите один правильный ответ в каждом вопросе.
+      </p>
+      <div id="task5-questions" class="question-list"></div>
+      <div class="task-actions">
+        <button class="primary" type="button" id="check5">
+          Проверить ответы
+        </button>
+        <button class="secondary" type="button" id="reset5">
+          Сбросить
+        </button>
+        <span class="task-result" id="result5" aria-live="polite"></span>
+      </div>
+    </section>
+  </main>
+
+  <footer>Интерактивная практика по грамматике РКИ</footer>
+
+  <script>
+    const taskScores = {};
+    let selectedTileId = null;
+    let draggedTileId = null;
+
+    // ЗАДАНИЕ 1. Должен или нужен?
+    const task1Data = [
+      {
+        text: 'Завтра у меня экзамен. Я ... много заниматься.',
+        options: ['должен', 'нужен'],
+        answer: 'должен'
+      },
+      {
+        text: 'У меня болит голова. Мне ... Ибупрофен.',
+        options: ['должен', 'нужен'],
+        answer: 'нужен'
+      },
+      {
+        text: 'Мария заболела. Ей ... остаться дома.',
+        options: ['должно', 'нужно'],
+        answer: 'нужно'
+      },
+      {
+        text: 'У Марии завтра дедлайн. Она ... написать преподавателю.',
+        options: ['должна', 'нужна'],
+        answer: 'должна'
+      },
+      {
+        text: 'Для урока нам ... словарь.',
+        options: ['должен', 'нужен'],
+        answer: 'нужен'
+      },
+      {
+        text: 'Студенты ... сдать работу до пятницы.',
+        options: ['должны', 'нужны'],
+        answer: 'должны'
+      },
+      {
+        text: 'Для путешествия мне ... деньги.',
+        options: ['должны', 'нужны'],
+        answer: 'нужны'
+      },
+      {
+        text: 'Мы ... купить билеты заранее.',
+        options: ['должны', 'нужны'],
+        answer: 'должны'
+      },
+      {
+        text: 'Мне ... помощь, я не могу сделать это задание.',
+        options: ['должна', 'нужна'],
+        answer: 'нужна'
+      },
+      {
+        text: 'Чтобы решить проблему, мне ... время.',
+        options: ['должно', 'нужно'],
+        answer: 'нужно'
+      }
+    ];
+
+    // ЗАДАНИЕ 2. Спряжение хотеть и мочь.
+    const pronouns = [
+      { key: 'ya', label: 'Я', want: 'хочу', can: 'могу' },
+      { key: 'ty', label: 'Ты', want: 'хочешь', can: 'можешь' },
+      { key: 'ona', label: 'Он / она / оно', want: 'хочет', can: 'может' },
+      { key: 'my', label: 'Мы', want: 'хотим', can: 'можем' },
+      { key: 'vy', label: 'Вы', want: 'хотите', can: 'можете' },
+      { key: 'oni', label: 'Они', want: 'хотят', can: 'могут' }
+    ];
+
+    const verbForms = [
+      'хочу', 'хочешь', 'хочет', 'хотим', 'хотите', 'хотят',
+      'могу', 'можешь', 'может', 'можем', 'можете', 'могут'
+    ];
+
+    // ЗАДАНИЕ 3. Хотеть или мочь?
+    const task3Data = [
+      {
+        text: 'Я ... пить. У тебя есть вода?',
+        answer: 'хочу'
+      },
+      {
+        text: 'Анна ... выучить русский язык, потому что она интересуется русской культурой.',
+        answer: 'хочет'
+      },
+      {
+        text: 'Извини, я не ... пойти сегодня на концерт, у меня много работы.',
+        answer: 'могу'
+      },
+      {
+        text: 'Привет! Ты ... пойти с нами в кино?',
+        answer: 'хочешь'
+      },
+      {
+        text: 'Привет, как дела? Извини, ты ... говорить сейчас?',
+        answer: 'можешь'
+      },
+      {
+        text: 'Дети уже ... немного читать и писать.',
+        answer: 'могут'
+      },
+      {
+        text: 'Это Николай, наш специалист. Он ... помочь вам.',
+        answer: 'может'
+      },
+      {
+        text: 'Здравствуйте, что вы ... заказать?',
+        answer: 'хотите'
+      },
+      {
+        text: 'Извините, вы ... закрыть окно? Здесь холодно.',
+        answer: 'можете'
+      },
+      {
+        text: 'Дети не ... есть суп.',
+        answer: 'хотят'
+      }
+    ];
+
+    // ЗАДАНИЕ 4. Можно или нельзя?
+    const imageTasks = [
+      {
+        id: 'img1',
+        sentence: 'Здесь нельзя курить',
+        src: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS6HVe9vlrk5luaLjgXe2SZ4dqYJ0ldEEAFAnUYKHT36w&s=10',
+        alt: 'Знак «Курить запрещено»'
+      },
+      {
+        id: 'img2',
+        sentence: 'Здесь можно парковать машину',
+        src: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSfkG33y3SYGkRiabR5uiJc7Md0ef9uEYtxNJ5EQzp5mQ&s=10',
+        alt: 'Знак парковки'
+      },
+      {
+        id: 'img3',
+        sentence: 'Здесь нельзя пользоваться телефоном',
+        src: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ8K4wNGjUGjyxMgodZUWy7bvjK75a6ukYW2vLFLMNsf6um1BUaVAxap_4&s=10',
+        alt: 'Знак запрета пользоваться телефоном'
+      },
+      {
+        id: 'img4',
+        sentence: 'Здесь можно фотографировать',
+        src: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSX65KlmH82tCYWjOG7itHsrc2Yd3T8cQhS1DGHIuZ1xWytlWnZ2Tt5NRn4&s=10',
+        alt: 'Знак, разрешающий фотографировать'
+      },
+      {
+        id: 'img5',
+        sentence: 'Здесь нельзя гулять с собакой',
+        src: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQPcsnjr9UE7NcK6FEMm5vbdzfFDUKkkAkWWkkRIxCDJmupIkMrCikY0zzp&s=10',
+        alt: 'Знак, запрещающий гулять с собакой'
+      },
+      {
+        id: 'img6',
+        sentence: 'Здесь нельзя кормить птиц',
+        src: 'https://www.shutterstock.com/image-vector/do-not-feed-birds-sign-260nw-2288622477.jpg',
+        alt: 'Знак «Не кормить птиц»'
+      }
+    ];
+
+    // ЗАДАНИЕ 5. Итоговый тест.
+    const task5Data = [
+      {
+        text: 'Я очень устал, но завтра экзамен. Я ... подготовиться.',
+        options: [['a', 'хочу'], ['b', 'нужен'], ['c', 'должен']],
+        answer: 'c'
+      },
+      {
+        text: 'У меня нет ручки. Мне ... ручка.',
+        options: [['a', 'должна'], ['b', 'нужна'], ['c', 'можно']],
+        answer: 'b'
+      },
+      {
+        text: 'Я свободен вечером и ... посмотреть этот фильм.',
+        options: [['a', 'хочу'], ['b', 'могу'], ['c', 'должен']],
+        answer: 'a'
+      },
+      {
+        text: 'В самолёте ... курить.',
+        options: [['a', 'нужно'], ['b', 'можно'], ['c', 'нельзя']],
+        answer: 'c'
+      },
+      {
+        text: 'Извини, у меня много работы, я не ... встретиться сегодня.',
+        options: [['a', 'могу'], ['b', 'хочу'], ['c', 'должен']],
+        answer: 'a'
+      },
+      {
+        text: 'Это музей. Тут ... фотографировать, но без вспышки.',
+        options: [['a', 'можно'], ['b', 'нельзя'], ['c', 'нужно']],
+        answer: 'a'
+      },
+      {
+        text: 'В библиотеке ... быть тихо.',
+        options: [['a', 'нужно'], ['b', 'можно'], ['c', 'должно']],
+        answer: 'c'
+      },
+      {
+        text: 'У врача много пациентов. Он ... много работать.',
+        options: [['a', 'должен'], ['b', 'может'], ['c', 'нужен']],
+        answer: 'a'
+      },
+      {
+        text: 'Мне ... купить хлеб и молоко.',
+        options: [['a', 'можно'], ['b', 'нельзя'], ['c', 'нужно']],
+        answer: 'c'
+      },
+      {
+        text: 'Чтобы купить хлеб и молоко, мне ... деньги.',
+        options: [['a', 'должны'], ['b', 'нужны'], ['c', 'можно']],
+        answer: 'b'
+      }
+    ];
+
+    // Создание выпадающего списка.
+    function makeSelect(options, name) {
+      const select = document.createElement('select');
+      select.name = name;
+      select.setAttribute('aria-label', 'Выберите правильный ответ');
+
+      const first = document.createElement('option');
+      first.value = '';
+      first.textContent = '— выберите —';
+      select.appendChild(first);
+
+      options.forEach(option => {
+        const el = document.createElement('option');
+        el.value = option;
+        el.textContent = option;
+        select.appendChild(el);
+      });
+
+      return select;
+    }
+
+    // Отображение заданий с выпадающими списками.
+    function renderSelectTask(containerId, data, prefix, optionsForAll) {
+      const container = document.getElementById(containerId);
+
+      data.forEach((item, index) => {
+        const row = document.createElement('div');
+        row.className = 'question';
+        row.dataset.index = index;
+        row.dataset.correct = item.answer;
+
+        const number = document.createElement('span');
+        number.className = 'q-number';
+        number.textContent = `${index + 1}.`;
+
+        const text = document.createElement('div');
+        text.className = 'q-text';
+        text.textContent = item.text;
+
+        const select = makeSelect(
+          item.options || optionsForAll,
+          `${prefix}-${index}`
+        );
+
+        const feedback = document.createElement('div');
+        feedback.className = 'inline-feedback';
+        feedback.setAttribute('aria-live', 'polite');
+
+        row.append(number, text, select, feedback);
+        container.appendChild(row);
+      });
+    }
+
+    renderSelectTask('task1-questions', task1Data, 'task1');
+    renderSelectTask('task3-questions', task3Data, 'task3', verbForms);
+
+    // Отображение итогового теста.
+    function renderTask5() {
+      const container = document.getElementById('task5-questions');
+
+      task5Data.forEach((item, index) => {
+        const row = document.createElement('div');
+        row.className = 'question question-test';
+        row.dataset.index = index;
+        row.dataset.correct = item.answer;
+
+        const qNumber = document.createElement('span');
+        qNumber.className = 'q-number';
+        qNumber.textContent = `${index + 1}.`;
+
+        const qText = document.createElement('span');
+        qText.className = 'q-text';
+        qText.textContent = item.text;
+
+        const options = document.createElement('div');
+        options.className = 'test-options';
+
+        item.options.forEach(([value, label]) => {
+          const optionLabel = document.createElement('label');
+          optionLabel.className = 'option-label';
+
+          const input = document.createElement('input');
+          input.type = 'radio';
+          input.name = `task5-${index}`;
+          input.value = value;
+
+          const optionText = document.createElement('span');
+          optionText.textContent = `${value}) ${label}`;
+
+          optionLabel.append(input, optionText);
+          options.appendChild(optionLabel);
+        });
+
+        const feedback = document.createElement('div');
+        feedback.className = 'inline-feedback';
+        feedback.setAttribute('aria-live', 'polite');
+
+        row.append(qNumber, qText, options, feedback);
+        container.appendChild(row);
+      });
+    }
+
+    renderTask5();
+
+    // Перемешивание карточек.
+    function shuffle(array) {
+      const result = [...array];
+
+      for (let i = result.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [result[i], result[j]] = [result[j], result[i]];
+      }
+
+      return result;
+    }
+
+    // Создание перетаскиваемой карточки.
+    function makeTile(id, text, target, className = 'drop-tile') {
+      const tile = document.createElement('button');
+      tile.type = 'button';
+      tile.className = className;
+      tile.id = id;
+      tile.draggable = true;
+      tile.dataset.target = target;
+      tile.textContent = text;
+
+      tile.setAttribute(
+        'aria-label',
+        `${text}. Нажмите, чтобы выбрать, или перетащите.`
+      );
+
+      tile.addEventListener('click', event => {
+        event.stopPropagation();
+
+        const previouslySelected = selectedTileId
+          ? document.getElementById(selectedTileId)
+          : null;
+
+        const containingZone = tile.closest('.dropzone');
+
+        if (
+          previouslySelected &&
+          previouslySelected !== tile &&
+          containingZone
+        ) {
+          placeTile(previouslySelected, containingZone);
+          return;
+        }
+
+        if (selectedTileId === tile.id) {
+          tile.classList.remove('selected');
+          selectedTileId = null;
+          return;
+        }
+
+        document.querySelectorAll('.drop-tile.selected').forEach(el => {
+          el.classList.remove('selected');
+        });
+
+        selectedTileId = tile.id;
+        tile.classList.add('selected');
+      });
+
+      tile.addEventListener('dragstart', event => {
+        draggedTileId = tile.id;
+        selectedTileId = tile.id;
+
+        if (event.dataTransfer) {
+          event.dataTransfer.setData('text/plain', tile.id);
+          event.dataTransfer.effectAllowed = 'move';
+        }
+      });
+
+      tile.addEventListener('dragend', () => {
+        draggedTileId = null;
+      });
+
+      return tile;
+    }
+
+    // Настройка ячеек для перетаскивания.
+    function setupZone(zone) {
+      zone.addEventListener('dragover', event => {
+        event.preventDefault();
+        zone.classList.add('drag-over');
+
+        if (event.dataTransfer) {
+          event.dataTransfer.dropEffect = 'move';
+        }
+      });
+
+      zone.addEventListener('dragleave', () => {
+        zone.classList.remove('drag-over');
+      });
+
+      zone.addEventListener('drop', event => {
+        event.preventDefault();
+        zone.classList.remove('drag-over');
+
+        const id =
+          (event.dataTransfer && event.dataTransfer.getData('text/plain')) ||
+          draggedTileId;
+
+        const tile = document.getElementById(id);
+
+        if (tile) placeTile(tile, zone);
+      });
+
+      zone.addEventListener('click', event => {
+        if (event.target.closest('.drop-tile')) return;
+
+        if (selectedTileId) {
+          const tile = document.getElementById(selectedTileId);
+          if (tile) placeTile(tile, zone);
+        } else {
+          const existing = zone.querySelector('.drop-tile');
+
+          if (existing) {
+            selectedTileId = existing.id;
+            existing.classList.add('selected');
+          }
+        }
+      });
+
+      zone.addEventListener('keydown', event => {
+        if (
+          (event.key === 'Enter' || event.key === ' ') &&
+          selectedTileId
+        ) {
+          event.preventDefault();
+          const tile = document.getElementById(selectedTileId);
+          if (tile) placeTile(tile, zone);
+        }
+      });
+    }
+
+    // Размещение карточки в ячейке.
+    function placeTile(tile, zone) {
+      if (!tile || !zone) return;
+
+      const sourceZone = tile.closest('.dropzone');
+      const oldTile = zone.querySelector('.drop-tile');
+
+      if (oldTile && oldTile !== tile) {
+        const bank = oldTile.dataset.bank;
+        const bankContainer = document.getElementById(bank);
+
+        if (bankContainer) bankContainer.appendChild(oldTile);
+
+        oldTile.classList.remove('selected');
+      }
+
+      document.querySelectorAll('.drop-tile.selected').forEach(el => {
+        el.classList.remove('selected');
+      });
+
+      zone.appendChild(tile);
+
+      if (sourceZone && sourceZone !== zone &&
+          !sourceZone.querySelector('.drop-tile')) {
+        sourceZone.classList.remove('filled', 'correct', 'incorrect');
+
+        const sourceNote = sourceZone.querySelector('.cell-note');
+        if (sourceNote) sourceNote.textContent = '';
+      }
+
+      zone.classList.add('filled');
+      zone.classList.remove('correct', 'incorrect');
+
+      const note = zone.querySelector('.cell-note');
+      if (note) note.textContent = '';
+
+      selectedTileId = null;
+    }
+
+    // Удаление цветовой обратной связи.
+    function clearZoneMarks(selector) {
+      document.querySelectorAll(selector).forEach(zone => {
+        zone.classList.remove('correct', 'incorrect', 'drag-over');
+
+        const note = zone.querySelector('.cell-note');
+        if (note) note.textContent = '';
+      });
+    }
+
+    // Создание таблицы спряжения.
+    function renderConjugation() {
+      const bank = document.getElementById('verb-bank');
+      const body = document.getElementById('conjugation-body');
+      const label = bank.querySelector('.bank-label');
+
+      bank.innerHTML = '';
+      bank.appendChild(label);
+
+      const forms = [];
+
+      pronouns.forEach(person => {
+        forms.push({
+          id: `want-${person.key}`,
+          text: person.want,
+          target: `want-${person.key}`
+        });
+
+        forms.push({
+          id: `can-${person.key}`,
+          text: person.can,
+          target: `can-${person.key}`
+        });
+      });
+
+      shuffle(forms).forEach(form => {
+        const tile = makeTile(form.id, form.text, form.target);
+        tile.dataset.bank = 'verb-bank';
+        bank.appendChild(tile);
+      });
+
+      body.innerHTML = '';
+
+      pronouns.forEach(person => {
+        const tr = document.createElement('tr');
+
+        const th = document.createElement('td');
+        th.className = 'pronoun';
+        th.textContent = person.label;
+        tr.appendChild(th);
+
+        ['want', 'can'].forEach(verb => {
+          const td = document.createElement('td');
+
+          const zone = document.createElement('div');
+          zone.className = 'dropzone';
+          zone.id = `zone-${verb}-${person.key}`;
+          zone.dataset.target = `${verb}-${person.key}`;
+          zone.tabIndex = 0;
+          zone.setAttribute('role', 'button');
+
+          zone.setAttribute(
+            'aria-label',
+            `${person.label}, ${verb === 'want' ? 'хотеть' : 'мочь'}`
+          );
+
+          const placeholder = document.createElement('span');
+          placeholder.className = 'placeholder';
+          placeholder.textContent = 'Перетащите сюда';
+
+          const note = document.createElement('span');
+          note.className = 'cell-note';
+
+          zone.append(placeholder, note);
+          setupZone(zone);
+          td.appendChild(zone);
+          tr.appendChild(td);
+        });
+
+        body.appendChild(tr);
+      });
+    }
+
+    renderConjugation();
+
+    // Создание упражнения с изображениями.
+    function renderImageTask() {
+      const bank = document.getElementById('sentence-bank');
+      const label = bank.querySelector('.bank-label');
+
+      bank.innerHTML = '';
+      bank.appendChild(label);
+
+      shuffle(imageTasks).forEach(item => {
+        const tile = makeTile(
+          `sentence-${item.id}`,
+          item.sentence,
+          item.id
+        );
+
+        tile.dataset.bank = 'sentence-bank';
+        tile.style.whiteSpace = 'normal';
+        bank.appendChild(tile);
+      });
+
+      const grid = document.getElementById('image-grid');
+      grid.innerHTML = '';
+
+      imageTasks.forEach((item, index) => {
+        const card = document.createElement('article');
+        card.className = 'image-card';
+
+        const frame = document.createElement('div');
+        frame.className = 'image-frame';
+
+        const img = document.createElement('img');
+        img.src = item.src;
+        img.alt = item.alt;
+        img.loading = 'lazy';
+
+        const fallback = document.createElement('div');
+        fallback.className = 'image-fallback';
+        fallback.textContent =
+          'Изображение не загрузилось. Проверьте подключение к интернету.';
+        fallback.hidden = true;
+
+        img.addEventListener('error', () => {
+          img.hidden = true;
+          fallback.hidden = false;
+        });
+
+        frame.append(img, fallback);
+
+        const bottom = document.createElement('div');
+        bottom.className = 'image-card-bottom';
+
+        const caption = document.createElement('p');
+        caption.className = 'image-caption';
+        caption.textContent = `Изображение ${index + 1}`;
+
+        const zone = document.createElement('div');
+        zone.className = 'dropzone image-dropzone';
+        zone.id = `zone-${item.id}`;
+        zone.dataset.target = item.id;
+        zone.tabIndex = 0;
+        zone.setAttribute('role', 'button');
+
+        zone.setAttribute(
+          'aria-label',
+          `Перетащите предложение к изображению ${index + 1}`
+        );
+
+        const placeholder = document.createElement('span');
+        placeholder.className = 'placeholder';
+        placeholder.textContent = 'Перетащите предложение сюда';
+
+        const note = document.createElement('span');
+        note.className = 'cell-note';
+
+        zone.append(placeholder, note);
+        setupZone(zone);
+
+        bottom.append(caption, zone);
+        card.append(frame, bottom);
+        grid.appendChild(card);
+      });
+    }
+
+    renderImageTask();
+
+    // Подсчёт баллов и общего результата.
+    function recordScore(taskNum, correct, total) {
+      taskScores[taskNum] = { correct, total };
+
+      const result = document.getElementById(`result${taskNum}`);
+
+      if (result) {
+        result.textContent = `Результат: ${correct} из ${total}`;
+      }
+
+      updateOverall();
+    }
+
+    function updateOverall() {
+      const checked = Object.values(taskScores);
+
+      if (!checked.length) {
+        document.getElementById('overall-result').textContent =
+          'Выполните задания и нажмите «Проверить».';
+        return;
+      }
+
+      const correct = checked.reduce(
+        (sum, item) => sum + item.correct, 0
+      );
+
+      const total = checked.reduce(
+        (sum, item) => sum + item.total, 0
+      );
+
+      document.getElementById('overall-result').textContent =
+        `Правильных ответов: ${correct} из ${total}. ` +
+        `Проверено заданий: ${checked.length} из 5.`;
+    }
+
+    // Проверка заданий с выпадающими списками.
+    function checkSelectTask(taskNum, containerId) {
+      const rows = [
+        ...document.querySelectorAll(`#${containerId} .question`)
+      ];
+
+      let correct = 0;
+
+      rows.forEach(row => {
+        const select = row.querySelector('select');
+        const feedback = row.querySelector('.inline-feedback');
+        const answer = row.dataset.correct;
+        const isCorrect = select.value === answer;
+
+        row.classList.toggle('correct', isCorrect);
+        row.classList.toggle('incorrect', !isCorrect);
+
+        if (isCorrect) {
+          correct++;
+          feedback.textContent = 'Верно!';
+        } else {
+          feedback.textContent = select.value
+            ? `Правильный ответ: ${answer}.`
+            : `Выберите ответ. Правильный ответ: ${answer}.`;
+        }
+      });
+
+      recordScore(taskNum, correct, rows.length);
+      return { correct, total: rows.length };
+    }
+
+    // Проверка спряжения глаголов.
+    function checkTask2() {
+      let correct = 0;
+      const total = pronouns.length * 2;
+
+      pronouns.forEach(person => {
+        ['want', 'can'].forEach(verb => {
+          const zone = document.getElementById(
+            `zone-${verb}-${person.key}`
+          );
+
+          const tile = zone.querySelector('.drop-tile');
+
+          const isCorrect =
+            !!tile && tile.dataset.target === zone.dataset.target;
+
+          zone.classList.toggle('correct', isCorrect);
+          zone.classList.toggle('incorrect', !isCorrect);
+
+          const note = zone.querySelector('.cell-note');
+
+          if (isCorrect) {
+            correct++;
+            note.textContent = '';
+          } else {
+            const answer = verb === 'want' ? person.want : person.can;
+            note.textContent = answer;
+          }
+        });
+      });
+
+      recordScore(2, correct, total);
+      return { correct, total };
+    }
+
+    // Проверка соотнесения предложений с картинками.
+    function checkTask4() {
+      let correct = 0;
+
+      imageTasks.forEach(item => {
+        const zone = document.getElementById(`zone-${item.id}`);
+        const tile = zone.querySelector('.drop-tile');
+
+        const isCorrect =
+          !!tile && tile.dataset.target === item.id;
+
+        zone.classList.toggle('correct', isCorrect);
+        zone.classList.toggle('incorrect', !isCorrect);
+
+        const note = zone.querySelector('.cell-note');
+        note.textContent = isCorrect ? '' : item.sentence;
+
+        if (isCorrect) correct++;
+      });
+
+      recordScore(4, correct, imageTasks.length);
+      return { correct, total: imageTasks.length };
+    }
+
+    // Проверка итогового теста.
+    function checkTask5() {
+      const rows = [
+        ...document.querySelectorAll('#task5-questions .question')
+      ];
+
+      let correct = 0;
+
+      rows.forEach(row => {
+        const chosen = row.querySelector('input[type="radio"]:checked');
+        const answer = row.dataset.correct;
+        const isCorrect = !!chosen && chosen.value === answer;
+
+        row.classList.toggle('correct', isCorrect);
+        row.classList.toggle('incorrect', !isCorrect);
+
+        const feedback = row.querySelector('.inline-feedback');
+
+        const correctOption = task5Data[
+          Number(row.dataset.index)
+        ].options.find(option => option[0] === answer);
+
+        if (isCorrect) {
+          correct++;
+          feedback.textContent = 'Верно!';
+        } else {
+          feedback.textContent =
+            `Правильный ответ: ${answer}) ${correctOption[1]}.`;
+        }
+      });
+
+      recordScore(5, correct, rows.length);
+      return { correct, total: rows.length };
+    }
+
+    // Сброс заданий с выпадающими списками.
+    function resetSelectTask(containerId, taskNum) {
+      document.querySelectorAll(`#${containerId} .question`).forEach(row => {
+        row.classList.remove('correct', 'incorrect');
+        row.querySelector('select').value = '';
+        row.querySelector('.inline-feedback').textContent = '';
+      });
+
+      resetScore(taskNum);
+    }
+
+    function resetScore(taskNum) {
+      delete taskScores[taskNum];
+
+      const result = document.getElementById(`result${taskNum}`);
+
+      if (result) result.textContent = '';
+
+      updateOverall();
+    }
+
+    // Сброс таблицы спряжения.
+    function resetTask2() {
+      const bank = document.getElementById('verb-bank');
+
+      document.querySelectorAll('#conjugation-body .drop-tile').forEach(
+        tile => bank.appendChild(tile)
+      );
+
+      clearZoneMarks('#conjugation-body .dropzone');
+
+      document.querySelectorAll('#conjugation-body .dropzone').forEach(
+        zone => zone.classList.remove('filled')
+      );
+
+      document.querySelectorAll('#conjugation-body .drop-tile').forEach(
+        tile => tile.classList.remove('selected')
+      );
+
+      selectedTileId = null;
+      resetScore(2);
+    }
+
+    // Сброс задания с картинками.
+    function resetTask4() {
+      const bank = document.getElementById('sentence-bank');
+
+      document.querySelectorAll('#image-grid .drop-tile').forEach(
+        tile => bank.appendChild(tile)
+      );
+
+      clearZoneMarks('#image-grid .dropzone');
+
+      document.querySelectorAll('#image-grid .dropzone').forEach(
+        zone => zone.classList.remove('filled')
+      );
+
+      document.querySelectorAll('#sentence-bank .drop-tile').forEach(
+        tile => tile.classList.remove('selected')
+      );
+
+      selectedTileId = null;
+      resetScore(4);
+    }
+
+    // Сброс итогового теста.
+    function resetTask5() {
+      document.querySelectorAll('#task5-questions .question').forEach(row => {
+        row.classList.remove('correct', 'incorrect');
+
+        row.querySelectorAll('input[type="radio"]').forEach(input => {
+          input.checked = false;
+        });
+
+        row.querySelector('.inline-feedback').textContent = '';
+      });
+
+      resetScore(5);
+    }
+
+    // Сброс всех заданий.
+    function resetAll() {
+      resetSelectTask('task1-questions', 1);
+      resetTask2();
+      resetSelectTask('task3-questions', 3);
+      resetTask4();
+      resetTask5();
+    }
+
+    // Кнопки проверки.
+    document.getElementById('check1').addEventListener('click', () => {
+      checkSelectTask(1, 'task1-questions');
+    });
+
+    document.getElementById('check2').addEventListener('click', checkTask2);
+
+    document.getElementById('check3').addEventListener('click', () => {
+      checkSelectTask(3, 'task3-questions');
+    });
+
+    document.getElementById('check4').addEventListener('click', checkTask4);
+    document.getElementById('check5').addEventListener('click', checkTask5);
+
+    // Кнопки сброса.
+    document.getElementById('reset1').addEventListener('click', () => {
+      resetSelectTask('task1-questions', 1);
+    });
+
+    document.getElementById('reset2').addEventListener('click', resetTask2);
+
+    document.getElementById('reset3').addEventListener('click', () => {
+      resetSelectTask('task3-questions', 3);
+    });
+
+    document.getElementById('reset4').addEventListener('click', resetTask4);
+    document.getElementById('reset5').addEventListener('click', resetTask5);
+
+    document.getElementById('reset-all').addEventListener('click', resetAll);
+  </script>
 </body>
 </html>
