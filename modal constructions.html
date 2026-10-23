@@ -1,0 +1,835 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+	<title></title>
+	<meta name="generator" content="LibreOffice 26.8.0.3 (Linux)"/>
+	<meta name="created" content="00:00:00"/>
+	<meta name="changed" content="00:00:00"/>
+	<style type="text/css">
+		@page { size: 8.27in 11.69in; margin: 0.79in }
+		p { margin-bottom: 0.1in; line-height: 115%; background: transparent }
+		pre { font-size: 10pt; font-family: "Liberation Mono", monospace; background: transparent }
+		h1 { margin-bottom: 0.08in; background: transparent; page-break-after: avoid }
+		h1.western { font-family: "Liberation Serif", serif; font-size: 24pt; font-weight: bold }
+		h1.cjk { font-family: "AR PL SungtiL GB"; font-size: 24pt; font-weight: bold }
+		h1.ctl { font-size: 24pt; font-family: "Noto Sans Devanagari"; font-weight: bold }
+		h2 { margin-top: 0.14in; margin-bottom: 0.08in; background: transparent; page-break-after: avoid }
+		h2.western { font-family: "Liberation Serif", serif; font-size: 18pt; font-weight: bold }
+		h2.cjk { font-family: "AR PL SungtiL GB"; font-size: 18pt; font-weight: bold }
+		h2.ctl { font-size: 18pt; font-family: "Noto Sans Devanagari"; font-weight: bold }
+		strong { font-weight: bold }
+	</style>
+</head>
+<body lang="en-US" link="#000080" vlink="#800000" dir="ltr"><pre style="margin-bottom: 0.2in; background: #e1e1e1">body {<br/>
+  font-family: -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, Helvetica, Arial, sans-serif;<br/>
+  background-color: var(--bg-color);<br/>
+  color: var(--text-color);<br/>
+  line-height: 1.6;<br/>
+  margin: 0;<br/>
+  padding: 20px;<br/>
+}<br/>
+<br/>
+.container {<br/>
+  max-width: 900px;<br/>
+  margin: 0 auto;<br/>
+  background: var(--card-bg);<br/>
+  padding: 30px;<br/>
+  border-radius: 14px;<br/>
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);<br/>
+}<br/>
+<br/>
+h1 {<br/>
+  text-align: center;<br/>
+  color: var(--primary-color);<br/>
+  margin-top: 0;<br/>
+  margin-bottom: 5px;<br/>
+}<br/>
+<br/>
+.subtitle {<br/>
+  text-align: center;<br/>
+  color: #64748b;<br/>
+  margin-bottom: 30px;<br/>
+  font-weight: 500;<br/>
+}<br/>
+<br/>
+h2 {<br/>
+  color: #1e3a8a;<br/>
+  border-bottom: 2px solid #e2e8f0;<br/>
+  padding-bottom: 8px;<br/>
+  margin-top: 40px;<br/>
+  font-size: 1.25rem;<br/>
+}<br/>
+<br/>
+.instructions {<br/>
+  color: #334155;<br/>
+  margin-bottom: 16px;<br/>
+  font-size: 0.95rem;<br/>
+  background-color: #eff6ff;<br/>
+  padding: 12px 18px;<br/>
+  border-radius: 8px;<br/>
+  border-left: 4px solid var(--primary-color);<br/>
+}<br/>
+<br/>
+.task-block {<br/>
+  background: var(--section-bg);<br/>
+  padding: 20px;<br/>
+  border: 1px solid #e2e8f0;<br/>
+  border-radius: 10px;<br/>
+  margin-bottom: 20px;<br/>
+}<br/>
+<br/>
+.item-row {<br/>
+  margin-bottom: 12px;<br/>
+  display: flex;<br/>
+  align-items: center;<br/>
+  justify-content: space-between;<br/>
+  flex-wrap: wrap;<br/>
+  gap: 10px;<br/>
+}<br/>
+<br/>
+.item-row span {<br/>
+  flex: 1;<br/>
+  min-width: 250px;<br/>
+}<br/>
+<br/>
+select {<br/>
+  padding: 6px 12px;<br/>
+  border: 1px solid var(--border-color);<br/>
+  border-radius: 6px;<br/>
+  font-size: 0.95rem;<br/>
+  background-color: #ffffff;<br/>
+  color: #0f172a;<br/>
+  cursor: pointer;<br/>
+  font-weight: 500;<br/>
+  transition: all 0.2s ease;<br/>
+}<br/>
+<br/>
+select:focus {<br/>
+  outline: 2px solid var(--primary-color);<br/>
+}<br/>
+<br/>
+/* Таблица для Задания 2 */<br/>
+.drag-pool {<br/>
+  display: flex;<br/>
+  flex-wrap: wrap;<br/>
+  gap: 10px;<br/>
+  background: #ffffff;<br/>
+  padding: 15px;<br/>
+  border: 2px dashed var(--border-color);<br/>
+  border-radius: 8px;<br/>
+  margin-bottom: 20px;<br/>
+  min-height: 50px;<br/>
+}<br/>
+<br/>
+.draggable-item {<br/>
+  background-color: #e0f2fe;<br/>
+  color: #0369a1;<br/>
+  border: 1px solid #bae6fd;<br/>
+  padding: 8px 14px;<br/>
+  border-radius: 6px;<br/>
+  cursor: grab;<br/>
+  font-weight: 600;<br/>
+  user-select: none;<br/>
+  transition: background 0.2s;<br/>
+}<br/>
+<br/>
+.draggable-item:active {<br/>
+  cursor: grabbing;<br/>
+}<br/>
+<br/>
+.conjugation-table {<br/>
+  width: 100%;<br/>
+  border-collapse: collapse;<br/>
+  background: #ffffff;<br/>
+  border-radius: 8px;<br/>
+  overflow: hidden;<br/>
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);<br/>
+}<br/>
+<br/>
+.conjugation-table th, .conjugation-table td {<br/>
+  border: 1px solid #e2e8f0;<br/>
+  padding: 12px;<br/>
+  text-align: center;<br/>
+}<br/>
+<br/>
+.conjugation-table th {<br/>
+  background-color: #f1f5f9;<br/>
+  color: #334155;<br/>
+}<br/>
+<br/>
+.drop-target {<br/>
+  min-height: 40px;<br/>
+  background-color: #f8fafc;<br/>
+  border: 2px dashed #cbd5e1;<br/>
+  border-radius: 6px;<br/>
+  display: flex;<br/>
+  align-items: center;<br/>
+  justify-content: center;<br/>
+  padding: 4px;<br/>
+  transition: background 0.2s;<br/>
+}<br/>
+<br/>
+.drop-target.drag-over {<br/>
+  background-color: #e0f2fe;<br/>
+  border-color: var(--primary-color);<br/>
+}<br/>
+<br/>
+/* Задание 4: Картинки и дроп-зоны */<br/>
+.images-grid {<br/>
+  display: grid;<br/>
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));<br/>
+  gap: 20px;<br/>
+  margin-bottom: 20px;<br/>
+}<br/>
+<br/>
+.image-card {<br/>
+  background: #ffffff;<br/>
+  border: 1px solid #cbd5e1;<br/>
+  border-radius: 10px;<br/>
+  padding: 12px;<br/>
+  display: flex;<br/>
+  flex-direction: column;<br/>
+  align-items: center;<br/>
+  gap: 12px;<br/>
+}<br/>
+<br/>
+.image-card img {<br/>
+  width: 100%;<br/>
+  height: 160px;<br/>
+  object-fit: cover;<br/>
+  border-radius: 6px;<br/>
+  border: 1px solid #e2e8f0;<br/>
+}<br/>
+<br/>
+.sentence-pool {<br/>
+  display: flex;<br/>
+  flex-direction: column;<br/>
+  gap: 10px;<br/>
+  background: #ffffff;<br/>
+  padding: 15px;<br/>
+  border: 2px dashed var(--border-color);<br/>
+  border-radius: 8px;<br/>
+  margin-bottom: 20px;<br/>
+}<br/>
+<br/>
+.sentence-chip {<br/>
+  background-color: #fef3c7;<br/>
+  color: #92400e;<br/>
+  border: 1px solid #fde68a;<br/>
+  padding: 8px 12px;<br/>
+  border-radius: 6px;<br/>
+  cursor: grab;<br/>
+  font-weight: 500;<br/>
+  font-size: 0.95rem;<br/>
+  user-select: none;<br/>
+}<br/>
+<br/>
+/* Радио-кнопки для теста */<br/>
+.radio-group {<br/>
+  display: flex;<br/>
+  gap: 15px;<br/>
+  margin-top: 6px;<br/>
+  flex-wrap: wrap;<br/>
+}<br/>
+<br/>
+.radio-label {<br/>
+  cursor: pointer;<br/>
+  font-weight: 500;<br/>
+  display: flex;<br/>
+  align-items: center;<br/>
+  gap: 5px;<br/>
+}<br/>
+<br/>
+/* Статусы валидации */<br/>
+.correct {<br/>
+  border: 2px solid var(--correct-color) !important;<br/>
+  background-color: #f0fdf4 !important;<br/>
+  color: #15803d !important;<br/>
+}<br/>
+<br/>
+.incorrect {<br/>
+  border: 2px solid var(--incorrect-color) !important;<br/>
+  background-color: #fef2f2 !important;<br/>
+  color: #b91c1c !important;<br/>
+}<br/>
+<br/>
+.highlight-correct {<br/>
+  color: var(--correct-color);<br/>
+  font-weight: bold;<br/>
+}<br/>
+<br/>
+.highlight-incorrect {<br/>
+  color: var(--incorrect-color);<br/>
+  font-weight: bold;<br/>
+}<br/>
+<br/>
+/* Кнопки и результаты */<br/>
+.controls {<br/>
+  display: flex;<br/>
+  flex-direction: column;<br/>
+  align-items: flex-start;<br/>
+  gap: 10px;<br/>
+  margin-top: 15px;<br/>
+  padding-top: 10px;<br/>
+  border-top: 1px dashed #cbd5e1;<br/>
+}<br/>
+<br/>
+.btn-group {<br/>
+  display: flex;<br/>
+  gap: 10px;<br/>
+}<br/>
+<br/>
+.btn {<br/>
+  background-color: var(--primary-color);<br/>
+  color: white;<br/>
+  border: none;<br/>
+  padding: 10px 20px;<br/>
+  font-size: 0.95rem;<br/>
+  font-weight: 600;<br/>
+  border-radius: 6px;<br/>
+  cursor: pointer;<br/>
+  transition: background-color 0.2s ease;<br/>
+}<br/>
+<br/>
+.btn:hover {<br/>
+  background-color: var(--primary-hover);<br/>
+}<br/>
+<br/>
+.btn-reset {<br/>
+  background-color: #64748b;<br/>
+}<br/>
+<br/>
+.btn-reset:hover {<br/>
+  background-color: #475569;<br/>
+}<br/>
+<br/>
+.result-box {<br/>
+  font-weight: bold;<br/>
+  font-size: 1.05rem;<br/>
+}<br/>
+<br/>
+.total-score-card {<br/>
+  margin-top: 40px;<br/>
+  padding: 25px;<br/>
+  background: #eff6ff;<br/>
+  border: 2px solid var(--primary-color);<br/>
+  border-radius: 12px;<br/>
+  text-align: center;<br/>
+}<br/>
+<br/>
+.total-score-card h2 {<br/>
+  margin-top: 0;<br/>
+  color: var(--primary-color);<br/>
+  border: none;<br/>
+  font-size: 1.4rem;<br/>
+}<br/>
+<br/>
+#total-result {<br/>
+  font-size: 1.25rem;<br/>
+  font-weight: bold;<br/>
+  margin-top: 15px;<br/>
+}</pre><h1 class="western" style="line-height: 115%; margin-top: 0in; margin-bottom: 0.1in">
+Интерактивные упражнения РКИ</h1>
+<p style="margin-bottom: 0in">Тема: Модальные
+конструкции (Должен / Нужен, Хотеть /
+Мочь, Можно / Нельзя)</p>
+<h2 class="western">Задание 1. Должен или Нужен?</h2>
+<p style="margin-bottom: 0in">Выберите правильную
+альтернативу для каждого предложения.
+(10 баллов)</p>
+<p style="line-height: 100%; margin-bottom: 0in">1. Завтра у
+меня экзамен. Я -- выберите -- должен нужен
+много заниматься. 
+</p>
+<pre style="margin-bottom: 0.2in; background: #e1e1e1">&lt;div class=&quot;item-row&quot;&gt;<br/>
+  &lt;span&gt;2. У меня болит голова. Мне <br/>
+    &lt;select class=&quot;t1-select&quot; data-answer=&quot;нужен&quot;&gt;<br/>
+      &lt;option value=&quot;&quot;&gt;-- выберите --&lt;/option&gt;<br/>
+      &lt;option value=&quot;должен&quot;&gt;должен&lt;/option&gt;<br/>
+      &lt;option value=&quot;нужен&quot;&gt;нужен&lt;/option&gt;<br/>
+    &lt;/select&gt; Ибупрофен.<br/>
+  &lt;/span&gt;<br/>
+&lt;/div&gt;<br/>
+<br/>
+&lt;div class=&quot;item-row&quot;&gt;<br/>
+  &lt;span&gt;3. Мария заболела. Ей <br/>
+    &lt;select class=&quot;t1-select&quot; data-answer=&quot;нужно&quot;&gt;<br/>
+      &lt;option value=&quot;&quot;&gt;-- выберите --&lt;/option&gt;<br/>
+      &lt;option value=&quot;должно&quot;&gt;должно&lt;/option&gt;<br/>
+      &lt;option value=&quot;нужно&quot;&gt;нужно&lt;/option&gt;<br/>
+    &lt;/select&gt; остаться дома.<br/>
+  &lt;/span&gt;<br/>
+&lt;/div&gt;<br/>
+<br/>
+&lt;div class=&quot;item-row&quot;&gt;<br/>
+  &lt;span&gt;4. У Марии завтра дедлайн. Она <br/>
+    &lt;select class=&quot;t1-select&quot; data-answer=&quot;должна&quot;&gt;<br/>
+      &lt;option value=&quot;&quot;&gt;-- выберите --&lt;/option&gt;<br/>
+      &lt;option value=&quot;должна&quot;&gt;должна&lt;/option&gt;<br/>
+      &lt;option value=&quot;нужна&quot;&gt;нужна&lt;/option&gt;<br/>
+    &lt;/select&gt; написать преподавателю.<br/>
+  &lt;/span&gt;<br/>
+&lt;/div&gt;<br/>
+<br/>
+&lt;div class=&quot;item-row&quot;&gt;<br/>
+  &lt;span&gt;5. Для урока нам <br/>
+    &lt;select class=&quot;t1-select&quot; data-answer=&quot;нужен&quot;&gt;<br/>
+      &lt;option value=&quot;&quot;&gt;-- выберите --&lt;/option&gt;<br/>
+      &lt;option value=&quot;должен&quot;&gt;должен&lt;/option&gt;<br/>
+      &lt;option value=&quot;нужен&quot;&gt;нужен&lt;/option&gt;<br/>
+    &lt;/select&gt; словарь.<br/>
+  &lt;/span&gt;<br/>
+&lt;/div&gt;<br/>
+<br/>
+&lt;div class=&quot;item-row&quot;&gt;<br/>
+  &lt;span&gt;6. Студенты <br/>
+    &lt;select class=&quot;t1-select&quot; data-answer=&quot;должны&quot;&gt;<br/>
+      &lt;option value=&quot;&quot;&gt;-- выберите --&lt;/option&gt;<br/>
+      &lt;option value=&quot;должны&quot;&gt;должны&lt;/option&gt;<br/>
+      &lt;option value=&quot;нужны&quot;&gt;нужны&lt;/option&gt;<br/>
+    &lt;/select&gt; сдать работу до пятницы.<br/>
+  &lt;/span&gt;<br/>
+&lt;/div&gt;<br/>
+<br/>
+&lt;div class=&quot;item-row&quot;&gt;<br/>
+  &lt;span&gt;7. Для путешествия мне <br/>
+    &lt;select class=&quot;t1-select&quot; data-answer=&quot;нужны&quot;&gt;<br/>
+      &lt;option value=&quot;&quot;&gt;-- выберите --&lt;/option&gt;<br/>
+      &lt;option value=&quot;должны&quot;&gt;должны&lt;/option&gt;<br/>
+      &lt;option value=&quot;нужны&quot;&gt;нужны&lt;/option&gt;<br/>
+    &lt;/select&gt; деньги.<br/>
+  &lt;/span&gt;<br/>
+&lt;/div&gt;<br/>
+<br/>
+&lt;div class=&quot;item-row&quot;&gt;<br/>
+  &lt;span&gt;8. Мы <br/>
+    &lt;select class=&quot;t1-select&quot; data-answer=&quot;должны&quot;&gt;<br/>
+      &lt;option value=&quot;&quot;&gt;-- выберите --&lt;/option&gt;<br/>
+      &lt;option value=&quot;должны&quot;&gt;должны&lt;/option&gt;<br/>
+      &lt;option value=&quot;нужны&quot;&gt;нужны&lt;/option&gt;<br/>
+    &lt;/select&gt; купить билеты заранее.<br/>
+  &lt;/span&gt;<br/>
+&lt;/div&gt;<br/>
+<br/>
+&lt;div class=&quot;item-row&quot;&gt;<br/>
+  &lt;span&gt;9. Мне <br/>
+    &lt;select class=&quot;t1-select&quot; data-answer=&quot;нужна&quot;&gt;<br/>
+      &lt;option value=&quot;&quot;&gt;-- выберите --&lt;/option&gt;<br/>
+      &lt;option value=&quot;должна&quot;&gt;должна&lt;/option&gt;<br/>
+      &lt;option value=&quot;нужна&quot;&gt;нужна&lt;/option&gt;<br/>
+    &lt;/select&gt; помощь, я не могу сделать это задание.<br/>
+  &lt;/span&gt;<br/>
+&lt;/div&gt;<br/>
+<br/>
+&lt;div class=&quot;item-row&quot;&gt;<br/>
+  &lt;span&gt;10. Чтобы решить проблему, мне <br/>
+    &lt;select class=&quot;t1-select&quot; data-answer=&quot;нужно&quot;&gt;<br/>
+      &lt;option value=&quot;&quot;&gt;-- выберите --&lt;/option&gt;<br/>
+      &lt;option value=&quot;должно&quot;&gt;должно&lt;/option&gt;<br/>
+      &lt;option value=&quot;нужно&quot;&gt;нужно&lt;/option&gt;<br/>
+    &lt;/select&gt; время.<br/>
+  &lt;/span&gt;<br/>
+&lt;/div&gt;<br/>
+<br/>
+&lt;div class=&quot;controls&quot;&gt;<br/>
+  &lt;div class=&quot;btn-group&quot;&gt;<br/>
+    &lt;button class=&quot;btn&quot; onclick=&quot;checkTask1()&quot;&gt;Проверить Задание 1&lt;/button&gt;<br/>
+    &lt;button class=&quot;btn btn-reset&quot; onclick=&quot;resetTask1()&quot;&gt;Сбросить&lt;/button&gt;<br/>
+  &lt;/div&gt;<br/>
+  &lt;div id=&quot;result-task1&quot; class=&quot;result-box&quot;&gt;&lt;/div&gt;<br/>
+&lt;/div&gt;</pre><h2 class="western">
+Задание 2. Спряжение глаголов &quot;хотеть&quot;
+и &quot;мочь&quot;</h2>
+<p style="margin-bottom: 0in">Перетащите формы
+глаголов в соответствующие ячейки
+таблицы. (12 баллов)</p>
+<p style="line-height: 100%; margin-bottom: 0in"><br/>
+
+</p>
+<div id="task2-container" dir="ltr">
+	<div id="pool-task2" dir="ltr"><p style="line-height: 100%; margin-bottom: 0in">
+		<br/>
+
+		</p>
+		<div id="item-hocu" dir="ltr"><p style="line-height: 100%; margin-bottom: 0in">
+			хочу</p>
+		</div>
+		<div id="item-hoces" dir="ltr"><p style="line-height: 100%; margin-bottom: 0in">
+			хочешь</p>
+		</div>
+		<div id="item-hocet" dir="ltr"><p style="line-height: 100%; margin-bottom: 0in">
+			хочет</p>
+		</div>
+		<div id="item-hotim" dir="ltr"><p style="line-height: 100%; margin-bottom: 0in">
+			хотим</p>
+		</div>
+		<div id="item-hotite" dir="ltr"><p style="line-height: 100%; margin-bottom: 0in">
+			хотите</p>
+		</div>
+		<div id="item-hotyat" dir="ltr"><p style="line-height: 100%; margin-bottom: 0in">
+			хотят</p>
+		</div>
+		<div id="item-mogu" dir="ltr"><p style="line-height: 100%; margin-bottom: 0in">
+			могу</p>
+		</div>
+		<div id="item-mozes" dir="ltr"><p style="line-height: 100%; margin-bottom: 0in">
+			можешь</p>
+		</div>
+		<div id="item-mozet" dir="ltr"><p style="line-height: 100%; margin-bottom: 0in">
+			может</p>
+		</div>
+		<div id="item-mozem" dir="ltr"><p style="line-height: 100%; margin-bottom: 0in">
+			можем</p>
+		</div>
+		<div id="item-mozete" dir="ltr"><p style="line-height: 100%; margin-bottom: 0in">
+			можете</p>
+		</div>
+		<div id="item-mogut" dir="ltr"><p style="line-height: 100%; margin-bottom: 0in">
+			могут</p>
+		</div>
+	</div>
+</div>
+<pre style="margin-bottom: 0.2in; background: #e1e1e1">&lt;table class=&quot;conjugation-table&quot;&gt;<br/>
+  &lt;thead&gt;<br/>
+    &lt;tr&gt;<br/>
+      &lt;th&gt;Местоимение&lt;/th&gt;<br/>
+      &lt;th&gt;Глагол &quot;хотеть&quot;&lt;/th&gt;<br/>
+      &lt;th&gt;Глагол &quot;мочь&quot;&lt;/th&gt;<br/>
+    &lt;/tr&gt;<br/>
+  &lt;/thead&gt;<br/>
+  &lt;tbody&gt;<br/>
+    &lt;tr&gt;<br/>
+      &lt;td&gt;&lt;strong&gt;я&lt;/strong&gt;&lt;/td&gt;<br/>
+      &lt;td&gt;&lt;div class=&quot;drop-target&quot; data-answer=&quot;хочу&quot; ondragover=&quot;allowDrop(event)&quot; ondragleave=&quot;removeDropStyle(event)&quot; ondrop=&quot;drop(event)&quot;&gt;&lt;/div&gt;&lt;/td&gt;<br/>
+      &lt;td&gt;&lt;div class=&quot;drop-target&quot; data-answer=&quot;могу&quot; ondragover=&quot;allowDrop(event)&quot; ondragleave=&quot;removeDropStyle(event)&quot; ondrop=&quot;drop(event)&quot;&gt;&lt;/div&gt;&lt;/td&gt;<br/>
+    &lt;/tr&gt;<br/>
+    &lt;tr&gt;<br/>
+      &lt;td&gt;&lt;strong&gt;ты&lt;/strong&gt;&lt;/td&gt;<br/>
+      &lt;td&gt;&lt;div class=&quot;drop-target&quot; data-answer=&quot;хочешь&quot; ondragover=&quot;allowDrop(event)&quot; ondragleave=&quot;removeDropStyle(event)&quot; ondrop=&quot;drop(event)&quot;&gt;&lt;/div&gt;&lt;/td&gt;<br/>
+      &lt;td&gt;&lt;div class=&quot;drop-target&quot; data-answer=&quot;можешь&quot; ondragover=&quot;allowDrop(event)&quot; ondragleave=&quot;removeDropStyle(event)&quot; ondrop=&quot;drop(event)&quot;&gt;&lt;/div&gt;&lt;/td&gt;<br/>
+    &lt;/tr&gt;<br/>
+    &lt;tr&gt;<br/>
+      &lt;td&gt;&lt;strong&gt;он / она / оно&lt;/strong&gt;&lt;/td&gt;<br/>
+      &lt;td&gt;&lt;div class=&quot;drop-target&quot; data-answer=&quot;хочет&quot; ondragover=&quot;allowDrop(event)&quot; ondragleave=&quot;removeDropStyle(event)&quot; ondrop=&quot;drop(event)&quot;&gt;&lt;/div&gt;&lt;/td&gt;<br/>
+      &lt;td&gt;&lt;div class=&quot;drop-target&quot; data-answer=&quot;может&quot; ondragover=&quot;allowDrop(event)&quot; ondragleave=&quot;removeDropStyle(event)&quot; ondrop=&quot;drop(event)&quot;&gt;&lt;/div&gt;&lt;/td&gt;<br/>
+    &lt;/tr&gt;<br/>
+    &lt;tr&gt;<br/>
+      &lt;td&gt;&lt;strong&gt;мы&lt;/strong&gt;&lt;/td&gt;<br/>
+      &lt;td&gt;&lt;div class=&quot;drop-target&quot; data-answer=&quot;хотим&quot; ondragover=&quot;allowDrop(event)&quot; ondragleave=&quot;removeDropStyle(event)&quot; ondrop=&quot;drop(event)&quot;&gt;&lt;/div&gt;&lt;/td&gt;<br/>
+      &lt;td&gt;&lt;div class=&quot;drop-target&quot; data-answer=&quot;можем&quot; ondragover=&quot;allowDrop(event)&quot; ondragleave=&quot;removeDropStyle(event)&quot; ondrop=&quot;drop(event)&quot;&gt;&lt;/div&gt;&lt;/td&gt;<br/>
+    &lt;/tr&gt;<br/>
+    &lt;tr&gt;<br/>
+      &lt;td&gt;&lt;strong&gt;вы&lt;/strong&gt;&lt;/td&gt;<br/>
+      &lt;td&gt;&lt;div class=&quot;drop-target&quot; data-answer=&quot;хотите&quot; ondragover=&quot;allowDrop(event)&quot; ondragleave=&quot;removeDropStyle(event)&quot; ondrop=&quot;drop(event)&quot;&gt;&lt;/div&gt;&lt;/td&gt;<br/>
+      &lt;td&gt;&lt;div class=&quot;drop-target&quot; data-answer=&quot;можете&quot; ondragover=&quot;allowDrop(event)&quot; ondragleave=&quot;removeDropStyle(event)&quot; ondrop=&quot;drop(event)&quot;&gt;&lt;/div&gt;&lt;/td&gt;<br/>
+    &lt;/tr&gt;<br/>
+    &lt;tr&gt;<br/>
+      &lt;td&gt;&lt;strong&gt;они&lt;/strong&gt;&lt;/td&gt;<br/>
+      &lt;td&gt;&lt;div class=&quot;drop-target&quot; data-answer=&quot;хотят&quot; ondragover=&quot;allowDrop(event)&quot; ondragleave=&quot;removeDropStyle(event)&quot; ondrop=&quot;drop(event)&quot;&gt;&lt;/div&gt;&lt;/td&gt;<br/>
+      &lt;td&gt;&lt;div class=&quot;drop-target&quot; data-answer=&quot;могут&quot; ondragover=&quot;allowDrop(event)&quot; ondragleave=&quot;removeDropStyle(event)&quot; ondrop=&quot;drop(event)&quot;&gt;&lt;/div&gt;&lt;/td&gt;<br/>
+    &lt;/tr&gt;<br/>
+  &lt;/tbody&gt;<br/>
+&lt;/table&gt;<br/>
+<br/>
+&lt;div class=&quot;controls&quot;&gt;<br/>
+  &lt;div class=&quot;btn-group&quot;&gt;<br/>
+    &lt;button class=&quot;btn&quot; onclick=&quot;checkTask2()&quot;&gt;Проверить Задание 2&lt;/button&gt;<br/>
+    &lt;button class=&quot;btn btn-reset&quot; onclick=&quot;resetTask2()&quot;&gt;Сбросить&lt;/button&gt;<br/>
+  &lt;/div&gt;<br/>
+  &lt;div id=&quot;result-task2&quot; class=&quot;result-box&quot;&gt;&lt;/div&gt;<br/>
+&lt;/div&gt;</pre><h2 class="western">
+Задание 3. Заполнить пропуски (&quot;хотеть&quot;
+или &quot;мочь&quot;)</h2>
+<p style="margin-bottom: 0in">Выберите правильную
+форму глагола для каждого предложения.
+(10 баллов)</p>
+<p style="line-height: 100%; margin-bottom: 0in">1. Я -- выберите
+-- хочу могу пить. У тебя есть вода? 
+</p>
+<pre style="margin-bottom: 0.2in; background: #e1e1e1">&lt;div class=&quot;item-row&quot;&gt;<br/>
+  &lt;span&gt;2. Анна <br/>
+    &lt;select class=&quot;t3-select&quot; data-answer=&quot;хочет&quot;&gt;<br/>
+      &lt;option value=&quot;&quot;&gt;-- выберите --&lt;/option&gt;<br/>
+      &lt;option value=&quot;хочет&quot;&gt;хочет&lt;/option&gt;<br/>
+      &lt;option value=&quot;может&quot;&gt;может&lt;/option&gt;<br/>
+    &lt;/select&gt; выучить русский язык, потому что она интересуется русской культурой.<br/>
+  &lt;/span&gt;<br/>
+&lt;/div&gt;<br/>
+<br/>
+&lt;div class=&quot;item-row&quot;&gt;<br/>
+  &lt;span&gt;3. Извини, я не <br/>
+    &lt;select class=&quot;t3-select&quot; data-answer=&quot;могу&quot;&gt;<br/>
+      &lt;option value=&quot;&quot;&gt;-- выберите --&lt;/option&gt;<br/>
+      &lt;option value=&quot;хочу&quot;&gt;хочу&lt;/option&gt;<br/>
+      &lt;option value=&quot;могу&quot;&gt;могу&lt;/option&gt;<br/>
+    &lt;/select&gt; пойти сегодня на концерт, у меня много работы.<br/>
+  &lt;/span&gt;<br/>
+&lt;/div&gt;<br/>
+<br/>
+&lt;div class=&quot;item-row&quot;&gt;<br/>
+  &lt;span&gt;4. Привет! Ты <br/>
+    &lt;select class=&quot;t3-select&quot; data-answer=&quot;хочешь&quot;&gt;<br/>
+      &lt;option value=&quot;&quot;&gt;-- выберите --&lt;/option&gt;<br/>
+      &lt;option value=&quot;хочешь&quot;&gt;хочешь&lt;/option&gt;<br/>
+      &lt;option value=&quot;можешь&quot;&gt;можешь&lt;/option&gt;<br/>
+    &lt;/select&gt; пойти с нами в кино?<br/>
+  &lt;/span&gt;<br/>
+&lt;/div&gt;<br/>
+<br/>
+&lt;div class=&quot;item-row&quot;&gt;<br/>
+  &lt;span&gt;5. Привет, как дела? Извини, ты <br/>
+    &lt;select class=&quot;t3-select&quot; data-answer=&quot;можешь&quot;&gt;<br/>
+      &lt;option value=&quot;&quot;&gt;-- выберите --&lt;/option&gt;<br/>
+      &lt;option value=&quot;хочешь&quot;&gt;хочешь&lt;/option&gt;<br/>
+      &lt;option value=&quot;можешь&quot;&gt;можешь&lt;/option&gt;<br/>
+    &lt;/select&gt; говорить сейчас?<br/>
+  &lt;/span&gt;<br/>
+&lt;/div&gt;<br/>
+<br/>
+&lt;div class=&quot;item-row&quot;&gt;<br/>
+  &lt;span&gt;6. Дети уже <br/>
+    &lt;select class=&quot;t3-select&quot; data-answer=&quot;могут&quot;&gt;<br/>
+      &lt;option value=&quot;&quot;&gt;-- выберите --&lt;/option&gt;<br/>
+      &lt;option value=&quot;хотят&quot;&gt;хотят&lt;/option&gt;<br/>
+      &lt;option value=&quot;могут&quot;&gt;могут&lt;/option&gt;<br/>
+    &lt;/select&gt; немного читать и писать.<br/>
+  &lt;/span&gt;<br/>
+&lt;/div&gt;<br/>
+<br/>
+&lt;div class=&quot;item-row&quot;&gt;<br/>
+  &lt;span&gt;7. Это Николай, наш специалист. Он <br/>
+    &lt;select class=&quot;t3-select&quot; data-answer=&quot;может&quot;&gt;<br/>
+      &lt;option value=&quot;&quot;&gt;-- выберите --&lt;/option&gt;<br/>
+      &lt;option value=&quot;хочет&quot;&gt;хочет&lt;/option&gt;<br/>
+      &lt;option value=&quot;может&quot;&gt;может&lt;/option&gt;<br/>
+    &lt;/select&gt; помочь вам.<br/>
+  &lt;/span&gt;<br/>
+&lt;/div&gt;<br/>
+<br/>
+&lt;div class=&quot;item-row&quot;&gt;<br/>
+  &lt;span&gt;8. Здравствуйте, что вы <br/>
+    &lt;select class=&quot;t3-select&quot; data-answer=&quot;хотите&quot;&gt;<br/>
+      &lt;option value=&quot;&quot;&gt;-- выберите --&lt;/option&gt;<br/>
+      &lt;option value=&quot;хотите&quot;&gt;хотите&lt;/option&gt;<br/>
+      &lt;option value=&quot;можете&quot;&gt;можете&lt;/option&gt;<br/>
+    &lt;/select&gt; заказать?<br/>
+  &lt;/span&gt;<br/>
+&lt;/div&gt;<br/>
+<br/>
+&lt;div class=&quot;item-row&quot;&gt;<br/>
+  &lt;span&gt;9. Извините, вы <br/>
+    &lt;select class=&quot;t3-select&quot; data-answer=&quot;можете&quot;&gt;<br/>
+      &lt;option value=&quot;&quot;&gt;-- выберите --&lt;/option&gt;<br/>
+      &lt;option value=&quot;хотите&quot;&gt;хотите&lt;/option&gt;<br/>
+      &lt;option value=&quot;можете&quot;&gt;можете&lt;/option&gt;<br/>
+    &lt;/select&gt; закрыть окно? Здесь холодно.<br/>
+  &lt;/span&gt;<br/>
+&lt;/div&gt;<br/>
+<br/>
+&lt;div class=&quot;item-row&quot;&gt;<br/>
+  &lt;span&gt;10. Дети не <br/>
+    &lt;select class=&quot;t3-select&quot; data-answer=&quot;хотят&quot;&gt;<br/>
+      &lt;option value=&quot;&quot;&gt;-- выберите --&lt;/option&gt;<br/>
+      &lt;option value=&quot;хотят&quot;&gt;хотят&lt;/option&gt;<br/>
+      &lt;option value=&quot;могут&quot;&gt;могут&lt;/option&gt;<br/>
+    &lt;/select&gt; есть суп.<br/>
+  &lt;/span&gt;<br/>
+&lt;/div&gt;<br/>
+<br/>
+&lt;div class=&quot;controls&quot;&gt;<br/>
+  &lt;div class=&quot;btn-group&quot;&gt;<br/>
+    &lt;button class=&quot;btn&quot; onclick=&quot;checkTask3()&quot;&gt;Проверить Задание 3&lt;/button&gt;<br/>
+    &lt;button class=&quot;btn btn-reset&quot; onclick=&quot;resetTask3()&quot;&gt;Сбросить&lt;/button&gt;<br/>
+  &lt;/div&gt;<br/>
+  &lt;div id=&quot;result-task3&quot; class=&quot;result-box&quot;&gt;&lt;/div&gt;<br/>
+&lt;/div&gt;</pre><h2 class="western">
+Задание 4. Можно или нельзя?</h2>
+<p style="margin-bottom: 0in">Перетащите правильные
+предложения под соответствующие
+изображения. (6 баллов)</p>
+<p style="line-height: 100%; margin-bottom: 0in"><br/>
+
+</p>
+<div id="task4-container" dir="ltr">
+	<div id="pool-task4" dir="ltr"><p style="line-height: 100%; margin-bottom: 0in">
+		<br/>
+
+		</p>
+		<div id="s1" dir="ltr"><p style="line-height: 100%; margin-bottom: 0in">
+			Здесь нельзя курить</p>
+		</div>
+		<div id="s2" dir="ltr"><p style="line-height: 100%; margin-bottom: 0in">
+			Здесь можно парковать машину</p>
+		</div>
+		<div id="s3" dir="ltr"><p style="line-height: 100%; margin-bottom: 0in">
+			Здесь нельзя пользоваться телефоном</p>
+		</div>
+		<div id="s4" dir="ltr"><p style="line-height: 100%; margin-bottom: 0in">
+			Здесь можно фотографировать</p>
+		</div>
+		<div id="s5" dir="ltr"><p style="line-height: 100%; margin-bottom: 0in">
+			Здесь нельзя гулять с собакой</p>
+		</div>
+		<div id="s6" dir="ltr"><p style="line-height: 100%; margin-bottom: 0in">
+			Здесь нельзя кормить птиц</p>
+		</div>
+	</div>
+</div>
+<pre style="margin-bottom: 0.2in; background: #e1e1e1">&lt;div class=&quot;images-grid&quot;&gt;<br/>
+  &lt;div class=&quot;image-card&quot;&gt;<br/>
+    &lt;img src=&quot;https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS6HVe9vlrk5luaLjgXe2SZ4dqYJ0ldEEAFAnUYKHT36w&amp;s=10&quot; alt=&quot;Знак 1&quot;&gt;<br/>
+    &lt;div class=&quot;drop-target&quot; style=&quot;width: 100%;&quot; data-answer=&quot;Здесь нельзя курить&quot; ondragover=&quot;allowDrop(event)&quot; ondragleave=&quot;removeDropStyle(event)&quot; ondrop=&quot;drop(event)&quot;&gt;&lt;/div&gt;<br/>
+  &lt;/div&gt;<br/>
+  &lt;div class=&quot;image-card&quot;&gt;<br/>
+    &lt;img src=&quot;https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSfkG33y3SYGkRiabR5uiJc7Md0ef9uEYtxNJ5EQzp5mQ&amp;s=10&quot; alt=&quot;Знак 2&quot;&gt;<br/>
+    &lt;div class=&quot;drop-target&quot; style=&quot;width: 100%;&quot; data-answer=&quot;Здесь можно парковать машину&quot; ondragover=&quot;allowDrop(event)&quot; ondragleave=&quot;removeDropStyle(event)&quot; ondrop=&quot;drop(event)&quot;&gt;&lt;/div&gt;<br/>
+  &lt;/div&gt;<br/>
+  &lt;div class=&quot;image-card&quot;&gt;<br/>
+    &lt;img src=&quot;https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ8K4wNGjUGjyxMgodZUWy7bvjK75a6ukYW2vLFLMNsf6um1BUaVAxap_4&amp;s=10&quot; alt=&quot;Знак 3&quot;&gt;<br/>
+    &lt;div class=&quot;drop-target&quot; style=&quot;width: 100%;&quot; data-answer=&quot;Здесь нельзя пользоваться телефоном&quot; ondragover=&quot;allowDrop(event)&quot; ondragleave=&quot;removeDropStyle(event)&quot; ondrop=&quot;drop(event)&quot;&gt;&lt;/div&gt;<br/>
+  &lt;/div&gt;<br/>
+  &lt;div class=&quot;image-card&quot;&gt;<br/>
+    &lt;img src=&quot;https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSX65KlmH82tCYWjOG7itHsrc2Yd3T8cQhS1DGHIuZ1xWytlWnZ2Tt5NRn4&amp;s=10&quot; alt=&quot;Знак 4&quot;&gt;<br/>
+    &lt;div class=&quot;drop-target&quot; style=&quot;width: 100%;&quot; data-answer=&quot;Здесь можно фотографировать&quot; ondragover=&quot;allowDrop(event)&quot; ondragleave=&quot;removeDropStyle(event)&quot; ondrop=&quot;drop(event)&quot;&gt;&lt;/div&gt;<br/>
+  &lt;/div&gt;<br/>
+  &lt;div class=&quot;image-card&quot;&gt;<br/>
+    &lt;img src=&quot;https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQPcsnjr9UE7NcK6FEMm5vbdzfFDUKkkAkWWkkRIxCDJmupIkMrCikY0zzp&amp;s=10&quot; alt=&quot;Знак 5&quot;&gt;<br/>
+    &lt;div class=&quot;drop-target&quot; style=&quot;width: 100%;&quot; data-answer=&quot;Здесь нельзя гулять с собакой&quot; ondragover=&quot;allowDrop(event)&quot; ondragleave=&quot;removeDropStyle(event)&quot; ondrop=&quot;drop(event)&quot;&gt;&lt;/div&gt;<br/>
+  &lt;/div&gt;<br/>
+  &lt;div class=&quot;image-card&quot;&gt;<br/>
+    &lt;img src=&quot;https://www.shutterstock.com/image-vector/do-not-feed-birds-sign-260nw-2288622477.jpg&quot; alt=&quot;Знак 6&quot;&gt;<br/>
+    &lt;div class=&quot;drop-target&quot; style=&quot;width: 100%;&quot; data-answer=&quot;Здесь нельзя кормить птиц&quot; ondragover=&quot;allowDrop(event)&quot; ondragleave=&quot;removeDropStyle(event)&quot; ondrop=&quot;drop(event)&quot;&gt;&lt;/div&gt;<br/>
+  &lt;/div&gt;<br/>
+&lt;/div&gt;<br/>
+<br/>
+&lt;div class=&quot;controls&quot;&gt;<br/>
+  &lt;div class=&quot;btn-group&quot;&gt;<br/>
+    &lt;button class=&quot;btn&quot; onclick=&quot;checkTask4()&quot;&gt;Проверить Задание 4&lt;/button&gt;<br/>
+    &lt;button class=&quot;btn btn-reset&quot; onclick=&quot;resetTask4()&quot;&gt;Сбросить&lt;/button&gt;<br/>
+  &lt;/div&gt;<br/>
+  &lt;div id=&quot;result-task4&quot; class=&quot;result-box&quot;&gt;&lt;/div&gt;<br/>
+&lt;/div&gt;</pre><h2 class="western">
+Задание 5. Тест</h2>
+<p style="margin-bottom: 0in">Выберите правильный
+вариант ответа для каждого предложения.
+(10 баллов)</p>
+<p style="line-height: 100%; margin-bottom: 0in"><strong>1. Я очень
+устал, но завтра экзамен. Я ...
+подготовиться.</strong><br/>
+а) хочу б) нужен
+в) должен 
+</p>
+<pre style="margin-bottom: 0.2in; background: #e1e1e1">&lt;div class=&quot;item-row&quot; data-answer=&quot;нужна&quot;&gt;<br/>
+  &lt;span&gt;&lt;strong&gt;2. У меня нет ручки. Мне ... ручка.&lt;/strong&gt;&lt;br&gt;<br/>
+    &lt;span class=&quot;radio-group&quot;&gt;<br/>
+      &lt;label class=&quot;radio-label&quot;&gt;&lt;input type=&quot;radio&quot; name=&quot;t5_2&quot; value=&quot;должна&quot;&gt; а) должна&lt;/label&gt;<br/>
+      &lt;label class=&quot;radio-label&quot;&gt;&lt;input type=&quot;radio&quot; name=&quot;t5_2&quot; value=&quot;нужна&quot;&gt; б) нужна&lt;/label&gt;<br/>
+      &lt;label class=&quot;radio-label&quot;&gt;&lt;input type=&quot;radio&quot; name=&quot;t5_2&quot; value=&quot;можно&quot;&gt; в) можно&lt;/label&gt;<br/>
+    &lt;/span&gt;<br/>
+  &lt;/span&gt;<br/>
+&lt;/div&gt;<br/>
+<br/>
+&lt;div class=&quot;item-row&quot; data-answer=&quot;хочу&quot;&gt;<br/>
+  &lt;span&gt;&lt;strong&gt;3. Я свободен вечером и ... посмотреть этот фильм.&lt;/strong&gt;&lt;br&gt;<br/>
+    &lt;span class=&quot;radio-group&quot;&gt;<br/>
+      &lt;label class=&quot;radio-label&quot;&gt;&lt;input type=&quot;radio&quot; name=&quot;t5_3&quot; value=&quot;хочу&quot;&gt; а) хочу&lt;/label&gt;<br/>
+      &lt;label class=&quot;radio-label&quot;&gt;&lt;input type=&quot;radio&quot; name=&quot;t5_3&quot; value=&quot;могу&quot;&gt; б) могу&lt;/label&gt;<br/>
+      &lt;label class=&quot;radio-label&quot;&gt;&lt;input type=&quot;radio&quot; name=&quot;t5_3&quot; value=&quot;должен&quot;&gt; в) должен&lt;/label&gt;<br/>
+    &lt;/span&gt;<br/>
+  &lt;/span&gt;<br/>
+&lt;/div&gt;<br/>
+<br/>
+&lt;div class=&quot;item-row&quot; data-answer=&quot;нельзя&quot;&gt;<br/>
+  &lt;span&gt;&lt;strong&gt;4. В самолёте ... курить.&lt;/strong&gt;&lt;br&gt;<br/>
+    &lt;span class=&quot;radio-group&quot;&gt;<br/>
+      &lt;label class=&quot;radio-label&quot;&gt;&lt;input type=&quot;radio&quot; name=&quot;t5_4&quot; value=&quot;нужно&quot;&gt; а) нужно&lt;/label&gt;<br/>
+      &lt;label class=&quot;radio-label&quot;&gt;&lt;input type=&quot;radio&quot; name=&quot;t5_4&quot; value=&quot;можно&quot;&gt; б) можно&lt;/label&gt;<br/>
+      &lt;label class=&quot;radio-label&quot;&gt;&lt;input type=&quot;radio&quot; name=&quot;t5_4&quot; value=&quot;нельзя&quot;&gt; в) нельзя&lt;/label&gt;<br/>
+    &lt;/span&gt;<br/>
+  &lt;/span&gt;<br/>
+&lt;/div&gt;<br/>
+<br/>
+&lt;div class=&quot;item-row&quot; data-answer=&quot;могу&quot;&gt;<br/>
+  &lt;span&gt;&lt;strong&gt;5. Извини, у меня много работы, я не ... встретиться сегодня.&lt;/strong&gt;&lt;br&gt;<br/>
+    &lt;span class=&quot;radio-group&quot;&gt;<br/>
+      &lt;label class=&quot;radio-label&quot;&gt;&lt;input type=&quot;radio&quot; name=&quot;t5_5&quot; value=&quot;могу&quot;&gt; а) могу&lt;/label&gt;<br/>
+      &lt;label class=&quot;radio-label&quot;&gt;&lt;input type=&quot;radio&quot; name=&quot;t5_5&quot; value=&quot;хочу&quot;&gt; б) хочу&lt;/label&gt;<br/>
+      &lt;label class=&quot;radio-label&quot;&gt;&lt;input type=&quot;radio&quot; name=&quot;t5_5&quot; value=&quot;должен&quot;&gt; в) должен&lt;/label&gt;<br/>
+    &lt;/span&gt;<br/>
+  &lt;/span&gt;<br/>
+&lt;/div&gt;<br/>
+<br/>
+&lt;div class=&quot;item-row&quot; data-answer=&quot;можно&quot;&gt;<br/>
+  &lt;span&gt;&lt;strong&gt;6. Это музей. Тут ... фотографировать, но без вспышки.&lt;/strong&gt;&lt;br&gt;<br/>
+    &lt;span class=&quot;radio-group&quot;&gt;<br/>
+      &lt;label class=&quot;radio-label&quot;&gt;&lt;input type=&quot;radio&quot; name=&quot;t5_6&quot; value=&quot;можно&quot;&gt; а) можно&lt;/label&gt;<br/>
+      &lt;label class=&quot;radio-label&quot;&gt;&lt;input type=&quot;radio&quot; name=&quot;t5_6&quot; value=&quot;нельзя&quot;&gt; б) нельзя&lt;/label&gt;<br/>
+      &lt;label class=&quot;radio-label&quot;&gt;&lt;input type=&quot;radio&quot; name=&quot;t5_6&quot; value=&quot;нужно&quot;&gt; в) нужно&lt;/label&gt;<br/>
+    &lt;/span&gt;<br/>
+  &lt;/span&gt;<br/>
+&lt;/div&gt;<br/>
+<br/>
+&lt;div class=&quot;item-row&quot; data-answer=&quot;должно&quot;&gt;<br/>
+  &lt;span&gt;&lt;strong&gt;7. В библиотеке ... быть тихо.&lt;/strong&gt;&lt;br&gt;<br/>
+    &lt;span class=&quot;radio-group&quot;&gt;<br/>
+      &lt;label class=&quot;radio-label&quot;&gt;&lt;input type=&quot;radio&quot; name=&quot;t5_7&quot; value=&quot;нужно&quot;&gt; а) нужно&lt;/label&gt;<br/>
+      &lt;label class=&quot;radio-label&quot;&gt;&lt;input type=&quot;radio&quot; name=&quot;t5_7&quot; value=&quot;можно&quot;&gt; б) можно&lt;/label&gt;<br/>
+      &lt;label class=&quot;radio-label&quot;&gt;&lt;input type=&quot;radio&quot; name=&quot;t5_7&quot; value=&quot;должно&quot;&gt; в) должно&lt;/label&gt;<br/>
+    &lt;/span&gt;<br/>
+  &lt;/span&gt;<br/>
+&lt;/div&gt;<br/>
+<br/>
+&lt;div class=&quot;item-row&quot; data-answer=&quot;должен&quot;&gt;<br/>
+  &lt;span&gt;&lt;strong&gt;8. У врача много пациентов. Он ... много работать.&lt;/strong&gt;&lt;br&gt;<br/>
+    &lt;span class=&quot;radio-group&quot;&gt;<br/>
+      &lt;label class=&quot;radio-label&quot;&gt;&lt;input type=&quot;radio&quot; name=&quot;t5_8&quot; value=&quot;должен&quot;&gt; а) должен&lt;/label&gt;<br/>
+      &lt;label class=&quot;radio-label&quot;&gt;&lt;input type=&quot;radio&quot; name=&quot;t5_8&quot; value=&quot;может&quot;&gt; б) может&lt;/label&gt;<br/>
+      &lt;label class=&quot;radio-label&quot;&gt;&lt;input type=&quot;radio&quot; name=&quot;t5_8&quot; value=&quot;нужен&quot;&gt; в) нужен&lt;/label&gt;<br/>
+    &lt;/span&gt;<br/>
+  &lt;/span&gt;<br/>
+&lt;/div&gt;<br/>
+<br/>
+&lt;div class=&quot;item-row&quot; data-answer=&quot;нужно&quot;&gt;<br/>
+  &lt;span&gt;&lt;strong&gt;9. Мне ... купить хлеб и молоко.&lt;/strong&gt;&lt;br&gt;<br/>
+    &lt;span class=&quot;radio-group&quot;&gt;<br/>
+      &lt;label class=&quot;radio-label&quot;&gt;&lt;input type=&quot;radio&quot; name=&quot;t5_9&quot; value=&quot;можно&quot;&gt; а) можно&lt;/label&gt;<br/>
+      &lt;label class=&quot;radio-label&quot;&gt;&lt;input type=&quot;radio&quot; name=&quot;t5_9&quot; value=&quot;нельзя&quot;&gt; б) нельзя&lt;/label&gt;<br/>
+      &lt;label class=&quot;radio-label&quot;&gt;&lt;input type=&quot;radio&quot; name=&quot;t5_9&quot; value=&quot;нужно&quot;&gt; в) нужно&lt;/label&gt;<br/>
+    &lt;/span&gt;<br/>
+  &lt;/span&gt;<br/>
+&lt;/div&gt;<br/>
+<br/>
+&lt;div class=&quot;item-row&quot; data-answer=&quot;нужны&quot;&gt;<br/>
+  &lt;span&gt;&lt;strong&gt;10. Чтобы купить хлеб и молоко, мне ... деньги.&lt;/strong&gt;&lt;br&gt;<br/>
+    &lt;span class=&quot;radio-group&quot;&gt;<br/>
+      &lt;label class=&quot;radio-label&quot;&gt;&lt;input type=&quot;radio&quot; name=&quot;t5_10&quot; value=&quot;должны&quot;&gt; а) должны&lt;/label&gt;<br/>
+      &lt;label class=&quot;radio-label&quot;&gt;&lt;input type=&quot;radio&quot; name=&quot;t5_10&quot; value=&quot;нужны&quot;&gt; б) нужны&lt;/label&gt;<br/>
+      &lt;label class=&quot;radio-label&quot;&gt;&lt;input type=&quot;radio&quot; name=&quot;t5_10&quot; value=&quot;можно&quot;&gt; в) можно&lt;/label&gt;<br/>
+    &lt;/span&gt;<br/>
+  &lt;/span&gt;<br/>
+&lt;/div&gt;<br/>
+<br/>
+&lt;div class=&quot;controls&quot;&gt;<br/>
+  &lt;div class=&quot;btn-group&quot;&gt;<br/>
+    &lt;button class=&quot;btn&quot; onclick=&quot;checkTask5()&quot;&gt;Проверить Тест&lt;/button&gt;<br/>
+    &lt;button class=&quot;btn btn-reset&quot; onclick=&quot;resetTask5()&quot;&gt;Сбросить&lt;/button&gt;<br/>
+  &lt;/div&gt;<br/>
+  &lt;div id=&quot;result-task5&quot; class=&quot;result-box&quot;&gt;&lt;/div&gt;<br/>
+&lt;/div&gt;</pre><h2 class="western">
+Итоговый результат</h2>
+<p style="margin-right: 0.05in; margin-left: 0.05in; margin-top: 0.05in; margin-bottom: 0.16in">
+<font color="#334155">Нажмите кнопку, чтобы
+рассчитать суммарный балл по всем
+упражнениям (Максимум: 48 баллов).</font></p>
+<div id="total-result" dir="ltr"><p><br/>
+<br/>
+
+	</p>
+</div>
+<p><br/>
+<br/>
+
+</p>
+</body>
+</html>
