@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>РКИ А2 — Выражения времени</title>
+<style>
+  :root {
+    --ink: #243047;
+    --muted: #637087;
+    --paper: #ffffff;
+    --bg: #f3f6fb;
+    --line: #dbe2ee;
+    --accent: #3459a8;
+    --accent-light: #eaf0ff;
+    --correct: #176b45;
+    --correct-bg: #e7f6ed;
+    --wrong: #a33434;
+    --wrong-bg: #fff0f0;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; padding: 28px 16px 48px;
+    background: var(--bg); color: var(--ink);
+    font: 16px/1.55 system-ui, -apple-system, "Segoe UI", sans-serif;
+  }
+  main { max-width: 900px; margin: 0 auto; }
+  header { margin-bottom: 24px; }
+  .eyebrow { color: var(--accent); font-weight: 750; letter-spacing: .04em; text-transform: uppercase; font-size: .78rem; }
+  h1 { font-size: clamp(1.7rem, 4vw, 2.35rem); line-height: 1.2; margin: 8px 0; }
+  .subtitle { color: var(--muted); margin: 0; }
+  .exercise {
+    background: var(--paper); border: 1px solid var(--line); border-radius: 18px;
+    padding: clamp(18px, 3vw, 28px); margin: 20px 0;
+    box-shadow: 0 5px 18px rgba(35, 55, 90, .045);
+  }
+  h2 { margin: 0 0 8px; font-size: 1.35rem; }
+  .instruction { margin: 0 0 20px; color: var(--muted); }
+  .question {
+    padding: 16px 0; border-top: 1px solid var(--line);
+  }
+  .question:first-of-type { border-top: 0; }
+  .qtext { font-weight: 650; margin-bottom: 10px; }
+  .options { display: grid; gap: 8px; }
+  label.option {
+    display: flex; gap: 10px; align-items: flex-start; cursor: pointer;
+    border: 1px solid var(--line); border-radius: 10px; padding: 10px 12px;
+    transition: background .15s, border-color .15s;
+  }
+  label.option:hover { background: #f8faff; border-color: #aab9d6; }
+  input[type="radio"] { margin-top: 5px; accent-color: var(--accent); }
+  .text-answer {
+    width: 100%; max-width: 520px; padding: 11px 12px; border: 1px solid #bdc8da;
+    border-radius: 9px; font: inherit; color: var(--ink); background: white;
+  }
+  .text-answer:focus { outline: 3px solid #dce6ff; border-color: var(--accent); }
+  .feedback { margin-top: 8px; min-height: 1.4em; font-size: .94rem; font-weight: 600; }
+  .correct { color: var(--correct); }
+  .wrong { color: var(--wrong); }
+  .question.is-correct { background: linear-gradient(90deg, var(--correct-bg), transparent 80%); }
+  .question.is-wrong { background: linear-gradient(90deg, var(--wrong-bg), transparent 80%); }
+  .actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 22px; }
+  button {
+    border: 0; border-radius: 10px; padding: 11px 17px; font: inherit;
+    font-weight: 700; cursor: pointer;
+  }
+  .primary { color: white; background: var(--accent); }
+  .primary:hover { background: #27488d; }
+  .secondary { color: var(--ink); background: #e9edf5; }
+  .secondary:hover { background: #dfe5ef; }
+  .score {
+    display: none; margin-top: 18px; padding: 13px 15px; border-radius: 10px;
+    background: var(--accent-light); font-weight: 750;
+  }
+  .score.visible { display: block; }
+  .hint { color: var(--muted); font-size: .9rem; margin-top: 8px; }
+  .answers { display: none; border-top: 1px solid var(--line); margin-top: 18px; padding-top: 14px; }
+  .answers.visible { display: block; }
+  .answers ol { margin-bottom: 0; }
+  footer { text-align: center; color: var(--muted); font-size: .9rem; margin-top: 26px; }
+  @media (max-width: 520px) {
+    body { padding: 18px 10px 32px; }
+    .exercise { border-radius: 13px; }
+  }
+</style>
+</head>
+<body>
+<main>
+  <header>
+    <div class="eyebrow">Русский как иностранный · А2</div>
+    <h1>Выражения времени</h1>
+    <p class="subtitle">Родительный и винительный падежи · Интерактивная практика</p>
+  </header>
+
+  <section class="exercise" id="exercise1">
+    <h2>Задание 1. Выберите правильный вариант</h2>
+    <p class="instruction">Прочитайте предложения и выберите подходящий вариант. После выполнения нажмите «Проверить ответы».</p>
+    <div id="multipleChoice"></div>
+    <div class="actions">
+      <button class="primary" type="button" onclick="checkChoice()">Проверить ответы</button>
+      <button class="secondary" type="button" onclick="resetChoice()">Начать заново</button>
+    </div>
+    <div class="score" id="score1" aria-live="polite"></div>
+    <div class="answers" id="answers1">
+      <strong>Правильные ответы:</strong> 1а, 2а, 3б, 4б, 5а, 6б, 7а, 8б.
+    </div>
+  </section>
+
+  <section class="exercise" id="exercise2">
+    <h2>Задание 2. Поставьте слова в правильную форму</h2>
+    <p class="instruction">Дополните предложения. Введите недостающие слова в правильной форме. В предложениях с двумя пропусками заполните оба поля.</p>
+    <div id="fillIn"></div>
+    <div class="actions">
+      <button class="primary" type="button" onclick="checkFill()">Проверить ответы</button>
+      <button class="secondary" type="button" onclick="showAnswers()">Показать ответы</button>
+      <button class="secondary" type="button" onclick="resetFill()">Начать заново</button>
+    </div>
+    <div class="score" id="score2" aria-live="polite"></div>
+    <div class="answers" id="answers2">
+      <strong>Правильные ответы:</strong>
+      <ol>
+        <li>понедельника, пятницы</li>
+        <li>вторника, субботу</li>
+        <li>десять минут</li>
+        <li>года</li>
+        <li>часа</li>
+        <li>неделю</li>
+        <li>2018 года, 2020 года</li>
+        <li>одну неделю</li>
+      </ol>
+    </div>
+  </section>
+  <footer>Практикуйте выражения времени: «через неделю», «неделю назад», «на неделю», «с понедельника по субботу».</footer>
+</main>
+
+<script>
+const choiceQuestions = [
+  { text: "1. Обычно я работаю ___ девяти ___ пяти.", options: ["а) с … до", "б) через … до"], correct: 0, explanation: "«С девяти до пяти» обозначает начало и конец рабочего времени." },
+  { text: "2. Магазин работает ___ понедельника ___ субботу включительно.", options: ["а) с … по", "б) с … до"], correct: 0, explanation: "«С понедельника по субботу» включает субботу в указанный период." },
+  { text: "3. Мы встретимся ___ два часа.", options: ["а) два часа назад", "б) через два часа"], correct: 1, explanation: "«Через два часа» — событие произойдёт в будущем." },
+  { text: "4. Я начал изучать русский язык три года ___.", options: ["а) через", "б) назад"], correct: 1, explanation: "«Три года назад» указывает, как давно произошло событие." },
+  { text: "5. Вчера я занимался русским языком ___.", options: ["а) два часа", "б) на два часа"], correct: 0, explanation: "«Два часа» обозначает длительность действия." },
+  { text: "6. Летом мы поедем в Москву ___ две недели.", options: ["а) через", "б) на"], correct: 1, explanation: "«На две недели» обозначает планируемую продолжительность поездки." },
+  { text: "7. Я буду в отпуске ___ первого ___ пятнадцатого января.", options: ["а) с … до", "б) через … на"], correct: 0, explanation: "«С первого до пятнадцатого января» обозначает временной интервал." },
+  { text: "8. Я жил в Петербурге ___ пять лет, а потом переехал.", options: ["а) на", "б) пять лет"], correct: 1, explanation: "«Пять лет» обозначает продолжительность проживания." }
+];
+
+const fillQuestions = [
+  { before: "1. Я обычно работаю с", after: "до", parts: [
+    { placeholder: "понедельник", answers: ["понедельника"] },
+    { placeholder: "пятница", answers: ["пятницы"] }
+  ]},
+  { before: "2. Библиотека открыта с", after: "по", parts: [
+    { placeholder: "вторник", answers: ["вторника"] },
+    { placeholder: "суббота", answers: ["субботу"] }
+  ]},
+  { before: "3. Мы начнём урок через", after: ".", parts: [
+    { placeholder: "десять минут", answers: ["десять минут"] }
+  ]},
+  { before: "4. Я приехал в Аргентину три", after: "назад.", parts: [
+    { placeholder: "год", answers: ["года"] }
+  ]},
+  { before: "5. Вчера я гулял по городу два", after: ".", parts: [
+    { placeholder: "час", answers: ["часа"] }
+  ]},
+  { before: "6. Моя подруга уехала в отпуск на", after: ".", parts: [
+    { placeholder: "неделя", answers: ["неделю"] }
+  ]},
+  { before: "7. Я жил в Москве с", after: "до", parts: [
+    { placeholder: "2018 год", answers: ["2018 года"] },
+    { placeholder: "2020 год", answers: ["2020 года"] }
+  ]},
+  { before: "8. Я вернусь через", after: ".", parts: [
+    { placeholder: "одна неделя", answers: ["одну неделю"] }
+  ]}
+];
+
+function renderChoice() {
+  const root = document.getElementById("multipleChoice");
+  root.innerHTML = "";
+  choiceQuestions.forEach((q, i) => {
+    const article = document.createElement("div");
+    article.className = "question";
+    article.id = `choice-q${i}`;
+    const title = document.createElement("div");
+    title.className = "qtext";
+    title.textContent = q.text;
+    article.appendChild(title);
+    const options = document.createElement("div");
+    options.className = "options";
+    q.options.forEach((opt, j) => {
+      const label = document.createElement("label");
+      label.className = "option";
+      const radio = document.createElement("input");
+      radio.type = "radio";
+      radio.name = `choice-${i}`;
+      radio.value = j;
+      const span = document.createElement("span");
+      span.textContent = opt;
+      label.append(radio, span);
+      options.appendChild(label);
+    });
+    article.appendChild(options);
+    const feedback = document.createElement("div");
+    feedback.className = "feedback";
+    feedback.id = `choice-feedback${i}`;
+    feedback.setAttribute("aria-live", "polite");
+    article.appendChild(feedback);
+    root.appendChild(article);
+  });
+}
+
+function checkChoice() {
+  let score = 0;
+  let unanswered = 0;
+  choiceQuestions.forEach((q, i) => {
+    const selected = document.querySelector(`input[name="choice-${i}"]:checked`);
+    const article = document.getElementById(`choice-q${i}`);
+    const feedback = document.getElementById(`choice-feedback${i}`);
+    article.classList.remove("is-correct", "is-wrong");
+    if (!selected) {
+      unanswered++;
+      feedback.className = "feedback wrong";
+      feedback.textContent = "Выберите вариант ответа.";
+      article.classList.add("is-wrong");
+    } else if (Number(selected.value) === q.correct) {
+      score++;
+      feedback.className = "feedback correct";
+      feedback.textContent = "Верно! " + q.explanation;
+      article.classList.add("is-correct");
+    } else {
+      feedback.className = "feedback wrong";
+      feedback.textContent = "Пока неверно. " + q.explanation;
+      article.classList.add("is-wrong");
+    }
+  });
+  const box = document.getElementById("score1");
+  box.textContent = `Результат: ${score} из ${choiceQuestions.length}.${unanswered ? ` Без ответа: ${unanswered}.` : ""}`;
+  box.classList.add("visible");
+  document.getElementById("answers1").classList.add("visible");
+}
+
+function resetChoice() {
+  document.querySelectorAll('input[type="radio"]').forEach(el => el.checked = false);
+  choiceQuestions.forEach((q, i) => {
+    document.getElementById(`choice-q${i}`).classList.remove("is-correct", "is-wrong");
+    const f = document.getElementById(`choice-feedback${i}`);
+    f.textContent = ""; f.className = "feedback";
+  });
+  document.getElementById("score1").classList.remove("visible");
+  document.getElementById("answers1").classList.remove("visible");
+}
+
+function renderFill() {
+  const root = document.getElementById("fillIn");
+  root.innerHTML = "";
+  fillQuestions.forEach((q, i) => {
+    const article = document.createElement("div");
+    article.className = "question";
+    article.id = `fill-q${i}`;
+    const title = document.createElement("div");
+    title.className = "qtext";
+    title.textContent = q.before;
+    article.appendChild(title);
+    q.parts.forEach((part, j) => {
+      if (j > 0) {
+        const connector = document.createElement("span");
+        connector.textContent = " " + (q.after === "до" ? "до " : q.after === "по" ? "по " : "");
+        if (q.after === "до" || q.after === "по") article.appendChild(connector);
+      }
+      const input = document.createElement("input");
+      input.type = "text";
+      input.className = "text-answer";
+      input.id = `fill-${i}-${j}`;
+      input.placeholder = part.placeholder;
+      input.autocomplete = "off";
+      input.setAttribute("aria-label", `Задание ${i + 1}, ответ ${j + 1}`);
+      article.appendChild(input);
+      if (j < q.parts.length - 1) {
+        const gap = document.createElement("span");
+        gap.textContent = " ";
+        article.appendChild(gap);
+      }
+    });
+    const ending = document.createElement("span");
+    ending.textContent = " " + q.after;
+    article.appendChild(ending);
+    const feedback = document.createElement("div");
+    feedback.className = "feedback";
+    feedback.id = `fill-feedback${i}`;
+    feedback.setAttribute("aria-live", "polite");
+    article.appendChild(feedback);
+    root.appendChild(article);
+  });
+}
+
+function normalize(value) {
+  return value.toLocaleLowerCase("ru").trim().replace(/[.!?,;:]+$/g, "").replace(/\s+/g, " ");
+}
+
+function checkFill() {
+  let score = 0;
+  let total = 0;
+  fillQuestions.forEach((q, i) => {
+    const article = document.getElementById(`fill-q${i}`);
+    const feedback = document.getElementById(`fill-feedback${i}`);
+    article.classList.remove("is-correct", "is-wrong");
+    let allCorrect = true;
+    let complete = true;
+    q.parts.forEach((part, j) => {
+      total++;
+      const input = document.getElementById(`fill-${i}-${j}`);
+      const value = normalize(input.value);
+      if (!value) complete = false;
+      const accepted = part.answers.map(normalize);
+      if (accepted.includes(value)) {
+        score++;
+        input.style.borderColor = "var(--correct)";
+        input.style.background = "var(--correct-bg)";
+      } else {
+        allCorrect = false;
+        input.style.borderColor = "var(--wrong)";
+        input.style.background = "var(--wrong-bg)";
+      }
+    });
+    if (allCorrect) {
+      feedback.className = "feedback correct";
+      feedback.textContent = "Верно!";
+      article.classList.add("is-correct");
+    } else {
+      feedback.className = "feedback wrong";
+      feedback.textContent = complete ? "Проверьте форму слова." : "Заполните все пропуски и проверьте формы слов.";
+      article.classList.add("is-wrong");
+    }
+  });
+  const box = document.getElementById("score2");
+  box.textContent = `Результат: ${score} из ${total} пропусков.`;
+  box.classList.add("visible");
+}
+
+function showAnswers() {
+  document.getElementById("answers2").classList.add("visible");
+  fillQuestions.forEach((q, i) => q.parts.forEach((part, j) => {
+    const input = document.getElementById(`fill-${i}-${j}`);
+    input.value = part.answers[0];
+    input.style.borderColor = "";
+    input.style.background = "";
+  }));
+  document.getElementById("score2").classList.remove("visible");
+  fillQuestions.forEach((q, i) => {
+    document.getElementById(`fill-q${i}`).classList.remove("is-correct", "is-wrong");
+    const feedback = document.getElementById(`fill-feedback${i}`);
+    feedback.textContent = ""; feedback.className = "feedback";
+  });
+}
+
+function resetFill() {
+  fillQuestions.forEach((q, i) => {
+    q.parts.forEach((part, j) => {
+      const input = document.getElementById(`fill-${i}-${j}`);
+      input.value = ""; input.style.borderColor = ""; input.style.background = "";
+    });
+    document.getElementById(`fill-q${i}`).classList.remove("is-correct", "is-wrong");
+    const feedback = document.getElementById(`fill-feedback${i}`);
+    feedback.textContent = ""; feedback.className = "feedback";
+  });
+  document.getElementById("score2").classList.remove("visible");
+  document.getElementById("answers2").classList.remove("visible");
+}
+
+renderChoice();
+renderFill();
+</script>
+</body>
+</html>
