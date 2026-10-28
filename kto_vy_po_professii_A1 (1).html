@@ -1,0 +1,838 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>РКИ А1: Кто вы по профессии?</title>
+  <style>
+    :root {
+      --primary: #2563eb;
+      --primary-hover: #1d4ed8;
+      --bg-color: #f8fafc;
+      --card-bg: #ffffff;
+      --text-main: #1e293b;
+      --text-muted: #64748b;
+      --border-color: #e2e8f0;
+      --correct: #16a34a;
+      --correct-bg: #dcfce7;
+      --incorrect: #dc2626;
+      --incorrect-bg: #fee2e2;
+      --accent: #f59e0b;
+      --radius: 12px;
+      --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-main);
+      line-height: 1.6;
+      padding: 20px 10px;
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    header {
+      text-align: center;
+      background: linear-gradient(135deg, #1e3a8a, #2563eb);
+      color: white;
+      padding: 30px 20px;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      margin-bottom: 25px;
+    }
+
+    header h1 {
+      font-size: 1.8rem;
+      margin-bottom: 8px;
+    }
+
+    header p {
+      font-size: 1rem;
+      opacity: 0.9;
+    }
+
+    .badge {
+      display: inline-block;
+      background: rgba(255, 255, 255, 0.2);
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-top: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .section-card {
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      padding: 25px;
+      margin-bottom: 25px;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border-color);
+    }
+
+    .section-title {
+      font-size: 1.3rem;
+      color: #0f172a;
+      border-bottom: 2px solid var(--border-color);
+      padding-bottom: 10px;
+      margin-bottom: 15px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .instruction {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      margin-bottom: 20px;
+    }
+
+    /* TASK 1 STYLES */
+    .chip-bank-container {
+      background: #f1f5f9;
+      padding: 15px;
+      border-radius: var(--radius);
+      margin-bottom: 20px;
+      border: 2px dashed #cbd5e1;
+    }
+
+    .chip-bank-title {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      margin-bottom: 10px;
+      text-transform: uppercase;
+    }
+
+    .chips-flex {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      min-height: 50px;
+    }
+
+    .draggable-chip {
+      background: #ffffff;
+      border: 2px solid #3b82f6;
+      color: #1d4ed8;
+      padding: 8px 14px;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: grab;
+      user-select: none;
+      transition: all 0.2s ease;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+      font-size: 0.95rem;
+    }
+
+    .draggable-chip:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(37, 99, 235, 0.2);
+      background: #eff6ff;
+    }
+
+    .draggable-chip.selected {
+      background: #2563eb;
+      color: white;
+      border-color: #1d4ed8;
+    }
+
+    .draggable-chip.dragging {
+      opacity: 0.5;
+    }
+
+    .draggable-chip.type-name {
+      border-color: #0284c7;
+      color: #0369a1;
+    }
+
+    .draggable-chip.type-prof {
+      border-color: #d97706;
+      color: #b45309;
+    }
+
+    .photos-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 20px;
+    }
+
+    .photo-card {
+      background: #fafafa;
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius);
+      padding: 15px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .photo-card img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      border-radius: 8px;
+      margin-bottom: 12px;
+      background: #e2e8f0;
+    }
+
+    .drop-zone-container {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .drop-slot {
+      background: #ffffff;
+      border: 2px dashed #cbd5e1;
+      border-radius: 8px;
+      padding: 8px;
+      min-height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.85rem;
+      color: #94a3b8;
+      transition: all 0.2s;
+      cursor: pointer;
+    }
+
+    .drop-slot.hovered {
+      background: #eff6ff;
+      border-color: var(--primary);
+    }
+
+    .drop-slot.filled {
+      border-style: solid;
+      border-color: #94a3b8;
+      color: var(--text-main);
+    }
+
+    .drop-slot.correct {
+      border-color: var(--correct);
+      background-color: var(--correct-bg);
+      color: var(--correct);
+      font-weight: bold;
+    }
+
+    .drop-slot.incorrect {
+      border-color: var(--incorrect);
+      background-color: var(--incorrect-bg);
+      color: var(--incorrect);
+      font-weight: bold;
+    }
+
+    /* TASK 2 STYLES */
+    .audio-player-box {
+      background: #eff6ff;
+      border: 1px solid #bfdbfe;
+      padding: 15px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .audio-player-box label {
+      font-weight: 600;
+      color: #1e40af;
+      font-size: 0.9rem;
+    }
+
+    .dialogues-list {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .dialogue-item {
+      background: #f8fafc;
+      border-left: 4px solid var(--primary);
+      padding: 15px 18px;
+      border-radius: 0 8px 8px 0;
+    }
+
+    .dialogue-header {
+      font-weight: 700;
+      color: #1e3a8a;
+      margin-bottom: 8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .btn-tts {
+      background: #e0e7ff;
+      color: #3730a3;
+      border: none;
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: 0.8rem;
+      cursor: pointer;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .btn-tts:hover {
+      background: #c7d2fe;
+    }
+
+    .dialogue-line {
+      margin-bottom: 6px;
+      font-size: 1rem;
+    }
+
+    .gap-input {
+      border: 1px solid #cbd5e1;
+      border-bottom: 2px solid var(--primary);
+      background: #ffffff;
+      padding: 2px 8px;
+      font-size: 0.95rem;
+      font-family: inherit;
+      border-radius: 4px 4px 0 0;
+      width: 130px;
+      text-align: center;
+      font-weight: 600;
+      color: var(--text-main);
+      transition: all 0.2s;
+    }
+
+    .gap-input:focus {
+      outline: none;
+      border-bottom-color: #1d4ed8;
+      background: #f0f9ff;
+    }
+
+    .gap-input.correct {
+      border-color: var(--correct);
+      background-color: var(--correct-bg);
+      color: var(--correct);
+    }
+
+    .gap-input.incorrect {
+      border-color: var(--incorrect);
+      background-color: var(--incorrect-bg);
+      color: var(--incorrect);
+    }
+
+    /* CONTROLS & RESULT */
+    .action-bar {
+      display: flex;
+      gap: 15px;
+      justify-content: center;
+      margin-top: 10px;
+      margin-bottom: 30px;
+    }
+
+    .btn-main {
+      background: var(--primary);
+      color: white;
+      border: none;
+      padding: 12px 28px;
+      font-size: 1rem;
+      font-weight: 600;
+      border-radius: 8px;
+      cursor: pointer;
+      box-shadow: 0 4px 6px rgba(37, 99, 235, 0.3);
+      transition: all 0.2s;
+    }
+
+    .btn-main:hover {
+      background: var(--primary-hover);
+      transform: translateY(-1px);
+    }
+
+    .btn-reset {
+      background: #64748b;
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      font-size: 1rem;
+      font-weight: 600;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .btn-reset:hover {
+      background: #475569;
+    }
+
+    .result-box {
+      display: none;
+      background: #ffffff;
+      border: 2px solid var(--primary);
+      border-radius: var(--radius);
+      padding: 20px;
+      text-align: center;
+      margin-bottom: 25px;
+      box-shadow: var(--shadow);
+    }
+
+    .result-score {
+      font-size: 2rem;
+      font-weight: 800;
+      color: var(--primary);
+      margin: 10px 0;
+    }
+
+    @media (max-width: 600px) {
+      body { padding: 10px 5px; }
+      header { padding: 20px 10px; }
+      .photos-grid { grid-template-columns: 1fr; }
+      .gap-input { width: 110px; }
+      .action-bar { flex-direction: column; }
+      .btn-main, .btn-reset { width: 100%; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <header>
+    <h1>Интерактивное упражнение по РКИ</h1>
+    <p>Тема: «Кто вы по профессии?»</p>
+    <span class="badge">Уровень А1</span>
+  </header>
+
+  <!-- RESULT SCORE BOARD -->
+  <div class="result-box" id="resultBox">
+    <h2>Результаты упражнения</h2>
+    <div class="result-score" id="scoreText">0 / 0</div>
+    <p id="scoreFeedback"></p>
+  </div>
+
+  <!-- TASK 1 -->
+  <div class="section-card">
+    <div class="section-title">
+      <span>1️⃣</span> Задание 1. Соотнесите фото, имя и профессию
+    </div>
+    <div class="instruction">
+      Перетащите (или нажмите на карточку, затем на ячейку) прямоугольники с именем и профессией под соответствующее фото.
+    </div>
+
+    <!-- CHIP BANK -->
+    <div class="chip-bank-container">
+      <div class="chip-bank-title">Банк вариантов (Имена и Профессии)</div>
+      <div class="chips-flex" id="chipBank">
+        <!-- JS will populate draggable elements here -->
+      </div>
+    </div>
+
+    <!-- PHOTOS GRID -->
+    <div class="photos-grid" id="photosGrid">
+      <!-- JS will render photo cards here -->
+    </div>
+  </div>
+
+  <!-- TASK 2 -->
+  <div class="section-card">
+    <div class="section-title">
+      <span>2️⃣</span> Задание 2. Послушайте аудио и заполните пропуски
+    </div>
+    <div class="instruction">
+      Прослушайте диалоги и впишите пропущенные слова в поля ввода.
+    </div>
+
+    <!-- AUDIO PLAYER -->
+    <div class="audio-player-box">
+      <label for="audioSource">🔊 Аудиофайл упражнения:</label>
+      <audio id="mainAudioControls" controls style="width: 100%;">
+        <source src="audio.mp3" type="audio/mpeg">
+        Ваш браузер не поддерживает элемент <code>audio</code>.
+      </audio>
+      <div style="font-size: 0.8rem; color: #475569;">
+        💡 <i>Если у вас есть локальный аудиофайл, назовите его <b>audio.mp3</b> и положите в одну папку с этим HTML-файлом, либо используйте встроенное озвучивание кнопкой «🔊 Прослушать» рядом с каждым диалогом.</i>
+      </div>
+    </div>
+
+    <!-- DIALOGUES LIST -->
+    <div class="dialogues-list">
+      
+      <!-- Dialogue 1 -->
+      <div class="dialogue-item">
+        <div class="dialogue-header">
+          <span>Диалог 1</span>
+          <button class="btn-tts" onclick="speakDialogue(1)">🔊 Прослушать</button>
+        </div>
+        <div class="dialogue-line">- Здравствуйте, как <input type="text" class="gap-input" data-ans="Вас"> зовут?</div>
+        <div class="dialogue-line">- Меня зовут Дмитрий <input type="text" class="gap-input" data-ans="Медведев">.</div>
+        <div class="dialogue-line">- <input type="text" class="gap-input" data-ans="Кто"> вы по профессии, Дмитрий?</div>
+        <div class="dialogue-line">- По профессии я <input type="text" class="gap-input" data-ans="юрист">, но сейчас я <input type="text" class="gap-input" data-ans="политик">.</div>
+      </div>
+
+      <!-- Dialogue 2 -->
+      <div class="dialogue-item">
+        <div class="dialogue-header">
+          <span>Диалог 2</span>
+          <button class="btn-tts" onclick="speakDialogue(2)">🔊 Прослушать</button>
+        </div>
+        <div class="dialogue-line">Привет! Меня зовут Ольга <input type="text" class="gap-input" data-ans="Куриленко">. Я <input type="text" class="gap-input" data-ans="модель"> и <input type="text" class="gap-input" data-ans="актриса"> в Голливуде.</div>
+      </div>
+
+      <!-- Dialogue 3 -->
+      <div class="dialogue-item">
+        <div class="dialogue-header">
+          <span>Диалог 3</span>
+          <button class="btn-tts" onclick="speakDialogue(3)">🔊 Прослушать</button>
+        </div>
+        <div class="dialogue-line">Это Андрей <input type="text" class="gap-input" data-ans="Аршавин">. По профессии Андрей <input type="text" class="gap-input" data-ans="спортсмен">. Он <input type="text" class="gap-input" data-ans="футболист">.</div>
+      </div>
+
+      <!-- Dialogue 4 -->
+      <div class="dialogue-item">
+        <div class="dialogue-header">
+          <span>Диалог 4</span>
+          <button class="btn-tts" onclick="speakDialogue(4)">🔊 Прослушать</button>
+        </div>
+        <div class="dialogue-line">- Здравствуйте, Анна! Как <input type="text" class="gap-input" data-ans="дела">?</div>
+        <div class="dialogue-line">- Спасибо, хорошо. Но я не Анна, меня зовут <input type="text" class="gap-input" data-ans="Мария">. Мария Шарапова. Я <input type="text" class="gap-input" data-ans="спортсменка">.</div>
+        <div class="dialogue-line">- Извините, Мария!</div>
+      </div>
+
+      <!-- Dialogue 5 -->
+      <div class="dialogue-item">
+        <div class="dialogue-header">
+          <span>Диалог 5</span>
+          <button class="btn-tts" onclick="speakDialogue(5)">🔊 Прослушать</button>
+        </div>
+        <div class="dialogue-line">Это Борис Акунин - русский <input type="text" class="gap-input" data-ans="писатель">. Борис Акунин - автор <input type="text" class="gap-input" data-ans="детектива"> "Азазель".</div>
+      </div>
+
+      <!-- Dialogue 6 -->
+      <div class="dialogue-item">
+        <div class="dialogue-header">
+          <span>Диалог 6</span>
+          <button class="btn-tts" onclick="speakDialogue(6)">🔊 Прослушать</button>
+        </div>
+        <div class="dialogue-line">Здравствуйте, меня зовут Роман <input type="text" class="gap-input" data-ans="Абрамович">. Я русский <input type="text" class="gap-input" data-ans="бизнесмен"> и <input type="text" class="gap-input" data-ans="миллиардер">. "Челси" - мой футбольный <input type="text" class="gap-input" data-ans="клуб">.</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ACTION BUTTONS -->
+  <div class="action-bar">
+    <button class="btn-main" onclick="checkAllAnswers()">Проверить ответы</button>
+    <button class="btn-reset" onclick="resetExercise()">Начать заново</button>
+  </div>
+</div>
+
+<script>
+  // Data for Task 1
+  const peopleData = [
+    {
+      id: 1,
+      img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcToCfQWM0RokRr6FlFAt_3ZF5SYmQN8-SYEPuAGReBGkA&s=10",
+      name: "Дмитрий Медведев",
+      profession: "политик"
+    },
+    {
+      id: 2,
+      img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRfodYZgAGDcPUcXtWiGe1EUUJvnN3UcOawzB0lJrszkA&s=10",
+      name: "Ольга Куриленко",
+      profession: "актриса"
+    },
+    {
+      id: 3,
+      img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTa4w-S5ohuEAD3EuX2fK6X3eGzfMyaOm6srMCr3cPSZw&s=10",
+      name: "Андрей Аршавин",
+      profession: "футболист"
+    },
+    {
+      id: 4,
+      img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQWdoy5wJbrdeDRqxytXFYDen4qZTz8OvRc71t65U0xDg&s=10",
+      name: "Мария Шарапова",
+      profession: "теннисистка"
+    },
+    {
+      id: 5,
+      img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQDe8TCx9HpmvxMo__xsXnQlUwQ2tjbHueO_W8zqU2mMw&s=10",
+      name: "Борис Акунин",
+      profession: "писатель"
+    },
+    {
+      id: 6,
+      img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT_-YVZUWhH2BiF4UIVTpXpZqYI3mAubRpHTS_lAOZIOQ&s=10",
+      name: "Роман Абрамович",
+      profession: "бизнесмен"
+    }
+  ];
+
+  const rawDialogueTexts = {
+    1: "- Здравствуйте, как Вас зовут? - Меня зовут Дмитрий Медведев. - Кто вы по профессии, Дмитрий? - По профессии я юрист, но сейчас я политик.",
+    2: "Привет! Меня зовут Ольга Куриленко. Я модель и актриса в Голливуде.",
+    3: "Это Андрей Аршавин. По профессии Андрей спортсмен. Он футболист.",
+    4: "- Здравствуйте, Анна! Как дела? - Спасибо, хорошо. Но я не Анна, меня зовут Мария. Мария Шарапова. Я спортсменка. - Извините, Мария!",
+    5: "Это Борис Акунин - русский писатель. Борис Акунин - автор детектива 'Азазель'.",
+    6: "Здравствуйте, меня зовут Роман Абрамович. Я русский бизнесмен и миллиардер. 'Челси' - мой футбольный клуб."
+  };
+
+  let selectedChip = null;
+
+  // Initialize UI
+  function initTask1() {
+    const chipBank = document.getElementById('chipBank');
+    const photosGrid = document.getElementById('photosGrid');
+
+    chipBank.innerHTML = '';
+    photosGrid.innerHTML = '';
+
+    // Collect and shuffle chips
+    let chips = [];
+    peopleData.forEach(person => {
+      chips.push({ id: `name-${person.id}`, text: person.name, type: 'name', personId: person.id });
+      chips.push({ id: `prof-${person.id}`, text: person.profession, type: 'prof', personId: person.id });
+    });
+
+    chips.sort(() => Math.random() - 0.5);
+
+    chips.forEach(chip => {
+      const chipEl = document.createElement('div');
+      chipEl.className = `draggable-chip type-${chip.type}`;
+      chipEl.textContent = chip.text;
+      chipEl.setAttribute('draggable', 'true');
+      chipEl.dataset.id = chip.id;
+      chipEl.dataset.text = chip.text;
+      chipEl.dataset.type = chip.type;
+
+      // Desktop Drag events
+      chipEl.addEventListener('dragstart', handleDragStart);
+      chipEl.addEventListener('dragend', handleDragEnd);
+
+      // Mobile/Click selection
+      chipEl.addEventListener('click', () => handleChipClick(chipEl));
+
+      chipBank.appendChild(chipEl);
+    });
+
+    // Render photo cards
+    peopleData.forEach((person, idx) => {
+      const card = document.createElement('div');
+      card.className = 'photo-card';
+      card.innerHTML = `
+        <img src="${person.img}" alt="Фото ${idx + 1}" loading="lazy">
+        <div class="drop-zone-container">
+          <div class="drop-slot" data-target="name" data-correct-id="${person.id}" data-correct-val="${person.name}">
+            <span>+ Имя</span>
+          </div>
+          <div class="drop-slot" data-target="prof" data-correct-id="${person.id}" data-correct-val="${person.profession}">
+            <span>+ Профессия</span>
+          </div>
+        </div>
+      `;
+      photosGrid.appendChild(card);
+    });
+
+    // Setup drop slots
+    document.querySelectorAll('.drop-slot').forEach(slot => {
+      slot.addEventListener('dragover', handleDragOver);
+      slot.addEventListener('dragleave', handleDragLeave);
+      slot.addEventListener('drop', handleDrop);
+      slot.addEventListener('click', () => handleSlotClick(slot));
+    });
+  }
+
+  // Drag and Drop handlers
+  function handleDragStart(e) {
+    e.dataTransfer.setData('text/plain', JSON.stringify({
+      id: e.target.dataset.id,
+      text: e.target.dataset.text,
+      type: e.target.dataset.type
+    }));
+    e.target.classList.add('dragging');
+  }
+
+  function handleDragEnd(e) {
+    e.target.classList.remove('dragging');
+  }
+
+  function handleDragOver(e) {
+    e.preventDefault();
+    e.currentTarget.classList.add('hovered');
+  }
+
+  function handleDragLeave(e) {
+    e.currentTarget.classList.remove('hovered');
+  }
+
+  function handleDrop(e) {
+    e.preventDefault();
+    const slot = e.currentTarget;
+    slot.classList.remove('hovered');
+    
+    const data = JSON.parse(e.dataTransfer.getData('text/plain'));
+    const chipEl = document.querySelector(`[data-id="${data.id}"]`);
+
+    placeChipInSlot(chipEl, slot);
+  }
+
+  // Click / Tap selection logic
+  function handleChipClick(chipEl) {
+    if (selectedChip) {
+      selectedChip.classList.remove('selected');
+    }
+    if (selectedChip === chipEl) {
+      selectedChip = null;
+      return;
+    }
+    selectedChip = chipEl;
+    chipEl.classList.add('selected');
+  }
+
+  function handleSlotClick(slot) {
+    if (slot.children.length > 0 && slot.children[0].classList.contains('draggable-chip')) {
+      // Return chip to bank on click
+      const chip = slot.children[0];
+      document.getElementById('chipBank').appendChild(chip);
+      slot.classList.remove('filled', 'correct', 'incorrect');
+      slot.innerHTML = `<span>+ ${slot.dataset.target === 'name' ? 'Имя' : 'Профессия'}</span>`;
+      return;
+    }
+
+    if (selectedChip) {
+      placeChipInSlot(selectedChip, slot);
+      selectedChip.classList.remove('selected');
+      selectedChip = null;
+    }
+  }
+
+  function placeChipInSlot(chipEl, slot) {
+    // If slot already has chip, return old chip to bank
+    if (slot.children.length > 0 && slot.children[0].classList.contains('draggable-chip')) {
+      const oldChip = slot.children[0];
+      document.getElementById('chipBank').appendChild(oldChip);
+    }
+
+    slot.innerHTML = '';
+    slot.appendChild(chipEl);
+    slot.classList.add('filled');
+    slot.classList.remove('correct', 'incorrect');
+  }
+
+  // Task 2 Web Speech Synthesis (TTS)
+  function speakDialogue(id) {
+    if (!('speechSynthesis' in window)) {
+      alert('Ваш браузер не поддерживает синтез речи.');
+      return;
+    }
+    window.speechSynthesis.cancel();
+    const text = rawDialogueTexts[id];
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.lang = 'ru-RU';
+    utterance.rate = 0.9;
+    window.speechSynthesis.speak(utterance);
+  }
+
+  // Check all answers
+  function checkAllAnswers() {
+    let score = 0;
+    let total = 0;
+
+    // Check Task 1
+    const slots = document.querySelectorAll('.drop-slot');
+    slots.forEach(slot => {
+      total++;
+      const expectedVal = slot.dataset.correctVal.trim().toLowerCase();
+      const chip = slot.querySelector('.draggable-chip');
+
+      if (chip) {
+        const userVal = chip.dataset.text.trim().toLowerCase();
+        if (userVal === expectedVal) {
+          score++;
+          slot.classList.add('correct');
+          slot.classList.remove('incorrect');
+        } else {
+          slot.classList.add('incorrect');
+          slot.classList.remove('correct');
+        }
+      } else {
+        slot.classList.add('incorrect');
+        slot.classList.remove('correct');
+      }
+    });
+
+    // Check Task 2
+    const inputs = document.querySelectorAll('.gap-input');
+    inputs.forEach(input => {
+      total++;
+      const expected = input.dataset.ans.trim().toLowerCase();
+      const userAns = input.value.trim().toLowerCase();
+
+      if (userAns === expected) {
+        score++;
+        input.classList.add('correct');
+        input.classList.remove('incorrect');
+      } else {
+        input.classList.add('incorrect');
+        input.classList.remove('correct');
+      }
+    });
+
+    // Display Result Box
+    const resultBox = document.getElementById('resultBox');
+    const scoreText = document.getElementById('scoreText');
+    const scoreFeedback = document.getElementById('scoreFeedback');
+
+    const percent = Math.round((score / total) * 100);
+    scoreText.textContent = `${score} / ${total} (${percent}%)`;
+
+    if (percent === 100) {
+      scoreFeedback.textContent = "🎉 Отлично! Все ответы верны!";
+      scoreFeedback.style.color = "var(--correct)";
+    } else if (percent >= 70) {
+      scoreFeedback.textContent = "👍 Хороший результат! Обратите внимание на выделенные ошибки.";
+      scoreFeedback.style.color = "var(--primary)";
+    } else {
+      scoreFeedback.textContent = "💡 Попробуйте ещё раз и проверьте ошибки.";
+      scoreFeedback.style.color = "var(--incorrect)";
+    }
+
+    resultBox.style.display = 'block';
+    resultBox.scrollIntoView({ behavior: 'smooth' });
+  }
+
+  // Reset exercise
+  function resetExercise() {
+    selectedChip = null;
+    initTask1();
+
+    const inputs = document.querySelectorAll('.gap-input');
+    inputs.forEach(input => {
+      input.value = '';
+      input.classList.remove('correct', 'incorrect');
+    });
+
+    const slots = document.querySelectorAll('.drop-slot');
+    slots.forEach(slot => {
+      slot.classList.remove('correct', 'incorrect', 'filled');
+    });
+
+    document.getElementById('resultBox').style.display = 'none';
+  }
+
+  // Run initial state
+  window.addEventListener('DOMContentLoaded', () => {
+    initTask1();
+  });
+</script>
+
+</body>
+</html>
