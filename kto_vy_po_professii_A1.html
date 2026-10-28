@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Кто вы по профессии? — РКИ A1</title>
+<style>
+:root{--ink:#263238;--muted:#617078;--accent:#286c74;--pale:#eaf4f3;--line:#d6e0e2;--good:#e4f5e8;--bad:#fff0e9}
+*{box-sizing:border-box}
+body{margin:0;background:#f5f7f8;color:var(--ink);font:16px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
+main{max-width:1080px;margin:0 auto;padding:28px 18px 48px}
+header{background:#fff;border:1px solid var(--line);border-radius:18px;padding:24px;margin-bottom:22px}
+h1{margin:0 0 6px;font-size:clamp(1.7rem,4vw,2.35rem)} h2{margin:0 0 8px;font-size:1.4rem}
+p{margin:6px 0 12px}.sub{color:var(--muted)}
+section{background:#fff;border:1px solid var(--line);border-radius:18px;padding:22px;margin:18px 0}
+.people{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.person{border:1px solid var(--line);border-radius:14px;padding:12px;display:flex;flex-direction:column;gap:10px;min-width:0}
+.person img{width:100%;height:210px;object-fit:cover;border-radius:9px;background:#edf0f1}
+.person .label{font-size:.9rem;color:var(--muted);margin:0}
+.dropzone{min-height:46px;border:2px dashed #b8c9cc;border-radius:9px;padding:7px;display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:6px;text-align:center;color:var(--muted)}
+.dropzone.over{background:var(--pale);border-color:var(--accent)}
+.dropzone .tile{cursor:grab;margin:0}
+.tiles{display:flex;gap:9px;flex-wrap:wrap;margin:12px 0 18px}
+.tile{background:#fff;border:1px solid #9eb4b8;border-radius:9px;padding:8px 12px;cursor:grab;user-select:none;touch-action:manipulation;font-weight:600}
+.tile:focus{outline:3px solid #9bc7cb;outline-offset:2px}
+.tile.selected{background:var(--pale);border-color:var(--accent)}
+.tile.correct{background:var(--good);border-color:#47935a}
+.tile.incorrect{background:var(--bad);border-color:#c77b58}
+button{border:0;border-radius:9px;padding:10px 15px;background:var(--accent);color:#fff;font:inherit;font-weight:650;cursor:pointer}
+button.secondary{background:#e8eeee;color:var(--ink)} .actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:15px}
+.feedback{font-weight:600;margin-top:12px;min-height:1.5em}.ok{color:#267442}.err{color:#9c4b2e}
+.dialogues{display:grid;gap:14px}
+.dialogue{padding:14px;border:1px solid var(--line);border-radius:12px;background:#fcfdfd}
+.dialogue p{margin:0 0 10px}.dialogue p:last-child{margin-bottom:0}
+.blank{display:inline-block;min-width:115px;max-width:100%;padding:4px 6px;border:0;border-bottom:2px solid #9eb4b8;border-radius:4px;background:#f0f5f5;color:var(--ink);font:inherit}
+.blank:focus{outline:2px solid #8fc3c8}
+.blank.right{background:var(--good);border-color:#47935a}.blank.wrong{background:var(--bad);border-color:#c77b58}
+audio{width:100%;margin:10px 0}
+small{color:var(--muted)}
+@media(max-width:760px){.people{grid-template-columns:repeat(2,minmax(0,1fr))}.person img{height:190px}}
+@media(max-width:480px){main{padding:14px 10px 30px}section,header{padding:15px}.people{grid-template-columns:1fr}.person img{height:250px}}
+</style>
+</head>
+<body>
+<main>
+<header>
+<h1>Кто вы по профессии?</h1>
+<p class="sub">Русский как иностранный · Уровень A1</p>
+<p>Учимся говорить об имени и профессии. Выполните два задания.</p>
+</header>
+
+<section id="task1">
+<h2>Задание 1. Кто это?</h2>
+<p>Перетащите карточки с именами и профессиями под нужные фотографии. На телефоне можно сначала нажать на карточку, а затем на поле под фотографией.</p>
+<div class="tiles" id="tiles"></div>
+<div class="people" id="people"></div>
+<div class="actions"><button onclick="checkTask1()">Проверить</button><button class="secondary" onclick="resetTask1()">Начать заново</button></div>
+<div class="feedback" id="feedback1" aria-live="polite"></div>
+</section>
+
+<section id="task2">
+<h2>Задание 2. Послушайте и заполните пропуски</h2>
+<p>Послушайте аудио и впишите пропущенные слова. Если аудио не загружается, проверьте подключение к интернету или используйте файл, который был приложен к заданию.</p>
+<audio controls preload="metadata" id="audio">
+<source src="a1-kto-vy-po-professii-zadanie-4b.mp3" type="audio/mpeg">
+Ваш браузер не поддерживает аудио.
+</audio>
+<div class="dialogues" id="dialogues"></div>
+<div class="actions"><button onclick="checkTask2()">Проверить</button><button class="secondary" onclick="showAnswers()">Показать ответы</button><button class="secondary" onclick="resetTask2()">Очистить</button></div>
+<div class="feedback" id="feedback2" aria-live="polite"></div>
+</section>
+</main>
+<script>
+const people = [{"name": "Дмитрий Медведев", "job": "политик", "img": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcToCfQWM0RokRr6FlFAt_3ZF5SYmQN8-SYEPuAGReBGkA&s=10"}, {"name": "Ольга Куриленко", "job": "актриса", "img": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRfodYZgAGDcPUcXtWiGe1EUUJvnN3UcOawzB0lJrszkA&s=10"}, {"name": "Андрей Аршавин", "job": "футболист", "img": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTa4w-S5ohuEAD3EuX2fK6X3eGzfMyaOm6srMCr3cPSZw&s=10"}, {"name": "Мария Шарапова", "job": "теннисистка", "img": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQWdoy5wJbrdeDRqxytXFYDen4qZTz8OvRc71t65U0xDg&s=10"}, {"name": "Борис Акунин", "job": "писатель", "img": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQDe8TCx9HpmvxMo__xsXnQlUwQ2tjbHueO_W8zqU2mMw&s=10"}, {"name": "Роман Абрамович", "job": "бизнесмен", "img": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT_-YVZUWhH2BiF4UIVTpXpZqYI3mAubRpHTS_lAOZIOQ&s=10"}];
+const dialogues = [
+  {n:1, lines:[
+    ['— Здравствуйте, как Вас ', ['зовут'], '?'],
+    ['— Меня зовут Дмитрий Медведев.'],
+    ['— Кто вы ', ['по профессии'], ', Дмитрий?'],
+    ['— По профессии я юрист, но сейчас я ', ['политик'], '.']
+  ]},
+  {n:2, lines:[
+    ['— Привет! ', ['Меня'], ' зовут Ольга Куриленко. Я модель и ', ['актриса'], ' в Голливуде.']
+  ]},
+  {n:3, lines:[
+    ['— Это Андрей Аршавин. По профессии Андрей ', ['спортсмен'], '. Он футболист.']
+  ]},
+  {n:4, lines:[
+    ['— Здравствуйте, Анна! Как ', ['дела'], '?'],
+    ['— Спасибо, хорошо. Но я не Анна, ', ['меня зовут'], ' Мария. Мария Шарапова. Я спортсменка.'],
+    ['— ', ['Извините'], ', Мария!']
+  ]},
+  {n:5, lines:[
+    ['— Это Борис Акунин — русский ', ['писатель'], '. Борис Акунин — автор детектива «Азазель».']
+  ]},
+  {n:6, lines:[
+    ['— Здравствуйте, меня зовут Роман Абрамович. Я ', ['русский бизнесмен'], ' и миллиардер. «Челси» — мой футбольный клуб.']
+  ]}
+];
+let selectedTile = null;
+function shuffle(arr){for(let i=arr.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[arr[i],arr[j]]=[arr[j],arr[i]];}return arr;}
+function makeTile(text, id){
+  const el=document.createElement('button'); el.type='button'; el.className='tile'; el.draggable=true; el.textContent=text; el.dataset.id=id;
+  el.addEventListener('dragstart',e=>{e.dataTransfer.setData('text/plain',id);});
+  el.addEventListener('click',()=>{
+    if(selectedTile===id){selectedTile=null;el.classList.remove('selected');return;}
+    document.querySelectorAll('.tile').forEach(t=>t.classList.remove('selected'));
+    selectedTile=id;el.classList.add('selected');
+  });
+  return el;
+}
+function initTask1(){
+  const all=[];
+  people.forEach((p,i)=>{all.push({id:'name'+i,text:p.name});all.push({id:'job'+i,text:p.job});});
+  const tray=document.getElementById('tiles');tray.innerHTML='';
+  shuffle(all).forEach(t=>tray.appendChild(makeTile(t.text,t.id)));
+  const grid=document.getElementById('people');grid.innerHTML='';
+  people.forEach((p,i)=>{
+    const card=document.createElement('article');card.className='person';
+    const img=document.createElement('img');img.src=p.img;img.alt='Фотография '+(i+1);img.loading='lazy';
+    img.onerror=()=>{img.alt='Фото не загрузилось';img.style.height='90px';img.style.objectFit='contain';};
+    card.appendChild(img);
+    [['Имя','name'],['Профессия','job']].forEach(([label,type])=>{
+      const lab=document.createElement('p');lab.className='label';lab.textContent=label;card.appendChild(lab);
+      const zone=document.createElement('div');zone.className='dropzone';zone.dataset.expected=type+i;zone.dataset.type=type;zone.tabIndex=0;zone.setAttribute('aria-label',label+' для фотографии '+(i+1));zone.textContent='Перетащите карточку сюда';
+      zone.addEventListener('dragover',e=>{e.preventDefault();zone.classList.add('over');});
+      zone.addEventListener('dragleave',()=>zone.classList.remove('over'));
+      zone.addEventListener('drop',e=>{e.preventDefault();zone.classList.remove('over');placeTile(e.dataTransfer.getData('text/plain'),zone);});
+      zone.addEventListener('click',()=>{if(selectedTile)placeTile(selectedTile,zone);});
+      zone.addEventListener('keydown',e=>{if((e.key==='Enter'||e.key===' ')&&selectedTile){e.preventDefault();placeTile(selectedTile,zone);}});
+      card.appendChild(zone);
+    });
+    grid.appendChild(card);
+  });
+}
+function placeTile(id,zone){
+  const tile=document.querySelector('.tile[data-id="'+id+'"]');
+  if(!tile)return;
+  const old=zone.querySelector('.tile');
+  if(old)document.getElementById('tiles').appendChild(old);
+  zone.textContent='';zone.appendChild(tile);tile.classList.remove('selected','correct','incorrect');selectedTile=null;
+  document.querySelectorAll('.tile').forEach(t=>t.classList.remove('selected'));
+}
+function checkTask1(){
+  let correct=0,total=people.length*2;
+  document.querySelectorAll('.dropzone').forEach(z=>{
+    z.classList.remove('over');const t=z.querySelector('.tile');const ok=!!t&&t.dataset.id===z.dataset.expected;
+    if(t)t.classList.toggle('correct',ok),t.classList.toggle('incorrect',!ok);
+    if(ok)correct++;
+  });
+  const f=document.getElementById('feedback1');f.className='feedback '+(correct===total?'ok':'err');f.textContent='Правильно: '+correct+' из '+total+'. '+(correct===total?'Отлично!':'Попробуйте ещё раз.');
+}
+function resetTask1(){initTask1();const f=document.getElementById('feedback1');f.textContent='';f.className='feedback';}
+function initTask2(){
+  const root=document.getElementById('dialogues');root.innerHTML='';
+  dialogues.forEach(d=>{
+    const box=document.createElement('div');box.className='dialogue';
+    const title=document.createElement('p');const strong=document.createElement('strong');strong.textContent='Диалог '+d.n;title.appendChild(strong);box.appendChild(title);
+    d.lines.forEach(parts=>{
+      const p=document.createElement('p');
+      parts.forEach(part=>{
+        if(Array.isArray(part)){
+          const inp=document.createElement('input');inp.className='blank';inp.type='text';inp.autocomplete='off';inp.setAttribute('aria-label','Пропущенное слово в диалоге '+d.n);inp.dataset.answers=JSON.stringify(part);inp.size=Math.max(9,Math.min(20,part[0].length+2));p.appendChild(inp);
+        }else p.appendChild(document.createTextNode(part));
+      });
+      box.appendChild(p);
+    });
+    root.appendChild(box);
+  });
+}
+function normalize(s){return s.trim().toLocaleLowerCase('ru').replace(/[.!?,;:«»"—–-]/g,'').replace(/\s+/g,' ');}
+function checkTask2(){
+  let total=0,correct=0;
+  document.querySelectorAll('.blank').forEach(inp=>{
+    total++;const answers=JSON.parse(inp.dataset.answers);const ok=answers.some(a=>normalize(a)===normalize(inp.value));
+    inp.classList.toggle('right',ok);inp.classList.toggle('wrong',!ok);if(ok)correct++;
+  });
+  const f=document.getElementById('feedback2');f.className='feedback '+(correct===total?'ok':'err');f.textContent='Правильно: '+correct+' из '+total+'. '+(correct===total?'Отлично!':'Проверьте ответы и попробуйте ещё раз.');
+}
+function showAnswers(){
+  document.querySelectorAll('.blank').forEach(inp=>{inp.value=JSON.parse(inp.dataset.answers)[0];inp.classList.remove('wrong');inp.classList.add('right');});
+  const f=document.getElementById('feedback2');f.className='feedback';f.textContent='Показаны правильные ответы.';
+}
+function resetTask2(){document.querySelectorAll('.blank').forEach(i=>{i.value='';i.classList.remove('right','wrong');});const f=document.getElementById('feedback2');f.textContent='';f.className='feedback';}
+initTask1();initTask2();
+</script>
+</body>
+</html>
