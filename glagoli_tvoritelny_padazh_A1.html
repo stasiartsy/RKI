@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>РКИ А1: Глаголы + Творительный падеж</title>
+  <style>
+    :root {
+      --primary: #2563eb;
+      --primary-hover: #1d4ed8;
+      --bg-color: #f8fafc;
+      --card-bg: #ffffff;
+      --text-main: #1e293b;
+      --text-muted: #64748b;
+      --border-color: #e2e8f0;
+      --correct: #16a34a;
+      --correct-bg: #dcfce7;
+      --incorrect: #dc2626;
+      --incorrect-bg: #fee2e2;
+      --accent: #d97706;
+      --radius: 12px;
+      --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-main);
+      line-height: 1.6;
+      padding: 20px 10px;
+    }
+
+    .container {
+      max-width: 960px;
+      margin: 0 auto;
+    }
+
+    header {
+      text-align: center;
+      background: linear-gradient(135deg, #0f172a, #2563eb);
+      color: white;
+      padding: 32px 20px;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      margin-bottom: 25px;
+    }
+
+    header h1 {
+      font-size: 1.75rem;
+      margin-bottom: 8px;
+    }
+
+    header p {
+      font-size: 1rem;
+      opacity: 0.9;
+    }
+
+    .badge {
+      display: inline-block;
+      background: rgba(255, 255, 255, 0.2);
+      padding: 4px 14px;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-top: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .section-card {
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      padding: 25px;
+      margin-bottom: 25px;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border-color);
+    }
+
+    .section-title {
+      font-size: 1.25rem;
+      color: #0f172a;
+      border-bottom: 2px solid var(--border-color);
+      padding-bottom: 10px;
+      margin-bottom: 15px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .instruction {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      margin-bottom: 20px;
+    }
+
+    /* INPUT STYLES */
+    .gap-input {
+      border: 1px solid #cbd5e1;
+      border-bottom: 2px solid var(--primary);
+      background: #ffffff;
+      padding: 3px 8px;
+      font-size: 0.95rem;
+      font-family: inherit;
+      border-radius: 4px 4px 0 0;
+      min-width: 90px;
+      text-align: center;
+      font-weight: 600;
+      color: var(--text-main);
+      transition: all 0.2s;
+      display: inline-block;
+      margin: 0 2px;
+    }
+
+    .gap-input:focus {
+      outline: none;
+      border-bottom-color: #1d4ed8;
+      background: #f0f9ff;
+    }
+
+    .gap-input.correct {
+      border-color: var(--correct) !important;
+      background-color: var(--correct-bg) !important;
+      color: var(--correct) !important;
+    }
+
+    .gap-input.incorrect {
+      border-color: var(--incorrect) !important;
+      background-color: var(--incorrect-bg) !important;
+      color: var(--incorrect) !important;
+    }
+
+    /* TASK 1: PHOTOS GRID */
+    .photos-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 20px;
+    }
+
+    .photo-card {
+      background: #fafafa;
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius);
+      padding: 15px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .photo-card img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      border-radius: 8px;
+      margin-bottom: 12px;
+      background: #e2e8f0;
+    }
+
+    .photo-caption {
+      font-size: 0.95rem;
+      line-height: 1.8;
+      width: 100%;
+    }
+
+    /* TASK 2: SENTENCES LIST */
+    .sentences-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .sentence-item {
+      background: #f8fafc;
+      padding: 12px 16px;
+      border-radius: 8px;
+      border-left: 4px solid var(--primary);
+      font-size: 1rem;
+      line-height: 1.8;
+    }
+
+    .word-stem {
+      font-weight: 600;
+      color: #0f172a;
+    }
+
+    /* TASK 3: CONJUGATION TABLE */
+    .conjugation-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+    }
+
+    .conjugation-table {
+      width: 100%;
+      border-collapse: collapse;
+      background: #ffffff;
+      border-radius: 8px;
+      overflow: hidden;
+      border: 1px solid var(--border-color);
+    }
+
+    .conjugation-table th {
+      background: #eff6ff;
+      color: #1e40af;
+      padding: 12px;
+      font-size: 1rem;
+      text-align: center;
+      border-bottom: 2px solid #bfdbfe;
+    }
+
+    .conjugation-table td {
+      padding: 10px 15px;
+      border-bottom: 1px solid var(--border-color);
+      font-size: 0.95rem;
+    }
+
+    .pronoun-col {
+      font-weight: 600;
+      color: var(--text-muted);
+      width: 35%;
+      text-align: right;
+      padding-right: 15px !important;
+    }
+
+    /* TASK 4: VERBS PRACTICE */
+    .practice-subgroup {
+      margin-bottom: 20px;
+    }
+
+    .practice-subgroup h3 {
+      font-size: 1.1rem;
+      color: #1e40af;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* TASK 5: FREE PRACTICE */
+    .free-practice-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    .free-input-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .free-input-group label {
+      font-weight: 600;
+      color: #334155;
+    }
+
+    .free-textarea {
+      width: 100%;
+      border: 1px solid #cbd5e1;
+      border-radius: 6px;
+      padding: 10px;
+      font-family: inherit;
+      font-size: 0.95rem;
+      transition: border 0.2s;
+    }
+
+    .free-textarea:focus {
+      outline: none;
+      border-color: var(--primary);
+      background-color: #f0f9ff;
+    }
+
+    /* ACTION BAR & RESULTS */
+    .action-bar {
+      display: flex;
+      gap: 15px;
+      justify-content: center;
+      margin-top: 10px;
+      margin-bottom: 30px;
+    }
+
+    .btn-main {
+      background: var(--primary);
+      color: white;
+      border: none;
+      padding: 12px 28px;
+      font-size: 1rem;
+      font-weight: 600;
+      border-radius: 8px;
+      cursor: pointer;
+      box-shadow: 0 4px 6px rgba(37, 99, 235, 0.3);
+      transition: all 0.2s;
+    }
+
+    .btn-main:hover {
+      background: var(--primary-hover);
+      transform: translateY(-1px);
+    }
+
+    .btn-reset {
+      background: #64748b;
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      font-size: 1rem;
+      font-weight: 600;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .btn-reset:hover {
+      background: #475569;
+    }
+
+    .result-box {
+      display: none;
+      background: #ffffff;
+      border: 2px solid var(--primary);
+      border-radius: var(--radius);
+      padding: 20px;
+      text-align: center;
+      margin-bottom: 25px;
+      box-shadow: var(--shadow);
+    }
+
+    .result-score {
+      font-size: 2.2rem;
+      font-weight: 800;
+      color: var(--primary);
+      margin: 10px 0;
+    }
+
+    .tts-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 1.1rem;
+      margin-left: 5px;
+      vertical-align: middle;
+      opacity: 0.7;
+      transition: opacity 0.2s;
+    }
+
+    .tts-btn:hover {
+      opacity: 1;
+    }
+
+    @media (max-width: 600px) {
+      body { padding: 10px 5px; }
+      header { padding: 20px 10px; }
+      .photos-grid { grid-template-columns: 1fr; }
+      .action-bar { flex-direction: column; }
+      .btn-main, .btn-reset { width: 100%; }
+      .gap-input { min-width: 75px; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <header>
+    <h1>Интерактивное упражнение по РКИ</h1>
+    <p>Тема: Глаголы «быть, стать, работать», «заниматься, интересоваться» + Творительный падеж</p>
+    <span class="badge">Уровень А1</span>
+  </header>
+
+  <!-- RESULT SCORE BOARD -->
+  <div class="result-box" id="resultBox">
+    <h2>Результаты упражнения</h2>
+    <div class="result-score" id="scoreText">0 / 0</div>
+    <p id="scoreFeedback"></p>
+  </div>
+
+  <!-- TASK 1 -->
+  <div class="section-card">
+    <div class="section-title">
+      <span>1️⃣</span> Задание 1. Кем они хотели стать?
+    </div>
+    <div class="instruction">
+      Посмотрите на фотографии и впишите нужное слово в Творительном падеже.
+    </div>
+
+    <div class="photos-grid">
+      <!-- Photo 1 -->
+      <div class="photo-card">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTGLlbZgTp3kolz81GO4AZ-E20UGMswqzdA_s2Lb7oRkw&s=10" alt="Фото 1" loading="lazy">
+        <div class="photo-caption">
+          Николай хотел стать 
+          <input type="text" class="gap-input eval-gap" data-ans="футболистом" style="width: 120px;">
+        </div>
+      </div>
+
+      <!-- Photo 2 -->
+      <div class="photo-card">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT3yE-cyAcVirqnfMRp4mRK8TDnYVgCUH9iz9pK6qWQiw&s=10" alt="Фото 2" loading="lazy">
+        <div class="photo-caption">
+          Ксения хотела стать 
+          <input type="text" class="gap-input eval-gap" data-ans="балериной" style="width: 120px;">
+        </div>
+      </div>
+
+      <!-- Photo 3 -->
+      <div class="photo-card">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSJU1DVTzHaKNKUXNFjPTb0Cv5_qb7C3Pa_WfyIH6D6Tg&s=10" alt="Фото 3" loading="lazy">
+        <div class="photo-caption">
+          Виктор хотел стать 
+          <input type="text" class="gap-input eval-gap" data-ans="космонавтом" style="width: 130px;">
+        </div>
+      </div>
+
+      <!-- Photo 4 -->
+      <div class="photo-card">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQyE-At57RocHrAD2kH5u2K6if6IXcfEh9YQHaAxNWctg&s=10" alt="Фото 4" loading="lazy">
+        <div class="photo-caption">
+          Наталья хотела стать 
+          <input type="text" class="gap-input eval-gap" data-ans="актрисой" style="width: 110px;">
+        </div>
+      </div>
+
+      <!-- Photo 5 -->
+      <div class="photo-card">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQB4at_NVezg1yJCoN1HBqm5IP-AJ1dJKaYUGEPs_-3fQ&s=10" alt="Фото 5" loading="lazy">
+        <div class="photo-caption">
+          Катя хотела стать 
+          <input type="text" class="gap-input eval-gap" data-ans="поваром" style="width: 110px;">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TASK 2 -->
+  <div class="section-card">
+    <div class="section-title">
+      <span>2️⃣</span> Задание 2. Номинатив (1) или Инструменталь (5)?
+    </div>
+    <div class="instruction">
+      Впишите правильное окончание. Если окончания нет, поставьте знак дефиса «<b>-</b>».
+    </div>
+
+    <div class="sentences-list">
+      <div class="sentence-item">
+        1. Они не работают. Они студент<input type="text" class="gap-input eval-gap" data-ans="ы" style="width: 50px;">
+        <button class="tts-btn" onclick="speakText('Они не работают. Они студенты')">🔊</button>
+      </div>
+
+      <div class="sentence-item">
+        2. Раньше мой брат был администратор<input type="text" class="gap-input eval-gap" data-ans="ом" style="width: 60px;"> в отеле. Сейчас он менеджер<input type="text" class="gap-input eval-gap" data-ans="-" style="width: 45px;">.
+        <button class="tts-btn" onclick="speakText('Раньше мой брат был администратором в отеле. Сейчас он менеджер')">🔊</button>
+      </div>
+
+      <div class="sentence-item">
+        3. Их сын хочет стать пилот<input type="text" class="gap-input eval-gap" data-ans="ом" style="width: 60px;">.
+        <button class="tts-btn" onclick="speakText('Их сын хочет стать пилотом')">🔊</button>
+      </div>
+
+      <div class="sentence-item">
+        4. Раньше дети мечтали стать спортсмен<input type="text" class="gap-input eval-gap" data-ans="ами" style="width: 65px;">, а сейчас они мечтают стать блогер<input type="text" class="gap-input eval-gap" data-ans="ами" style="width: 65px;">.
+        <button class="tts-btn" onclick="speakText('Раньше дети мечтали стать спортсменами, а сейчас они мечтают стать блогерами')">🔊</button>
+      </div>
+
+      <div class="sentence-item">
+        5. Он фотограф<input type="text" class="gap-input eval-gap" data-ans="-" style="width: 45px;"> в модном журнале.
+        <button class="tts-btn" onclick="speakText('Он фотограф в модном журнале')">🔊</button>
+      </div>
+
+      <div class="sentence-item">
+        6. Раньше Маша была студентк<input type="text" class="gap-input eval-gap" data-ans="ой" style="width: 60px;">, а сейчас она работает журналистк<input type="text" class="gap-input eval-gap" data-ans="ой" style="width: 60px;">.
+        <button class="tts-btn" onclick="speakText('Раньше Маша была студенткой, а сейчас она работает журналисткой')">🔊</button>
+      </div>
+
+      <div class="sentence-item">
+        7. По профессии я юристк<input type="text" class="gap-input eval-gap" data-ans="а" style="width: 50px;">, но всегда мечтала стать художниц<input type="text" class="gap-input eval-gap" data-ans="ей" style="width: 60px;">.
+        <button class="tts-btn" onclick="speakText('По профессии я юристка, но всегда мечтала стать художницей')">🔊</button>
+      </div>
+
+      <div class="sentence-item">
+        8. Сейчас Светлана и Михаил мечтают стать родител<input type="text" class="gap-input eval-gap" data-ans="ями" style="width: 65px;">.
+        <button class="tts-btn" onclick="speakText('Сейчас Светлана и Михаил мечтают стать родителями')">🔊</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- TASK 3 -->
+  <div class="section-card">
+    <div class="section-title">
+      <span>3️⃣</span> Задание 3. Интерактивная таблица: спряжение глаголов
+    </div>
+    <div class="instruction">
+      Заполните таблицу спряжения глаголов «Заниматься» и «Интересоваться».
+    </div>
+
+    <div class="conjugation-grid">
+      <!-- Table 1 -->
+      <table class="conjugation-table">
+        <thead>
+          <tr>
+            <th colspan="2">Глагол «Заниматься»</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="pronoun-col">я</td>
+            <td><input type="text" class="gap-input eval-gap" data-ans="занимаюсь" style="width: 140px;"></td>
+          </tr>
+          <tr>
+            <td class="pronoun-col">ты</td>
+            <td><input type="text" class="gap-input eval-gap" data-ans="занимаешься" style="width: 140px;"></td>
+          </tr>
+          <tr>
+            <td class="pronoun-col">он, она</td>
+            <td><input type="text" class="gap-input eval-gap" data-ans="занимается" style="width: 140px;"></td>
+          </tr>
+          <tr>
+            <td class="pronoun-col">мы</td>
+            <td><input type="text" class="gap-input eval-gap" data-ans="занимаемся" style="width: 140px;"></td>
+          </tr>
+          <tr>
+            <td class="pronoun-col">вы</td>
+            <td><input type="text" class="gap-input eval-gap" data-ans="занимаетесь" style="width: 140px;"></td>
+          </tr>
+          <tr>
+            <td class="pronoun-col">они</td>
+            <td><input type="text" class="gap-input eval-gap" data-ans="занимаются" style="width: 140px;"></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <!-- Table 2 -->
+      <table class="conjugation-table">
+        <thead>
+          <tr>
+            <th colspan="2">Глагол «Интересоваться»</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="pronoun-col">я</td>
+            <td><input type="text" class="gap-input eval-gap" data-ans="интересуюсь" style="width: 140px;"></td>
+          </tr>
+          <tr>
+            <td class="pronoun-col">ты</td>
+            <td><input type="text" class="gap-input eval-gap" data-ans="интересуешься" style="width: 140px;"></td>
+          </tr>
+          <tr>
+            <td class="pronoun-col">он, она</td>
+            <td><input type="text" class="gap-input eval-gap" data-ans="интересуется" style="width: 140px;"></td>
+          </tr>
+          <tr>
+            <td class="pronoun-col">мы</td>
+            <td><input type="text" class="gap-input eval-gap" data-ans="интересуемся" style="width: 140px;"></td>
+          </tr>
+          <tr>
+            <td class="pronoun-col">вы</td>
+            <td><input type="text" class="gap-input eval-gap" data-ans="интересуетесь" style="width: 140px;"></td>
+          </tr>
+          <tr>
+            <td class="pronoun-col">они</td>
+            <td><input type="text" class="gap-input eval-gap" data-ans="интересуются" style="width: 140px;"></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- TASK 4 -->
+  <div class="section-card">
+    <div class="section-title">
+      <span>4️⃣</span> Задание 4. Практика глаголов «Заниматься» и «Интересоваться»
+    </div>
+    <div class="instruction">
+      Вставьте глаголы в правильной форме настоящего или прошедшего времени.
+    </div>
+
+    <!-- Subgroup 1 -->
+    <div class="practice-subgroup">
+      <h3>📌 Глагол «Заниматься»</h3>
+      <div class="sentences-list">
+        <div class="sentence-item">
+          1. — Вы <input type="text" class="gap-input eval-gap" data-ans="занимаетесь" style="width: 140px;"> спортом? 
+          — Да, я часто <input type="text" class="gap-input eval-gap" data-ans="занимаюсь" style="width: 140px;"> спортом.
+        </div>
+        <div class="sentence-item">
+          2. Он <input type="text" class="gap-input eval-gap" data-ans="занимается" style="width: 140px;"> русским языком каждый день.
+        </div>
+        <div class="sentence-item">
+          3. Раньше мы <input type="text" class="gap-input eval-gap" data-ans="занимались" style="width: 140px;"> фотографией, а сейчас не <input type="text" class="gap-input eval-gap" data-ans="занимаемся" style="width: 140px;">.
+        </div>
+        <div class="sentence-item">
+          4. — Чем ты <input type="text" class="gap-input eval-gap" data-ans="занимаешься" style="width: 140px;"> в свободное время? 
+          — Я <input type="text" class="gap-input eval-gap" data-ans="занимаюсь" style="width: 140px;"> музыкой и рисованием.
+        </div>
+        <div class="sentence-item">
+          5. Чем вы <input type="text" class="gap-input eval-gap" data-ans="занимаетесь" style="width: 140px;"> на выходных?
+        </div>
+        <div class="sentence-item">
+          6. Мои друзья <input type="text" class="gap-input eval-gap" data-ans="занимаются" style="width: 140px;"> бегом и атлетикой.
+        </div>
+      </div>
+    </div>
+
+    <!-- Subgroup 2 -->
+    <div class="practice-subgroup" style="margin-top: 25px;">
+      <h3>📌 Глагол «Интересоваться»</h3>
+      <div class="sentences-list">
+        <div class="sentence-item">
+          1. Чем вы <input type="text" class="gap-input eval-gap" data-ans="интересуетесь" style="width: 150px;">? 
+          — Я <input type="text" class="gap-input eval-gap" data-ans="интересуюсь" style="width: 140px;"> театром. 
+          Он <input type="text" class="gap-input eval-gap" data-ans="интересуется" style="width: 140px;"> классической музыкой. 
+          Они <input type="text" class="gap-input eval-gap" data-ans="интересуются" style="width: 150px;"> современным искусством. 
+          Чем ты <input type="text" class="gap-input eval-gap" data-ans="интересуешься" style="width: 150px;">? 
+          Раньше мы <input type="text" class="gap-input eval-gap" data-ans="интересовались" style="width: 160px;"> театром, а сейчас <input type="text" class="gap-input eval-gap" data-ans="интересуемся" style="width: 150px;"> кино.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TASK 5 -->
+  <div class="section-card">
+    <div class="section-title">
+      <span>5️⃣</span> Задание 5. Свободная практика
+    </div>
+    <div class="instruction">
+      Закончите фразы о себе. (Это задание открытого типа и не оценивается автоматически).
+    </div>
+
+    <div class="free-practice-grid">
+      <div class="free-input-group">
+        <label for="free1">1. Я работаю ...</label>
+        <input type="text" id="free1" class="free-textarea" placeholder="Например: преподавателем / в школе">
+      </div>
+
+      <div class="free-input-group">
+        <label for="free2">2. Я работаю с ...</label>
+        <input type="text" id="free2" class="free-textarea" placeholder="Например: людьми / компьютером / детьми">
+      </div>
+
+      <div class="free-input-group">
+        <label for="free3">3. Раньше я работал/а ...</label>
+        <input type="text" id="free3" class="free-textarea" placeholder="Например: гидом / официантом">
+      </div>
+
+      <div class="free-input-group">
+        <label for="free4">4. В детстве я мечтал/а стать ...</label>
+        <input type="text" id="free4" class="free-textarea" placeholder="Например: врачом / музыкантом">
+      </div>
+
+      <div class="free-input-group">
+        <label for="free5">5. Я занимаюсь ...</label>
+        <input type="text" id="free5" class="free-textarea" placeholder="Например: йогой / плаванием / языками">
+      </div>
+
+      <div class="free-input-group">
+        <label for="free6">6. Я интересуюсь ...</label>
+        <input type="text" id="free6" class="free-textarea" placeholder="Например: историей / искусством / наукой">
+      </div>
+    </div>
+  </div>
+
+  <!-- ACTION BUTTONS -->
+  <div class="action-bar">
+    <button class="btn-main" onclick="checkAllAnswers()">Проверить ответы</button>
+    <button class="btn-reset" onclick="resetExercise()">Начать заново</button>
+  </div>
+</div>
+
+<script>
+  // Text-to-Speech function
+  function speakText(text) {
+    if (!('speechSynthesis' in window)) {
+      alert('Ваш браузер не поддерживает синтез речи.');
+      return;
+    }
+    window.speechSynthesis.cancel();
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.lang = 'ru-RU';
+    utterance.rate = 0.9;
+    window.speechSynthesis.speak(utterance);
+  }
+
+  // Check answers
+  function checkAllAnswers() {
+    let score = 0;
+    const inputs = document.querySelectorAll('.eval-gap');
+    const total = inputs.length;
+
+    inputs.forEach(input => {
+      const expected = input.dataset.ans.trim().toLowerCase();
+      const userAns = input.value.trim().toLowerCase();
+
+      if (userAns === expected) {
+        score++;
+        input.classList.add('correct');
+        input.classList.remove('incorrect');
+      } else {
+        input.classList.add('incorrect');
+        input.classList.remove('correct');
+      }
+    });
+
+    // Display Scoreboard
+    const resultBox = document.getElementById('resultBox');
+    const scoreText = document.getElementById('scoreText');
+    const scoreFeedback = document.getElementById('scoreFeedback');
+
+    const percent = Math.round((score / total) * 100);
+    scoreText.textContent = `${score} / ${total} (${percent}%)`;
+
+    if (percent === 100) {
+      scoreFeedback.textContent = "🎉 Замечательно! Все ответы правильные!";
+      scoreFeedback.style.color = "var(--correct)";
+    } else if (percent >= 75) {
+      scoreFeedback.textContent = "👍 Хорошая работа! Проверьте выделенные ошибки.";
+      scoreFeedback.style.color = "var(--primary)";
+    } else {
+      scoreFeedback.textContent = "💡 Попробуйте ещё раз и обратите внимание на окончания.";
+      scoreFeedback.style.color = "var(--incorrect)";
+    }
+
+    resultBox.style.display = 'block';
+    resultBox.scrollIntoView({ behavior: 'smooth' });
+  }
+
+  // Reset exercise
+  function resetExercise() {
+    const inputs = document.querySelectorAll('.eval-gap');
+    inputs.forEach(input => {
+      input.value = '';
+      input.classList.remove('correct', 'incorrect');
+    });
+
+    const freeInputs = document.querySelectorAll('.free-textarea');
+    freeInputs.forEach(input => {
+      input.value = '';
+    });
+
+    document.getElementById('resultBox').style.display = 'none';
+  }
+</script>
+
+</body>
+</html>
