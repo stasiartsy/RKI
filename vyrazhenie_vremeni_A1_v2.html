@@ -1,0 +1,1150 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>РКИ А1: Выражение времени и предлоги ЗА, НА</title>
+  <style>
+    :root {
+      --primary: #2563eb;
+      --primary-hover: #1d4ed8;
+      --bg-color: #f8fafc;
+      --card-bg: #ffffff;
+      --text-main: #1e293b;
+      --text-muted: #64748b;
+      --border-color: #e2e8f0;
+      --correct: #16a34a;
+      --correct-bg: #dcfce7;
+      --incorrect: #dc2626;
+      --incorrect-bg: #fee2e2;
+      --radius: 12px;
+      --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-main);
+      line-height: 1.6;
+      padding: 20px 10px;
+    }
+
+    .container {
+      max-width: 960px;
+      margin: 0 auto;
+    }
+
+    header {
+      text-align: center;
+      background: linear-gradient(135deg, #1e3a8a, #2563eb);
+      color: white;
+      padding: 32px 20px;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      margin-bottom: 25px;
+    }
+
+    header h1 {
+      font-size: 1.75rem;
+      margin-bottom: 8px;
+    }
+
+    header p {
+      font-size: 0.98rem;
+      opacity: 0.9;
+    }
+
+    .badge {
+      display: inline-block;
+      background: rgba(255, 255, 255, 0.2);
+      padding: 4px 14px;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-top: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .section-card {
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      padding: 25px;
+      margin-bottom: 25px;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border-color);
+    }
+
+    .section-title {
+      font-size: 1.25rem;
+      color: #0f172a;
+      border-bottom: 2px solid var(--border-color);
+      padding-bottom: 10px;
+      margin-bottom: 15px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .instruction {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      margin-bottom: 20px;
+    }
+
+    /* INPUT & SELECT STYLES */
+    .gap-input {
+      border: 1px solid #cbd5e1;
+      border-bottom: 2px solid var(--primary);
+      background: #ffffff;
+      padding: 4px 8px;
+      font-size: 0.95rem;
+      font-family: inherit;
+      border-radius: 4px 4px 0 0;
+      min-width: 120px;
+      text-align: center;
+      font-weight: 600;
+      color: var(--text-main);
+      transition: all 0.2s;
+      display: inline-block;
+      margin: 0 2px;
+    }
+
+    .gap-input:focus {
+      outline: none;
+      border-bottom-color: #1d4ed8;
+      background: #f0f9ff;
+    }
+
+    .gap-input.correct, select.correct {
+      border-color: var(--correct) !important;
+      background-color: var(--correct-bg) !important;
+      color: var(--correct) !important;
+    }
+
+    .gap-input.incorrect, select.incorrect {
+      border-color: var(--incorrect) !important;
+      background-color: var(--incorrect-bg) !important;
+      color: var(--incorrect) !important;
+    }
+
+    select.choice-select {
+      padding: 4px 10px;
+      border: 2px solid var(--primary);
+      border-radius: 6px;
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: #1d4ed8;
+      background: #eff6ff;
+      cursor: pointer;
+      margin: 0 4px;
+    }
+
+    /* CHIP BANK & DRAG SLOTS */
+    .chip-bank-container {
+      background: #f1f5f9;
+      padding: 15px;
+      border-radius: var(--radius);
+      margin-bottom: 20px;
+      border: 2px dashed #cbd5e1;
+    }
+
+    .chip-bank-title {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      margin-bottom: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .chips-flex {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      min-height: 44px;
+      align-items: center;
+    }
+
+    .draggable-chip {
+      background: #ffffff;
+      border: 2px solid #3b82f6;
+      color: #1d4ed8;
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-weight: 700;
+      cursor: grab;
+      user-select: none;
+      transition: all 0.2s ease;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+      font-size: 0.95rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .draggable-chip:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(37, 99, 235, 0.2);
+      background: #eff6ff;
+    }
+
+    .draggable-chip.selected {
+      background: #2563eb;
+      color: white;
+      border-color: #1d4ed8;
+    }
+
+    .draggable-chip.dragging {
+      opacity: 0.5;
+    }
+
+    .drop-slot {
+      background: #ffffff;
+      border: 2px dashed #cbd5e1;
+      border-radius: 8px;
+      padding: 6px 12px;
+      min-height: 44px;
+      min-width: 140px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.9rem;
+      color: #94a3b8;
+      transition: all 0.2s;
+      cursor: pointer;
+    }
+
+    .drop-slot.hovered {
+      background: #eff6ff;
+      border-color: var(--primary);
+    }
+
+    .drop-slot.filled {
+      border-style: solid;
+      border-color: #94a3b8;
+      color: var(--text-main);
+      padding: 2px;
+    }
+
+    .drop-slot.correct {
+      border-color: var(--correct) !important;
+      background-color: var(--correct-bg) !important;
+      color: var(--correct) !important;
+      font-weight: bold;
+    }
+
+    .drop-slot.incorrect {
+      border-color: var(--incorrect) !important;
+      background-color: var(--incorrect-bg) !important;
+      color: var(--incorrect) !important;
+      font-weight: bold;
+    }
+
+    /* TABLES FOR TASK 1 & TASK 4 */
+    .task-table-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+    }
+
+    .custom-table {
+      width: 100%;
+      border-collapse: collapse;
+      background: #ffffff;
+      border-radius: 8px;
+      overflow: hidden;
+      border: 1px solid var(--border-color);
+    }
+
+    .custom-table th {
+      background: #eff6ff;
+      color: #1e40af;
+      padding: 14px;
+      font-size: 1rem;
+      text-align: center;
+      border-bottom: 2px solid #bfdbfe;
+    }
+
+    .custom-table td {
+      padding: 12px 15px;
+      border-bottom: 1px solid var(--border-color);
+      font-size: 0.95rem;
+    }
+
+    .custom-table tr:nth-child(even) {
+      background-color: #f8fafc;
+    }
+
+    /* SENTENCE LISTS */
+    .sentences-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .sentence-item {
+      background: #f8fafc;
+      padding: 12px 16px;
+      border-radius: 8px;
+      border-left: 4px solid var(--primary);
+      font-size: 1rem;
+      line-height: 1.8;
+    }
+
+    .sentence-prompt {
+      font-weight: 600;
+      color: #1e3a8a;
+      margin-bottom: 6px;
+    }
+
+    /* FREE PRACTICE */
+    .free-practice-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    .free-input-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .free-input-group label {
+      font-weight: 600;
+      color: #334155;
+    }
+
+    .free-textarea {
+      width: 100%;
+      border: 1px solid #cbd5e1;
+      border-radius: 6px;
+      padding: 10px;
+      font-family: inherit;
+      font-size: 0.95rem;
+      transition: border 0.2s;
+    }
+
+    .free-textarea:focus {
+      outline: none;
+      border-color: var(--primary);
+      background-color: #f0f9ff;
+    }
+
+    /* PER TASK ACTION & RESULT BAR */
+    .task-footer {
+      margin-top: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 12px;
+      border-top: 1px solid var(--border-color);
+      padding-top: 15px;
+    }
+
+    .btn-check-task {
+      background: var(--primary);
+      color: white;
+      border: none;
+      padding: 9px 22px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.1s;
+    }
+
+    .btn-check-task:hover {
+      background: var(--primary-hover);
+      transform: translateY(-1px);
+    }
+
+    .task-result-box {
+      display: none;
+      font-weight: 700;
+      font-size: 0.95rem;
+      padding: 8px 14px;
+      border-radius: 6px;
+      width: 100%;
+    }
+
+    .task-result-box.correct-result {
+      background: var(--correct-bg);
+      color: var(--correct);
+      border: 1px solid #86efac;
+    }
+
+    .task-result-box.partial-result {
+      background: #fef3c7;
+      color: var(--accent);
+      border: 1px solid #fde68a;
+    }
+
+    .task-result-box.incorrect-result {
+      background: var(--incorrect-bg);
+      color: var(--incorrect);
+      border: 1px solid #fca5a5;
+    }
+
+    /* GLOBAL RESET BAR */
+    .action-bar {
+      display: flex;
+      justify-content: center;
+      margin-top: 10px;
+      margin-bottom: 30px;
+    }
+
+    .btn-reset-all {
+      background: #64748b;
+      color: white;
+      border: none;
+      padding: 12px 28px;
+      font-size: 1rem;
+      font-weight: 600;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .btn-reset-all:hover {
+      background: #475569;
+    }
+
+    @media (max-width: 600px) {
+      body { padding: 10px 5px; }
+      header { padding: 20px 10px; }
+      .task-table-grid { grid-template-columns: 1fr; }
+      .gap-input { min-width: 100px; width: 100%; margin-top: 4px; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <header>
+    <h1>Интерактивное упражнение по РКИ</h1>
+    <p>Тема: Выражение времени (весь, каждый + Винительный падеж; предлоги ЗА, НА + Винительный падеж)</p>
+    <span class="badge">Уровень А1</span>
+  </header>
+
+  <!-- TASK 1 -->
+  <div class="section-card" id="taskCard1">
+    <div class="section-title">
+      <span>1️⃣</span> Задание 1. Как долго? или Как часто?
+    </div>
+    <div class="instruction">
+      Перетащите (или нажмите на прямоугольник, а затем на ячейку в заголовке таблицы) правильный заголовок для каждой колонки.
+    </div>
+
+    <!-- CHIP BANK 1 -->
+    <div class="chip-bank-container">
+      <div class="chip-bank-title">Банк заголовков</div>
+      <div class="chips-flex" id="chipBank1">
+        <div class="draggable-chip" draggable="true" data-id="hdr-long" data-text="Как долго?">
+          <span>Как долго?</span>
+        </div>
+        <div class="draggable-chip" draggable="true" data-id="hdr-often" data-text="Как часто?">
+          <span>Как часто?</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="task-table-grid">
+      <!-- Table Column 1 -->
+      <table class="custom-table">
+        <thead>
+          <tr>
+            <th>
+              <div class="drop-slot" data-group="task1" data-correct-val="Как долго?">
+                <span>+ Заголовок</span>
+              </div>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Весь день мы обсуждали проект.</td></tr>
+          <tr><td>Всю неделю он болел.</td></tr>
+          <tr><td>Всё утро ты не отвечал на сообщения.</td></tr>
+          <tr><td>Все каникулы мы отдыхали на море.</td></tr>
+        </tbody>
+      </table>
+
+      <!-- Table Column 2 -->
+      <table class="custom-table">
+        <thead>
+          <tr>
+            <th>
+              <div class="drop-slot" data-group="task1" data-correct-val="Как часто?">
+                <span>+ Заголовок</span>
+              </div>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Каждый вторник я хожу в спортзал.</td></tr>
+          <tr><td>Каждую пятницу мы ужинаем в ресторане.</td></tr>
+          <tr><td>Каждое утро она делает зарядку.</td></tr>
+          <tr><td>Каждые выходные они ездят на дачу.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="task-footer">
+      <button class="btn-check-task" onclick="checkTask1()">Проверить</button>
+      <div class="task-result-box" id="resultTask1"></div>
+    </div>
+  </div>
+
+  <!-- TASK 2 -->
+  <div class="section-card" id="taskCard2">
+    <div class="section-title">
+      <span>2️⃣</span> Задание 2. Составьте вопросы к предложениям
+    </div>
+    <div class="instruction">
+      Задайте вопрос к выделенной информации, используя «Как долго?» или «Как часто?».<br>
+      <i>Пример: Весь вечер Максим играл в видеоигры. — <b>Как долго Максим играл в видеоигры?</b></i>
+    </div>
+
+    <div class="sentences-list">
+      <div class="sentence-item">
+        <div class="sentence-prompt">1. Они разговаривали весь вечер.</div>
+        <input type="text" class="gap-input eval-gap-2" data-ans="Как долго они разговаривали?" style="width: 100%; max-width: 360px; text-align: left;">
+      </div>
+
+      <div class="sentence-item">
+        <div class="sentence-prompt">2. Каждый день Маша ходит в университет.</div>
+        <input type="text" class="gap-input eval-gap-2" data-ans="Как часто Маша ходит в университет?" style="width: 100%; max-width: 360px; text-align: left;">
+      </div>
+
+      <div class="sentence-item">
+        <div class="sentence-prompt">3. Они были на даче все выходные.</div>
+        <input type="text" class="gap-input eval-gap-2" data-ans="Как долго они были на даче?" style="width: 100%; max-width: 360px; text-align: left;">
+      </div>
+
+      <div class="sentence-item">
+        <div class="sentence-prompt">4. Они жили в Москве всю зиму.</div>
+        <input type="text" class="gap-input eval-gap-2" data-ans="Как долго они жили в Москве?" style="width: 100%; max-width: 360px; text-align: left;">
+      </div>
+
+      <div class="sentence-item">
+        <div class="sentence-prompt">5. Каждое утро он встречал этого человека.</div>
+        <input type="text" class="gap-input eval-gap-2" data-ans="Как часто он встречал этого человека?" style="width: 100%; max-width: 400px; text-align: left;">
+      </div>
+
+      <div class="sentence-item">
+        <div class="sentence-prompt">6. Каждую субботу он ходит в клуб.</div>
+        <input type="text" class="gap-input eval-gap-2" data-ans="Как часто он ходит в клуб?" style="width: 100%; max-width: 360px; text-align: left;">
+      </div>
+
+      <div class="sentence-item">
+        <div class="sentence-prompt">7. Всё воскресенье мы отдыхали.</div>
+        <input type="text" class="gap-input eval-gap-2" data-ans="Как долго вы отдыхали?" data-alt-ans="Как долго мы отдыхали?" style="width: 100%; max-width: 360px; text-align: left;">
+      </div>
+
+      <div class="sentence-item">
+        <div class="sentence-prompt">8. Каждые выходные мы ездим за город.</div>
+        <input type="text" class="gap-input eval-gap-2" data-ans="Как часто вы ездите за город?" data-alt-ans="Как часто мы ездим за город?" style="width: 100%; max-width: 360px; text-align: left;">
+      </div>
+    </div>
+
+    <div class="task-footer">
+      <button class="btn-check-task" onclick="checkTask2()">Проверить</button>
+      <div class="task-result-box" id="resultTask2"></div>
+    </div>
+  </div>
+
+  <!-- TASK 3 -->
+  <div class="section-card" id="taskCard3">
+    <div class="section-title">
+      <span>3️⃣</span> Задание 3. «весь» или «каждый» + Винительный падеж
+    </div>
+    <div class="instruction">
+      Заполните пропуски, раскрыв скобки в правильной форме (обращайте внимание на род и число).
+    </div>
+
+    <div class="sentences-list">
+      <div class="sentence-item">
+        1. Вчера я занимался в библиотеке (день) 
+        <input type="text" class="gap-input eval-gap-3" data-ans="весь день" style="width: 140px;">.
+      </div>
+      <div class="sentence-item">
+        2. (утро) <input type="text" class="gap-input eval-gap-3" data-ans="Каждое утро" style="width: 150px;"> она пьёт кофе и читает новости в этом кафе.
+      </div>
+      <div class="sentence-item">
+        3. Мы отдыхали на море (август) <input type="text" class="gap-input eval-gap-3" data-ans="весь август" style="width: 150px;">.
+      </div>
+      <div class="sentence-item">
+        4. Он ходит в бассейн (вторник) <input type="text" class="gap-input eval-gap-3" data-ans="каждый вторник" style="width: 160px;">.
+      </div>
+      <div class="sentence-item">
+        5. Я ждал этой поездки (неделя) <input type="text" class="gap-input eval-gap-3" data-ans="всю неделю" style="width: 140px;">.
+      </div>
+      <div class="sentence-item">
+        6. (лето) <input type="text" class="gap-input eval-gap-3" data-ans="Каждое лето" style="width: 150px;"> дети проводят каникулы у бабушки.
+      </div>
+      <div class="sentence-item">
+        7. Она готовилась к экзамену (воскресенье) <input type="text" class="gap-input eval-gap-3" data-ans="всё воскресенье" style="width: 170px;">.
+      </div>
+      <div class="sentence-item">
+        8. Мой друг занимается спортом (пятница) <input type="text" class="gap-input eval-gap-3" data-ans="каждую пятницу" style="width: 160px;">.
+      </div>
+    </div>
+
+    <div class="task-footer">
+      <button class="btn-check-task" onclick="checkTask3()">Проверить</button>
+      <div class="task-result-box" id="resultTask3"></div>
+    </div>
+  </div>
+
+  <!-- TASK 4 -->
+  <div class="section-card" id="taskCard4">
+    <div class="section-title">
+      <span>4️⃣</span> Задание 4. Предлоги «ЗА» и «НА» + Винительный падеж
+    </div>
+    <div class="instruction">
+      Перетащите категории («Результат» или «План») в соответствующие колонки рядом с вопросом.
+    </div>
+
+    <!-- CHIP BANK 2 -->
+    <div class="chip-bank-container">
+      <div class="chip-bank-title">Банк категорий</div>
+      <div class="chips-flex" id="chipBank2">
+        <div class="draggable-chip" draggable="true" data-id="cat-result" data-text="Результат">
+          <span>Результат</span>
+        </div>
+        <div class="draggable-chip" draggable="true" data-id="cat-plan" data-text="План">
+          <span>План</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="task-table-grid">
+      <!-- Table Column 1 -->
+      <table class="custom-table">
+        <thead>
+          <tr>
+            <th>
+              <div style="font-size: 1.05rem; color: #1e3a8a; margin-bottom: 8px;">За сколько времени?</div>
+              <div class="drop-slot" data-group="task4" data-correct-val="Результат">
+                <span>+ Категория</span>
+              </div>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Я прочитал книгу за неделю.</td></tr>
+          <tr><td>Он сделал проект за месяц.</td></tr>
+          <tr><td>Она написала статью за два дня.</td></tr>
+          <tr><td>Мы выучили новые слова за час.</td></tr>
+        </tbody>
+      </table>
+
+      <!-- Table Column 2 -->
+      <table class="custom-table">
+        <thead>
+          <tr>
+            <th>
+              <div style="font-size: 1.05rem; color: #1e3a8a; margin-bottom: 8px;">Как надолго?</div>
+              <div class="drop-slot" data-group="task4" data-correct-val="План">
+                <span>+ Категория</span>
+              </div>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Я взял книгу на неделю.</td></tr>
+          <tr><td>Он уехал в командировку на месяц.</td></tr>
+          <tr><td>Она приехала в Москву на два дня.</td></tr>
+          <tr><td>Мы встретились на час.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="task-footer">
+      <button class="btn-check-task" onclick="checkTask4()">Проверить</button>
+      <div class="task-result-box" id="resultTask4"></div>
+    </div>
+  </div>
+
+  <!-- TASK 5 -->
+  <div class="section-card" id="taskCard5">
+    <div class="section-title">
+      <span>5️⃣</span> Задание 5. Выберите правильный предлог: «НА» или «ЗА»
+    </div>
+    <div class="instruction">
+      Выберите подходящий предлог в меню для каждого предложения.
+    </div>
+
+    <div class="sentences-list">
+      <div class="sentence-item">
+        1. Я прочитал эту книгу 
+        <select class="choice-select eval-select-5" data-ans="за">
+          <option value="">-- Выберите --</option>
+          <option value="за">за</option>
+          <option value="на">на</option>
+        </select> 
+        неделю.
+      </div>
+
+      <div class="sentence-item">
+        2. Мы приехали в Казань 
+        <select class="choice-select eval-select-5" data-ans="на">
+          <option value="">-- Выберите --</option>
+          <option value="за">за</option>
+          <option value="на">на</option>
+        </select> 
+        пять дней.
+      </div>
+
+      <div class="sentence-item">
+        3. Николай приготовил ужин 
+        <select class="choice-select eval-select-5" data-ans="за">
+          <option value="">-- Выберите --</option>
+          <option value="за">за</option>
+          <option value="на">на</option>
+        </select> 
+        40 минут.
+      </div>
+
+      <div class="sentence-item">
+        4. Мой друг уехал в командировку 
+        <select class="choice-select eval-select-5" data-ans="на">
+          <option value="">-- Выберите --</option>
+          <option value="за">за</option>
+          <option value="на">на</option>
+        </select> 
+        две недели.
+      </div>
+
+      <div class="sentence-item">
+        5. Студенты выполнили упражнение 
+        <select class="choice-select eval-select-5" data-ans="за">
+          <option value="">-- Выберите --</option>
+          <option value="за">за</option>
+          <option value="на">на</option>
+        </select> 
+        15 минут.
+      </div>
+
+      <div class="sentence-item">
+        6. Я хочу снять квартиру 
+        <select class="choice-select eval-select-5" data-ans="на">
+          <option value="">-- Выберите --</option>
+          <option value="за">за</option>
+          <option value="на">на</option>
+        </select> 
+        один год.
+      </div>
+
+      <div class="sentence-item">
+        7. Он выучил 50 новых слов 
+        <select class="choice-select eval-select-5" data-ans="за">
+          <option value="">-- Выберите --</option>
+          <option value="за">за</option>
+          <option value="на">на</option>
+        </select> 
+        два дня.
+      </div>
+
+      <div class="sentence-item">
+        8. Летом мы поехали отдыхать на море 
+        <select class="choice-select eval-select-5" data-ans="на">
+          <option value="">-- Выберите --</option>
+          <option value="за">за</option>
+          <option value="на">на</option>
+        </select> 
+        месяц.
+      </div>
+    </div>
+
+    <div class="task-footer">
+      <button class="btn-check-task" onclick="checkTask5()">Проверить</button>
+      <div class="task-result-box" id="resultTask5"></div>
+    </div>
+  </div>
+
+  <!-- TASK 6 -->
+  <div class="section-card" id="taskCard6">
+    <div class="section-title">
+      <span>6️⃣</span> Задание 6. Свободная практика
+    </div>
+    <div class="instruction">
+      Закончите предложения о себе. (Открытые ответы — проверяются ответы на полноту).
+    </div>
+
+    <div class="free-practice-grid">
+      <div class="free-input-group">
+        <label for="free1">1. Весь день я ...</label>
+        <input type="text" id="free1" class="free-textarea" placeholder="Например: работал / учился / отдыхал">
+      </div>
+
+      <div class="free-input-group">
+        <label for="free2">2. Все выходные я ...</label>
+        <input type="text" id="free2" class="free-textarea" placeholder="Например: гулял с друзьями / смотрел фильмы">
+      </div>
+
+      <div class="free-input-group">
+        <label for="free3">3. Каждое лето мы ...</label>
+        <input type="text" id="free3" class="free-textarea" placeholder="Например: ездим на море / отдыхаем за городом">
+      </div>
+
+      <div class="free-input-group">
+        <label for="free4">4. Каждую неделю я ...</label>
+        <input type="text" id="free4" class="free-textarea" placeholder="Например: хожу в бассейн / покупаю продукты">
+      </div>
+
+      <div class="free-input-group">
+        <label for="free5">5. Можно выучить русский язык за ...</label>
+        <input type="text" id="free5" class="free-textarea" placeholder="Например: один год / два года">
+      </div>
+
+      <div class="free-input-group">
+        <label for="free6">6. Я хочу поехать в отпуск на ...</label>
+        <input type="text" id="free6" class="free-textarea" placeholder="Например: две недели / один месяц">
+      </div>
+
+      <div class="free-input-group">
+        <label for="free7">7. Я прочитал/а последнюю книгу за ...</label>
+        <input type="text" id="free7" class="free-textarea" placeholder="Например: три дня / одну неделю">
+      </div>
+
+      <div class="free-input-group">
+        <label for="free8">8. Последний раз я уехал/а в командировку на ...</label>
+        <input type="text" id="free8" class="free-textarea" placeholder="Например: три дня / неделю">
+      </div>
+    </div>
+
+    <div class="task-footer">
+      <button class="btn-check-task" onclick="checkTask6()">Проверить</button>
+      <div class="task-result-box" id="resultTask6"></div>
+    </div>
+  </div>
+
+  <!-- GLOBAL RESET BUTTON -->
+  <div class="action-bar">
+    <button class="btn-reset-all" onclick="resetAllExercises()">Сбросить всё</button>
+  </div>
+</div>
+
+<script>
+  let selectedChip = null;
+
+  // Setup Drag & Drop logic
+  function setupDragAndDrop() {
+    const chips = document.querySelectorAll('.draggable-chip');
+    const slots = document.querySelectorAll('.drop-slot');
+
+    chips.forEach(chip => {
+      chip.addEventListener('dragstart', handleDragStart);
+      chip.addEventListener('dragend', handleDragEnd);
+      chip.addEventListener('click', () => handleChipClick(chip));
+    });
+
+    slots.forEach(slot => {
+      slot.addEventListener('dragover', handleDragOver);
+      slot.addEventListener('dragleave', handleDragLeave);
+      slot.addEventListener('drop', handleDrop);
+      slot.addEventListener('click', () => handleSlotClick(slot));
+    });
+  }
+
+  function handleDragStart(e) {
+    e.dataTransfer.setData('text/plain', JSON.stringify({
+      id: e.currentTarget.dataset.id,
+      text: e.currentTarget.dataset.text
+    }));
+    e.currentTarget.classList.add('dragging');
+  }
+
+  function handleDragEnd(e) {
+    e.currentTarget.classList.remove('dragging');
+  }
+
+  function handleDragOver(e) {
+    e.preventDefault();
+    e.currentTarget.classList.add('hovered');
+  }
+
+  function handleDragLeave(e) {
+    e.currentTarget.classList.remove('hovered');
+  }
+
+  function handleDrop(e) {
+    e.preventDefault();
+    const slot = e.currentTarget;
+    slot.classList.remove('hovered');
+
+    const data = JSON.parse(e.dataTransfer.getData('text/plain'));
+    const chipEl = document.querySelector(`[data-id="${data.id}"]`);
+
+    placeChipInSlot(chipEl, slot);
+  }
+
+  function handleChipClick(chipEl) {
+    if (selectedChip) {
+      selectedChip.classList.remove('selected');
+    }
+    if (selectedChip === chipEl) {
+      selectedChip = null;
+      return;
+    }
+    selectedChip = chipEl;
+    chipEl.classList.add('selected');
+  }
+
+  function handleSlotClick(slot) {
+    if (slot.children.length > 0 && slot.children[0].classList.contains('draggable-chip')) {
+      const chip = slot.children[0];
+      const bankId = slot.dataset.group === 'task1' ? 'chipBank1' : 'chipBank2';
+      document.getElementById(bankId).appendChild(chip);
+      slot.classList.remove('filled', 'correct', 'incorrect');
+      slot.innerHTML = `<span>+ ${slot.dataset.group === 'task1' ? 'Заголовок' : 'Категория'}</span>`;
+      return;
+    }
+
+    if (selectedChip) {
+      placeChipInSlot(selectedChip, slot);
+      selectedChip.classList.remove('selected');
+      selectedChip = null;
+    }
+  }
+
+  function placeChipInSlot(chipEl, slot) {
+    if (slot.children.length > 0 && slot.children[0].classList.contains('draggable-chip')) {
+      const oldChip = slot.children[0];
+      const bankId = slot.dataset.group === 'task1' ? 'chipBank1' : 'chipBank2';
+      document.getElementById(bankId).appendChild(oldChip);
+    }
+
+    slot.innerHTML = '';
+    slot.appendChild(chipEl);
+    slot.classList.add('filled');
+    slot.classList.remove('correct', 'incorrect');
+  }
+
+  // Normalize string for checking
+  function normalizeText(str) {
+    return str
+      .trim()
+      .toLowerCase()
+      .replace(/[?.!,–—]/g, '')
+      .replace(/\s+/g, ' ');
+  }
+
+  // Helper to show task result
+  function displayTaskResult(resBoxId, score, total) {
+    const box = document.getElementById(resBoxId);
+    box.style.display = 'block';
+    box.className = 'task-result-box';
+
+    const percent = Math.round((score / total) * 100);
+
+    if (percent === 100) {
+      box.classList.add('correct-result');
+      box.textContent = `Результат: ${score} / ${total} (100%) — Отлично! Всё верно!`;
+    } else if (percent >= 50) {
+      box.classList.add('partial-result');
+      box.textContent = `Результат: ${score} / ${total} (${percent}%) — Хорошо, но есть ошибки.`;
+    } else {
+      box.classList.add('incorrect-result');
+      box.textContent = `Результат: ${score} / ${total} (${percent}%) — Попробуйте ещё раз.`;
+    }
+  }
+
+  // Check Task 1
+  function checkTask1() {
+    let score = 0;
+    const slots = document.querySelectorAll('[data-group="task1"]');
+    const total = slots.length;
+
+    slots.forEach(slot => {
+      const expected = slot.dataset.correctVal.trim().toLowerCase();
+      const chip = slot.querySelector('.draggable-chip');
+
+      if (chip && chip.dataset.text.trim().toLowerCase() === expected) {
+        score++;
+        slot.classList.add('correct');
+        slot.classList.remove('incorrect');
+      } else {
+        slot.classList.add('incorrect');
+        slot.classList.remove('correct');
+      }
+    });
+
+    displayTaskResult('resultTask1', score, total);
+  }
+
+  // Check Task 2
+  function checkTask2() {
+    let score = 0;
+    const inputs = document.querySelectorAll('.eval-gap-2');
+    const total = inputs.length;
+
+    inputs.forEach(input => {
+      const primaryAns = normalizeText(input.dataset.ans || '');
+      const altAns = input.dataset.altAns ? normalizeText(input.dataset.altAns) : null;
+      const userAns = normalizeText(input.value || '');
+
+      if (userAns !== '' && (userAns === primaryAns || (altAns && userAns === altAns))) {
+        score++;
+        input.classList.add('correct');
+        input.classList.remove('incorrect');
+      } else {
+        input.classList.add('incorrect');
+        input.classList.remove('correct');
+      }
+    });
+
+    displayTaskResult('resultTask2', score, total);
+  }
+
+  // Check Task 3
+  function checkTask3() {
+    let score = 0;
+    const inputs = document.querySelectorAll('.eval-gap-3');
+    const total = inputs.length;
+
+    inputs.forEach(input => {
+      const primaryAns = normalizeText(input.dataset.ans || '');
+      const userAns = normalizeText(input.value || '');
+
+      if (userAns !== '' && userAns === primaryAns) {
+        score++;
+        input.classList.add('correct');
+        input.classList.remove('incorrect');
+      } else {
+        input.classList.add('incorrect');
+        input.classList.remove('correct');
+      }
+    });
+
+    displayTaskResult('resultTask3', score, total);
+  }
+
+  // Check Task 4
+  function checkTask4() {
+    let score = 0;
+    const slots = document.querySelectorAll('[data-group="task4"]');
+    const total = slots.length;
+
+    slots.forEach(slot => {
+      const expected = slot.dataset.correctVal.trim().toLowerCase();
+      const chip = slot.querySelector('.draggable-chip');
+
+      if (chip && chip.dataset.text.trim().toLowerCase() === expected) {
+        score++;
+        slot.classList.add('correct');
+        slot.classList.remove('incorrect');
+      } else {
+        slot.classList.add('incorrect');
+        slot.classList.remove('correct');
+      }
+    });
+
+    displayTaskResult('resultTask4', score, total);
+  }
+
+  // Check Task 5
+  function checkTask5() {
+    let score = 0;
+    const selects = document.querySelectorAll('.eval-select-5');
+    const total = selects.length;
+
+    selects.forEach(select => {
+      const expected = select.dataset.ans.trim().toLowerCase();
+      const userVal = select.value.trim().toLowerCase();
+
+      if (userVal === expected) {
+        score++;
+        select.classList.add('correct');
+        select.classList.remove('incorrect');
+      } else {
+        select.classList.add('incorrect');
+        select.classList.remove('correct');
+      }
+    });
+
+    displayTaskResult('resultTask5', score, total);
+  }
+
+  // Check Task 6
+  function checkTask6() {
+    const textareas = document.querySelectorAll('.free-textarea');
+    let filledCount = 0;
+    const total = textareas.length;
+
+    textareas.forEach(t => {
+      if (t.value.trim().length > 0) {
+        filledCount++;
+      }
+    });
+
+    const box = document.getElementById('resultTask6');
+    box.style.display = 'block';
+    box.className = 'task-result-box';
+
+    if (filledCount === total) {
+      box.classList.add('correct-result');
+      box.textContent = `Заполнено предложений: ${filledCount} / ${total} — Замечательно! Все ответы сохранены.`;
+    } else if (filledCount > 0) {
+      box.classList.add('partial-result');
+      box.textContent = `Заполнено предложений: ${filledCount} / ${total}. Заполните остальные поля для полной практики.`;
+    } else {
+      box.classList.add('incorrect-result');
+      box.textContent = `Заполните поля ответов о себе.`;
+    }
+  }
+
+  // Reset All
+  function resetAllExercises() {
+    if (selectedChip) {
+      selectedChip.classList.remove('selected');
+      selectedChip = null;
+    }
+
+    // Reset Slots
+    const slots = document.querySelectorAll('.drop-slot');
+    slots.forEach(slot => {
+      if (slot.children.length > 0 && slot.children[0].classList.contains('draggable-chip')) {
+        const chip = slot.children[0];
+        const bankId = slot.dataset.group === 'task1' ? 'chipBank1' : 'chipBank2';
+        document.getElementById(bankId).appendChild(chip);
+      }
+      slot.classList.remove('correct', 'incorrect', 'filled');
+      slot.innerHTML = `<span>+ ${slot.dataset.group === 'task1' ? 'Заголовок' : 'Категория'}</span>`;
+    });
+
+    // Reset Inputs
+    const allInputs = document.querySelectorAll('.gap-input, .choice-select');
+    allInputs.forEach(input => {
+      input.value = '';
+      input.classList.remove('correct', 'incorrect');
+    });
+
+    // Reset Free Textareas
+    const freeTextareas = document.querySelectorAll('.free-textarea');
+    freeTextareas.forEach(textarea => {
+      textarea.value = '';
+    });
+
+    // Hide all result boxes
+    for (let i = 1; i <= 6; i++) {
+      const box = document.getElementById(`resultTask${i}`);
+      if (box) box.style.display = 'none';
+    }
+  }
+
+  window.addEventListener('DOMContentLoaded', () => {
+    setupDragAndDrop();
+  });
+</script>
+
+</body>
+</html>
