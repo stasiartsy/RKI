@@ -1,0 +1,1089 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>РКИ А1: Мой день</title>
+  <style>
+    :root {
+      --primary: #2563eb;
+      --primary-hover: #1d4ed8;
+      --primary-light: #eff6ff;
+      --bg-color: #f8fafc;
+      --card-bg: #ffffff;
+      --text-main: #1e293b;
+      --text-muted: #64748b;
+      --border-color: #e2e8f0;
+      --correct: #16a34a;
+      --correct-bg: #dcfce7;
+      --incorrect: #dc2626;
+      --incorrect-bg: #fee2e2;
+      --accent: #d97706;
+      --radius: 12px;
+      --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-main);
+      line-height: 1.6;
+      padding: 20px 10px;
+    }
+
+    .container {
+      max-width: 960px;
+      margin: 0 auto;
+    }
+
+    header {
+      text-align: center;
+      background: linear-gradient(135deg, #1e3a8a, #2563eb);
+      color: white;
+      padding: 32px 20px;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      margin-bottom: 25px;
+    }
+
+    header h1 {
+      font-size: 1.8rem;
+      margin-bottom: 8px;
+    }
+
+    header p {
+      font-size: 1rem;
+      opacity: 0.92;
+    }
+
+    .badge {
+      display: inline-block;
+      background: rgba(255, 255, 255, 0.2);
+      padding: 4px 14px;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-top: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .section-card {
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      padding: 25px;
+      margin-bottom: 25px;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border-color);
+    }
+
+    .section-title {
+      font-size: 1.25rem;
+      color: #0f172a;
+      border-bottom: 2px solid var(--border-color);
+      padding-bottom: 10px;
+      margin-bottom: 15px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .instruction {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      margin-bottom: 20px;
+    }
+
+    .example-box {
+      background: #f1f5f9;
+      border-left: 4px solid #64748b;
+      padding: 10px 14px;
+      border-radius: 0 8px 8px 0;
+      margin-bottom: 18px;
+      font-size: 0.95rem;
+      color: #334155;
+    }
+
+    /* INPUT STYLES */
+    .gap-input {
+      border: 1px solid #cbd5e1;
+      border-bottom: 2px solid var(--primary);
+      background: #ffffff;
+      padding: 4px 10px;
+      font-size: 0.95rem;
+      font-family: inherit;
+      border-radius: 4px 4px 0 0;
+      min-width: 110px;
+      text-align: center;
+      font-weight: 600;
+      color: var(--text-main);
+      transition: all 0.2s;
+      display: inline-block;
+      margin: 2px;
+    }
+
+    .gap-input:focus {
+      outline: none;
+      border-bottom-color: #1d4ed8;
+      background: #f0f9ff;
+    }
+
+    .gap-input.correct {
+      border-color: var(--correct) !important;
+      background-color: var(--correct-bg) !important;
+      color: var(--correct) !important;
+    }
+
+    .gap-input.incorrect {
+      border-color: var(--incorrect) !important;
+      background-color: var(--incorrect-bg) !important;
+      color: var(--incorrect) !important;
+    }
+
+    /* TASK 1: TIME */
+    .time-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .time-row {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      background: #f8fafc;
+      padding: 12px 16px;
+      border-radius: 8px;
+      border-left: 4px solid var(--primary);
+    }
+
+    .time-badge {
+      background: #1e3a8a;
+      color: #ffffff;
+      font-weight: 700;
+      font-size: 1.05rem;
+      padding: 4px 12px;
+      border-radius: 6px;
+      min-width: 72px;
+      text-align: center;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .time-input {
+      flex: 1;
+      min-width: 240px;
+      text-align: left;
+    }
+
+    /* TASK 2: PHOTOS GRID */
+    .photos-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 20px;
+    }
+
+    .photo-card {
+      background: #fafafa;
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius);
+      padding: 15px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .photo-card img {
+      width: 100%;
+      height: 185px;
+      object-fit: cover;
+      border-radius: 8px;
+      margin-bottom: 12px;
+      background: #e2e8f0;
+    }
+
+    .photo-caption {
+      font-size: 0.96rem;
+      line-height: 1.8;
+      width: 100%;
+    }
+
+    /* TASK 3: CONJUGATION TABLE WITH PHOTOS */
+    .conjugation-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+    }
+
+    .conjugation-table {
+      width: 100%;
+      border-collapse: collapse;
+      background: #ffffff;
+      border-radius: 8px;
+      overflow: hidden;
+      border: 1px solid var(--border-color);
+    }
+
+    .conjugation-table th {
+      background: #eff6ff;
+      color: #1e40af;
+      padding: 14px;
+      font-size: 1.05rem;
+      text-align: center;
+      border-bottom: 2px solid #bfdbfe;
+    }
+
+    .verb-header-img {
+      width: 100%;
+      max-width: 220px;
+      height: 145px;
+      object-fit: cover;
+      border-radius: 8px;
+      margin: 10px auto 4px;
+      display: block;
+      border: 2px solid #bfdbfe;
+      background: #e2e8f0;
+    }
+
+    .conjugation-table td {
+      padding: 10px 15px;
+      border-bottom: 1px solid var(--border-color);
+      font-size: 0.95rem;
+    }
+
+    .pronoun-col {
+      font-weight: 600;
+      color: var(--text-muted);
+      width: 35%;
+      text-align: right;
+      padding-right: 15px !important;
+    }
+
+    /* TASK 4: AUDIO EMBED & SUBPARTS */
+    .audio-embed-wrapper {
+      max-width: 480px;
+      margin: 0 auto 22px auto;
+    }
+
+    .subtask-title {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: #1e3a8a;
+      margin: 20px 0 12px 0;
+      padding-bottom: 6px;
+      border-bottom: 1px dashed #cbd5e1;
+    }
+
+    /* CHOICE PILLS (TASK 4 PART 1 & TASK 5) */
+    .sentences-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .sentence-item {
+      background: #f8fafc;
+      padding: 12px 16px;
+      border-radius: 8px;
+      border-left: 4px solid var(--primary);
+      font-size: 0.98rem;
+      line-height: 1.8;
+    }
+
+    .pill-group {
+      display: inline-flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      vertical-align: middle;
+      margin: 0 4px;
+    }
+
+    .choice-pill {
+      background: #ffffff;
+      border: 1.5px solid #94a3b8;
+      color: var(--text-main);
+      padding: 3px 12px;
+      border-radius: 20px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      font-family: inherit;
+    }
+
+    .choice-pill:hover {
+      border-color: var(--primary);
+      background: var(--primary-light);
+    }
+
+    .choice-pill.selected {
+      background: var(--primary);
+      border-color: var(--primary);
+      color: #ffffff;
+    }
+
+    .choice-pill.correct-pill {
+      background: var(--correct) !important;
+      border-color: var(--correct) !important;
+      color: #ffffff !important;
+    }
+
+    .choice-pill.incorrect-pill {
+      background: var(--incorrect) !important;
+      border-color: var(--incorrect) !important;
+      color: #ffffff !important;
+    }
+
+    .pill-group.unanswered-group {
+      outline: 2px solid var(--incorrect);
+      border-radius: 22px;
+      padding: 2px;
+    }
+
+    /* TASK 6: FREE PRACTICE */
+    .free-practice-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    .free-input-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .free-input-group label {
+      font-weight: 600;
+      color: #334155;
+    }
+
+    .free-textarea {
+      width: 100%;
+      border: 1px solid #cbd5e1;
+      border-radius: 6px;
+      padding: 10px;
+      font-family: inherit;
+      font-size: 0.95rem;
+      transition: border 0.2s;
+    }
+
+    .free-textarea:focus {
+      outline: none;
+      border-color: var(--primary);
+      background-color: #f0f9ff;
+    }
+
+    /* PER TASK ACTION & RESULT BAR */
+    .task-footer {
+      margin-top: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 12px;
+      border-top: 1px solid var(--border-color);
+      padding-top: 15px;
+    }
+
+    .btn-check-task {
+      background: var(--primary);
+      color: white;
+      border: none;
+      padding: 9px 22px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.1s;
+    }
+
+    .btn-check-task:hover {
+      background: var(--primary-hover);
+      transform: translateY(-1px);
+    }
+
+    .task-result-box {
+      display: none;
+      font-weight: 700;
+      font-size: 0.95rem;
+      padding: 8px 14px;
+      border-radius: 6px;
+      width: 100%;
+    }
+
+    .task-result-box.correct-result {
+      background: var(--correct-bg);
+      color: var(--correct);
+      border: 1px solid #86efac;
+    }
+
+    .task-result-box.partial-result {
+      background: #fef3c7;
+      color: var(--accent);
+      border: 1px solid #fde68a;
+    }
+
+    .task-result-box.incorrect-result {
+      background: var(--incorrect-bg);
+      color: var(--incorrect);
+      border: 1px solid #fca5a5;
+    }
+
+    /* GLOBAL RESET BAR */
+    .action-bar {
+      display: flex;
+      justify-content: center;
+      margin-top: 10px;
+      margin-bottom: 30px;
+    }
+
+    .btn-reset-all {
+      background: #64748b;
+      color: white;
+      border: none;
+      padding: 12px 28px;
+      font-size: 1rem;
+      font-weight: 600;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .btn-reset-all:hover {
+      background: #475569;
+    }
+
+    @media (max-width: 600px) {
+      body { padding: 10px 5px; }
+      header { padding: 20px 10px; }
+      .photos-grid, .conjugation-grid { grid-template-columns: 1fr; }
+      .time-input { width: 100%; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <header>
+    <h1>Интерактивное упражнение по РКИ</h1>
+    <p>Тема: «Мой день»</p>
+    <span class="badge">Уровень А1</span>
+  </header>
+
+  <!-- TASK 1 -->
+  <div class="section-card" id="taskCard1">
+    <div class="section-title">
+      <span>1️⃣</span> Задание 1. Сколько времени?
+    </div>
+    <div class="instruction">
+      Заполните пропуски правильным ответом. Пишите словами.
+    </div>
+    <div class="example-box">
+      <b>Пример:</b> 15:45 — <i>пятнадцать часов сорок пять минут</i>
+    </div>
+
+    <div class="time-list">
+      <div class="time-row">
+        <span class="time-badge">03:00</span>
+        <input type="text" class="gap-input time-input eval-gap-1" data-ans="три часа" placeholder="Напишите словами...">
+      </div>
+
+      <div class="time-row">
+        <span class="time-badge">12:30</span>
+        <input type="text" class="gap-input time-input eval-gap-1" data-ans="двенадцать часов тридцать минут" placeholder="Напишите словами...">
+      </div>
+
+      <div class="time-row">
+        <span class="time-badge">02:33</span>
+        <input type="text" class="gap-input time-input eval-gap-1" data-ans="два часа тридцать три минуты" placeholder="Напишите словами...">
+      </div>
+
+      <div class="time-row">
+        <span class="time-badge">21:55</span>
+        <input type="text" class="gap-input time-input eval-gap-1" data-ans="двадцать один час пятьдесят пять минут" placeholder="Напишите словами...">
+      </div>
+
+      <div class="time-row">
+        <span class="time-badge">16:41</span>
+        <input type="text" class="gap-input time-input eval-gap-1" data-ans="шестнадцать часов сорок одна минута" placeholder="Напишите словами...">
+      </div>
+    </div>
+
+    <div class="task-footer">
+      <button class="btn-check-task" onclick="checkTask1()">Проверить</button>
+      <div class="task-result-box" id="resultTask1"></div>
+    </div>
+  </div>
+
+  <!-- TASK 2 -->
+  <div class="section-card" id="taskCard2">
+    <div class="section-title">
+      <span>2️⃣</span> Задание 2. Лексика «Мой день»
+    </div>
+    <div class="instruction">
+      Ответьте на вопрос: «Что они делают?». Впишите правильный глагол в нужной форме под фотографией.
+    </div>
+
+    <div class="photos-grid">
+      <!-- Photo 1 -->
+      <div class="photo-card">
+        <img src="https://img.magnific.com/foto-gratis/mujer-despertando_53876-40961.jpg?semt=ais_hybrid&w=740&q=80" alt="Фото 1" loading="lazy">
+        <div class="photo-caption">
+          Она <input type="text" class="gap-input eval-gap-2" data-ans="встаёт" style="width: 115px;">
+        </div>
+      </div>
+
+      <!-- Photo 2 -->
+      <div class="photo-card">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRCA_s_a1-UssVwJeCjjI15BnpWkW7xukDEtDXOTn7hpw&s=10" alt="Фото 2" loading="lazy">
+        <div class="photo-caption">
+          Они <input type="text" class="gap-input eval-gap-2" data-ans="завтракают" style="width: 130px;">
+        </div>
+      </div>
+
+      <!-- Photo 3 -->
+      <div class="photo-card">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT2QqoEYHBLs5-T9hPI5NGA14I0Ax78nRzMfraKuTLWaA&s=10" alt="Фото 3" loading="lazy">
+        <div class="photo-caption">
+          Он <input type="text" class="gap-input eval-gap-2" data-ans="принимает" style="width: 125px;"> душ.
+        </div>
+      </div>
+
+      <!-- Photo 4 -->
+      <div class="photo-card">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR83fMsB3Gb_bYOucrYu0IjzhL2DkxhwiqgPf7LKNhBSg&s=10" alt="Фото 4" loading="lazy">
+        <div class="photo-caption">
+          Мы <input type="text" class="gap-input eval-gap-2" data-ans="обедаем" style="width: 115px;"> в офисе.
+        </div>
+      </div>
+
+      <!-- Photo 5 -->
+      <div class="photo-card">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRqCtLYnYje9FFpFrRzvC7XjJfD9E6SNUZ0bfYguUgnkQ&s=10" alt="Фото 5" loading="lazy">
+        <div class="photo-caption">
+          Во сколько вы <input type="text" class="gap-input eval-gap-2" data-ans="ужинаете" style="width: 120px;"> вечером?
+        </div>
+      </div>
+
+      <!-- Photo 6 -->
+      <div class="photo-card">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQfVbbu2qdBmf_1rgDhmR4m4SqizZjDEXQuHoqCT6sAdA&s=10" alt="Фото 6" loading="lazy">
+        <div class="photo-caption" style="text-align: left;">
+          — Во сколько ты <input type="text" class="gap-input eval-gap-2" data-ans="идёшь" style="width: 95px;"> спать?<br>
+          — Я <input type="text" class="gap-input eval-gap-2" data-ans="иду" style="width: 85px;"> спать в 22 часа.
+        </div>
+      </div>
+    </div>
+
+    <div class="task-footer">
+      <button class="btn-check-task" onclick="checkTask2()">Проверить</button>
+      <div class="task-result-box" id="resultTask2"></div>
+    </div>
+  </div>
+
+  <!-- TASK 3 -->
+  <div class="section-card" id="taskCard3">
+    <div class="section-title">
+      <span>3️⃣</span> Задание 3. Интерактивная таблица: спряжение глаголов
+    </div>
+    <div class="instruction">
+      Заполните таблицу спряжения глаголов «Умываться» и «Одеваться».
+    </div>
+
+    <div class="conjugation-grid">
+      <!-- Column 1: Умываться -->
+      <table class="conjugation-table">
+        <thead>
+          <tr>
+            <th colspan="2">
+              <div>«Умываться»</div>
+              <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQZoyKo9jaEvWQwpFUU8eSSk9PSfo2lgtDjpU1n2SU6AQ&s=10" alt="Умываться" class="verb-header-img" loading="lazy">
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="pronoun-col">я</td>
+            <td><input type="text" class="gap-input eval-gap-3" data-ans="умываюсь" style="width: 145px;"></td>
+          </tr>
+          <tr>
+            <td class="pronoun-col">ты</td>
+            <td><input type="text" class="gap-input eval-gap-3" data-ans="умываешься" style="width: 145px;"></td>
+          </tr>
+          <tr>
+            <td class="pronoun-col">он/а</td>
+            <td><input type="text" class="gap-input eval-gap-3" data-ans="умывается" style="width: 145px;"></td>
+          </tr>
+          <tr>
+            <td class="pronoun-col">мы</td>
+            <td><input type="text" class="gap-input eval-gap-3" data-ans="умываемся" style="width: 145px;"></td>
+          </tr>
+          <tr>
+            <td class="pronoun-col">вы</td>
+            <td><input type="text" class="gap-input eval-gap-3" data-ans="умываетесь" style="width: 145px;"></td>
+          </tr>
+          <tr>
+            <td class="pronoun-col">они</td>
+            <td><input type="text" class="gap-input eval-gap-3" data-ans="умываются" style="width: 145px;"></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <!-- Column 2: Одеваться -->
+      <table class="conjugation-table">
+        <thead>
+          <tr>
+            <th colspan="2">
+              <div>«Одеваться»</div>
+              <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRLPF3BbpDEPkC8-lI2uSxxWQd8RULZ78YRl94uy_xqPQ&s=10" alt="Одеваться" class="verb-header-img" loading="lazy">
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="pronoun-col">я</td>
+            <td><input type="text" class="gap-input eval-gap-3" data-ans="одеваюсь" style="width: 145px;"></td>
+          </tr>
+          <tr>
+            <td class="pronoun-col">ты</td>
+            <td><input type="text" class="gap-input eval-gap-3" data-ans="одеваешься" style="width: 145px;"></td>
+          </tr>
+          <tr>
+            <td class="pronoun-col">он/а</td>
+            <td><input type="text" class="gap-input eval-gap-3" data-ans="одевается" style="width: 145px;"></td>
+          </tr>
+          <tr>
+            <td class="pronoun-col">мы</td>
+            <td><input type="text" class="gap-input eval-gap-3" data-ans="одеваемся" style="width: 145px;"></td>
+          </tr>
+          <tr>
+            <td class="pronoun-col">вы</td>
+            <td><input type="text" class="gap-input eval-gap-3" data-ans="одеваетесь" style="width: 145px;"></td>
+          </tr>
+          <tr>
+            <td class="pronoun-col">они</td>
+            <td><input type="text" class="gap-input eval-gap-3" data-ans="одеваются" style="width: 145px;"></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="task-footer">
+      <button class="btn-check-task" onclick="checkTask3()">Проверить</button>
+      <div class="task-result-box" id="resultTask3"></div>
+    </div>
+  </div>
+
+  <!-- TASK 4 -->
+  <div class="section-card" id="taskCard4">
+    <div class="section-title">
+      <span>4️⃣</span> Задание 4. Слушать аудио
+    </div>
+    <div class="instruction">
+      Послушайте аудиозапись и выполните первую и вторую части задания.
+    </div>
+
+    <!-- CANVA AUDIO EMBED -->
+    <div class="audio-embed-wrapper">
+      <div style="position: relative; width: 100%; height: 0; padding-top: 100.0000%; padding-bottom: 0; box-shadow: 0 2px 8px 0 rgba(63,69,81,0.16); margin-top: 0.5em; margin-bottom: 0.7em; overflow: hidden; border-radius: 8px; will-change: transform;">
+        <iframe loading="lazy" style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; border: none; padding: 0; margin: 0;"
+          src="https://www.canva.com/design/DAHZywCm7Kw/U6M2NzS6LsHIp0CF8DU49w/view?embed" allowfullscreen="allowfullscreen" allow="fullscreen">
+        </iframe>
+      </div>
+      <div style="font-size: 0.85rem; text-align: center; color: #64748b;">
+        <a href="https://www.canva.com/design/DAHZywCm7Kw/U6M2NzS6LsHIp0CF8DU49w/view?utm_content=DAHZywCm7Kw&amp;utm_campaign=designshare&amp;utm_medium=embeds&amp;utm_source=link" target="_blank" rel="noopener" style="color: #2563eb; text-decoration: none; font-weight: 600;">Design</a> by Stanislava Trunova
+      </div>
+    </div>
+
+    <!-- PART 1 -->
+    <div class="subtask-title">Часть 1. Слушать и выбрать правильную альтернативу</div>
+    <div class="sentences-list">
+      <div class="sentence-item">
+        1. Марине 
+        <span class="pill-group eval-pill-4" data-ans="21 год">
+          <button type="button" class="choice-pill" data-val="21 год">21 год</button>
+          <button type="button" class="choice-pill" data-val="31 год">31 год</button>
+        </span>.
+      </div>
+
+      <div class="sentence-item">
+        2. Марина 
+        <span class="pill-group eval-pill-4" data-ans="из Москвы">
+          <button type="button" class="choice-pill" data-val="из Москвы">из Москвы</button>
+          <button type="button" class="choice-pill" data-val="из Санкт-Петербурга">из Санкт-Петербурга</button>
+        </span>.
+      </div>
+
+      <div class="sentence-item">
+        3. Марина встаёт в 
+        <span class="pill-group eval-pill-4" data-ans="7 часов">
+          <button type="button" class="choice-pill" data-val="6">6</button>
+          <button type="button" class="choice-pill" data-val="7 часов">7 часов</button>
+        </span>.
+      </div>
+
+      <div class="sentence-item">
+        4. Марина принимает 
+        <span class="pill-group eval-pill-4" data-ans="душ">
+          <button type="button" class="choice-pill" data-val="ванну">ванну</button>
+          <button type="button" class="choice-pill" data-val="душ">душ</button>
+        </span>.
+      </div>
+
+      <div class="sentence-item">
+        5. Марина завтракает 
+        <span class="pill-group eval-pill-4" data-ans="дома">
+          <button type="button" class="choice-pill" data-val="дома">дома</button>
+          <button type="button" class="choice-pill" data-val="в кафе">в кафе</button>
+        </span>.
+      </div>
+    </div>
+
+    <!-- PART 2 -->
+    <div class="subtask-title">Часть 2. Заполнить пропуски (писать ответы). В пункте 10 — писать цифры</div>
+    <div class="sentences-list">
+      <div class="sentence-item">
+        6. Мой завтрак — <input type="text" class="gap-input eval-gap-4" data-ans="йогурт" style="width: 115px;"> и чёрный <input type="text" class="gap-input eval-gap-4" data-ans="кофе" style="width: 105px;">.
+      </div>
+
+      <div class="sentence-item">
+        7. Я студентка и <input type="text" class="gap-input eval-gap-4" data-ans="изучаю" style="width: 115px;"> русский язык в МГУ.
+      </div>
+
+      <div class="sentence-item">
+        8. В час я <input type="text" class="gap-input eval-gap-4" data-ans="обедаю" style="width: 115px;"> в кафе, а потом <input type="text" class="gap-input eval-gap-4" data-ans="работаю" style="width: 120px;"> в библиотеке.
+      </div>
+
+      <div class="sentence-item">
+        9. В 9 часов я <input type="text" class="gap-input eval-gap-4" data-ans="читаю" style="width: 110px;"> книги и <input type="text" class="gap-input eval-gap-4" data-ans="смотрю" style="width: 115px;"> сериалы.
+      </div>
+
+      <div class="sentence-item">
+        10. Я отдыхаю в <input type="text" class="gap-input eval-gap-4" data-ans="10" style="width: 65px;"> или <input type="text" class="gap-input eval-gap-4" data-ans="11" style="width: 65px;"> часов.
+      </div>
+    </div>
+
+    <div class="task-footer">
+      <button class="btn-check-task" onclick="checkTask4()">Проверить</button>
+      <div class="task-result-box" id="resultTask4"></div>
+    </div>
+  </div>
+
+  <!-- TASK 5 -->
+  <div class="section-card" id="taskCard5">
+    <div class="section-title">
+      <span>5️⃣</span> Задание 5. Правда или Неправда?
+    </div>
+    <div class="instruction">
+      Выберите «Правда» или «Неправда» для каждого утверждения.
+    </div>
+
+    <div class="sentences-list">
+      <div class="sentence-item" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
+        <span>1. Марина работает в МГУ.</span>
+        <span class="pill-group eval-pill-5" data-ans="Неправда">
+          <button type="button" class="choice-pill" data-val="Правда">Правда</button>
+          <button type="button" class="choice-pill" data-val="Неправда">Неправда</button>
+        </span>
+      </div>
+
+      <div class="sentence-item" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
+        <span>2. Марина завтракает дома.</span>
+        <span class="pill-group eval-pill-5" data-ans="Правда">
+          <button type="button" class="choice-pill" data-val="Правда">Правда</button>
+          <button type="button" class="choice-pill" data-val="Неправда">Неправда</button>
+        </span>
+      </div>
+
+      <div class="sentence-item" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
+        <span>3. Марина изучает французский язык.</span>
+        <span class="pill-group eval-pill-5" data-ans="Неправда">
+          <button type="button" class="choice-pill" data-val="Правда">Правда</button>
+          <button type="button" class="choice-pill" data-val="Неправда">Неправда</button>
+        </span>
+      </div>
+
+      <div class="sentence-item" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
+        <span>4. Марина всегда делает домашнее задание.</span>
+        <span class="pill-group eval-pill-5" data-ans="Правда">
+          <button type="button" class="choice-pill" data-val="Правда">Правда</button>
+          <button type="button" class="choice-pill" data-val="Неправда">Неправда</button>
+        </span>
+      </div>
+
+      <div class="sentence-item" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
+        <span>5. Марина играет в футбол.</span>
+        <span class="pill-group eval-pill-5" data-ans="Неправда">
+          <button type="button" class="choice-pill" data-val="Правда">Правда</button>
+          <button type="button" class="choice-pill" data-val="Неправда">Неправда</button>
+        </span>
+      </div>
+
+      <div class="sentence-item" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
+        <span>6. Марина ужинает в ресторане.</span>
+        <span class="pill-group eval-pill-5" data-ans="Неправда">
+          <button type="button" class="choice-pill" data-val="Правда">Правда</button>
+          <button type="button" class="choice-pill" data-val="Неправда">Неправда</button>
+        </span>
+      </div>
+    </div>
+
+    <div class="task-footer">
+      <button class="btn-check-task" onclick="checkTask5()">Проверить</button>
+      <div class="task-result-box" id="resultTask5"></div>
+    </div>
+  </div>
+
+  <!-- TASK 6 -->
+  <div class="section-card" id="taskCard6">
+    <div class="section-title">
+      <span>6️⃣</span> Задание 6. Свободная практика
+    </div>
+    <div class="instruction">
+      Ответьте на вопросы в свободной форме (нет единственного правильного ответа).
+    </div>
+
+    <div class="free-practice-grid">
+      <div class="free-input-group">
+        <label for="free1">1. Во сколько вы встаёте?</label>
+        <input type="text" id="free1" class="free-textarea" placeholder="Например: Я встаю в 7 часов утра.">
+      </div>
+
+      <div class="free-input-group">
+        <label for="free2">2. Что вы делаете утром?</label>
+        <input type="text" id="free2" class="free-textarea" placeholder="Например: Утром я умываюсь, принимаю душ и завтракаю.">
+      </div>
+
+      <div class="free-input-group">
+        <label for="free3">3. Что у вас на завтрак?</label>
+        <input type="text" id="free3" class="free-textarea" placeholder="Например: На завтрак у меня кофе и бутерброд.">
+      </div>
+
+      <div class="free-input-group">
+        <label for="free4">4. Во сколько вы идёте работать / учиться?</label>
+        <input type="text" id="free4" class="free-textarea" placeholder="Например: Я иду работать в 8 часов 30 минут.">
+      </div>
+
+      <div class="free-input-group">
+        <label for="free5">5. Во сколько вы обедаете?</label>
+        <input type="text" id="free5" class="free-textarea" placeholder="Например: Я обедаю в 13 часов.">
+      </div>
+
+      <div class="free-input-group">
+        <label for="free6">6. Что вы делаете после работы / учёбы?</label>
+        <input type="text" id="free6" class="free-textarea" placeholder="Например: После работы я отдыхаю, читаю книги или смотрю фильмы.">
+      </div>
+
+      <div class="free-input-group">
+        <label for="free7">7. Во сколько вы идёте спать?</label>
+        <input type="text" id="free7" class="free-textarea" placeholder="Например: Я иду спать в 23 часа.">
+      </div>
+    </div>
+
+    <div class="task-footer">
+      <button class="btn-check-task" onclick="checkTask6()">Проверить</button>
+      <div class="task-result-box" id="resultTask6"></div>
+    </div>
+  </div>
+
+  <!-- GLOBAL RESET BUTTON -->
+  <div class="action-bar">
+    <button class="btn-reset-all" onclick="resetAllExercises()">Сбросить всё</button>
+  </div>
+</div>
+
+<script>
+  // Setup interactive choice pills
+  function setupChoicePills() {
+    const groups = document.querySelectorAll('.pill-group');
+    groups.forEach(group => {
+      const pills = group.querySelectorAll('.choice-pill');
+      pills.forEach(pill => {
+        pill.addEventListener('click', () => {
+          pills.forEach(p => p.classList.remove('selected', 'correct-pill', 'incorrect-pill'));
+          group.classList.remove('unanswered-group');
+          pill.classList.add('selected');
+        });
+      });
+    });
+  }
+
+  // Normalize Russian strings (case, extra spaces, punctuation, ё -> е)
+  function normalizeText(str) {
+    return str
+      .trim()
+      .toLowerCase()
+      .replace(/ё/g, 'е')
+      .replace(/[?.!,–—«»"']/g, '')
+      .replace(/\s+/g, ' ');
+  }
+
+  // Display result under each task
+  function displayTaskResult(resBoxId, score, total) {
+    const box = document.getElementById(resBoxId);
+    box.style.display = 'block';
+    box.className = 'task-result-box';
+
+    const percent = Math.round((score / total) * 100);
+
+    if (percent === 100) {
+      box.classList.add('correct-result');
+      box.textContent = `Результат: ${score} / ${total} (100%) — Отлично! Всё верно!`;
+    } else if (percent >= 50) {
+      box.classList.add('partial-result');
+      box.textContent = `Результат: ${score} / ${total} (${percent}%) — Хорошо, но есть ошибки.`;
+    } else {
+      box.classList.add('incorrect-result');
+      box.textContent = `Результат: ${score} / ${total} (${percent}%) — Попробуйте ещё раз.`;
+    }
+  }
+
+  // Helper to evaluate text inputs by class selector
+  function evaluateGapInputs(selector) {
+    let score = 0;
+    const inputs = document.querySelectorAll(selector);
+    inputs.forEach(input => {
+      const expected = normalizeText(input.dataset.ans || '');
+      const userAns = normalizeText(input.value || '');
+      if (userAns !== '' && userAns === expected) {
+        score++;
+        input.classList.add('correct');
+        input.classList.remove('incorrect');
+      } else {
+        input.classList.add('incorrect');
+        input.classList.remove('correct');
+      }
+    });
+    return { score, total: inputs.length };
+  }
+
+  // Helper to evaluate pill groups by class selector
+  function evaluatePillGroups(selector) {
+    let score = 0;
+    const groups = document.querySelectorAll(selector);
+    groups.forEach(group => {
+      const expected = group.dataset.ans.trim().toLowerCase();
+      const selectedPill = group.querySelector('.choice-pill.selected');
+      const allPills = group.querySelectorAll('.choice-pill');
+
+      allPills.forEach(p => p.classList.remove('correct-pill', 'incorrect-pill'));
+      group.classList.remove('unanswered-group');
+
+      if (selectedPill) {
+        const userVal = selectedPill.dataset.val.trim().toLowerCase();
+        if (userVal === expected) {
+          score++;
+          selectedPill.classList.add('correct-pill');
+        } else {
+          selectedPill.classList.add('incorrect-pill');
+        }
+      } else {
+        group.classList.add('unanswered-group');
+      }
+    });
+    return { score, total: groups.length };
+  }
+
+  // Check Task 1
+  function checkTask1() {
+    const res = evaluateGapInputs('.eval-gap-1');
+    displayTaskResult('resultTask1', res.score, res.total);
+  }
+
+  // Check Task 2
+  function checkTask2() {
+    const res = evaluateGapInputs('.eval-gap-2');
+    displayTaskResult('resultTask2', res.score, res.total);
+  }
+
+  // Check Task 3
+  function checkTask3() {
+    const res = evaluateGapInputs('.eval-gap-3');
+    displayTaskResult('resultTask3', res.score, res.total);
+  }
+
+  // Check Task 4 (Part 1 pills + Part 2 gap inputs)
+  function checkTask4() {
+    const part1 = evaluatePillGroups('.eval-pill-4');
+    const part2 = evaluateGapInputs('.eval-gap-4');
+    displayTaskResult('resultTask4', part1.score + part2.score, part1.total + part2.total);
+  }
+
+  // Check Task 5 (True / False pills)
+  function checkTask5() {
+    const res = evaluatePillGroups('.eval-pill-5');
+    displayTaskResult('resultTask5', res.score, res.total);
+  }
+
+  // Check Task 6 (Open practice completeness)
+  function checkTask6() {
+    const textareas = document.querySelectorAll('.free-textarea');
+    let filledCount = 0;
+    const total = textareas.length;
+
+    textareas.forEach(t => {
+      if (t.value.trim().length > 0) {
+        filledCount++;
+      }
+    });
+
+    const box = document.getElementById('resultTask6');
+    box.style.display = 'block';
+    box.className = 'task-result-box';
+
+    if (filledCount === total) {
+      box.classList.add('correct-result');
+      box.textContent = `Заполнено ответов: ${filledCount} / ${total} — Замечательно! Все ответы записаны.`;
+    } else if (filledCount > 0) {
+      box.classList.add('partial-result');
+      box.textContent = `Заполнено ответов: ${filledCount} / ${total}. Ответьте на остальные вопросы для полной практики.`;
+    } else {
+      box.classList.add('incorrect-result');
+      box.textContent = `Напишите ответы на вопросы о своём дне.`;
+    }
+  }
+
+  // Reset All
+  function resetAllExercises() {
+    const allInputs = document.querySelectorAll('.gap-input');
+    allInputs.forEach(input => {
+      input.value = '';
+      input.classList.remove('correct', 'incorrect');
+    });
+
+    const allPills = document.querySelectorAll('.choice-pill');
+    allPills.forEach(pill => {
+      pill.classList.remove('selected', 'correct-pill', 'incorrect-pill');
+    });
+
+    const allGroups = document.querySelectorAll('.pill-group');
+    allGroups.forEach(group => {
+      group.classList.remove('unanswered-group');
+    });
+
+    const freeTextareas = document.querySelectorAll('.free-textarea');
+    freeTextareas.forEach(textarea => {
+      textarea.value = '';
+    });
+
+    for (let i = 1; i <= 6; i++) {
+      const box = document.getElementById(`resultTask${i}`);
+      if (box) box.style.display = 'none';
+    }
+  }
+
+  window.addEventListener('DOMContentLoaded', () => {
+    setupChoicePills();
+  });
+</script>
+
+</body>
+</html>
